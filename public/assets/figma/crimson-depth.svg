@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="1415.51" height="689.13" viewBox="0 0 1415.51 689.13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse id="Crimson depth" cx="707.756" cy="344.565" rx="707.756" ry="344.565" fill="url(#paint0_radial_0_64)"/>
+<defs>
+<radialGradient id="paint0_radial_0_64" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(707.756 344.565) scale(707.756 344.565)">
+<stop stop-color="#475A38"/>
+<stop offset="0.15" stop-color="#475A38"/>
+<stop offset="1" stop-color="#475A38" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>

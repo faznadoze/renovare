@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="782.256" height="931.257" viewBox="0 0 782.256 931.257" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse id="Warm highlight" cx="391.128" cy="465.629" rx="391.128" ry="465.629" fill="url(#paint0_radial_0_24)"/>
+<defs>
+<radialGradient id="paint0_radial_0_24" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(391.128 465.629) scale(391.128 465.629)">
+<stop stop-color="#1A2412"/>
+<stop offset="0.15" stop-color="#1A2412"/>
+<stop offset="1" stop-color="#1A2412" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>
