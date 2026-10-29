@@ -37,21 +37,14 @@ export function App() {
   const [patientGoal, setPatientGoal] = useState('Ciclo Seca-Barriga & Desintoxicação');
   const [patientPeriod, setPatientPeriod] = useState('Manhã (08h às 12h)');
 
-  // Filter our primary 3 featured specialists
-  const featuredSpecialists = [
-    SPECIALISTS.find((s) => s.id === 'priscila-couto') || SPECIALISTS[0],
-    SPECIALISTS.find((s) => s.id === 'aparecida-silva') || SPECIALISTS[1],
-    SPECIALISTS.find((s) => s.id === 'adriano-castro') || SPECIALISTS[2],
-  ];
-
-  const currentDoctor = featuredSpecialists[currentDoctorIndex];
+  const currentDoctor = SPECIALISTS[currentDoctorIndex];
 
   const handlePrevDoctor = () => {
-    setCurrentDoctorIndex((prev) => (prev > 0 ? prev - 1 : featuredSpecialists.length - 1));
+    setCurrentDoctorIndex((prev) => (prev > 0 ? prev - 1 : SPECIALISTS.length - 1));
   };
 
   const handleNextDoctor = () => {
-    setCurrentDoctorIndex((prev) => (prev < featuredSpecialists.length - 1 ? prev + 1 : 0));
+    setCurrentDoctorIndex((prev) => (prev < SPECIALISTS.length - 1 ? prev + 1 : 0));
   };
 
   const handleCouponSubmit = (e: React.FormEvent) => {
@@ -522,11 +515,7 @@ export function App() {
               <div className="celimax-doctor-stage__body">
                 <div className="celimax-doctor-stage__portrait">
                   <img
-                    src={
-                      currentDoctor.id === 'priscila-couto'
-                        ? './assets/figma/doctor-priscila-figma.png'
-                        : currentDoctor.imageSrc
-                    }
+                    src={currentDoctor.imageSrc}
                     alt={currentDoctor.imageAlt}
                     loading="lazy"
                   />
@@ -536,10 +525,23 @@ export function App() {
                   <h3 className="celimax-doctor-stage__spec-title">Especialização Clínica</h3>
                   <p className="celimax-doctor-stage__spec-bio">{currentDoctor.bio}</p>
 
+                  {currentDoctor.focusAreas && currentDoctor.focusAreas.length > 0 && (
+                    <div className="celimax-doctor-stage__tags" aria-label="Áreas de foco">
+                      {currentDoctor.focusAreas.map((area, idx) => (
+                        <span key={idx} className="celimax-doctor-stage__tag">
+                          {area}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
                   <div className="celimax-doctor-stage__meta-row">
                     <div>
                       <h4 className="celimax-doctor-stage__name">{currentDoctor.name}</h4>
                       <p className="celimax-doctor-stage__role">{currentDoctor.role}</p>
+                      {currentDoctor.registry && (
+                        <p className="celimax-doctor-stage__reg">{currentDoctor.registry}</p>
+                      )}
                     </div>
 
                     <a
@@ -550,14 +552,14 @@ export function App() {
                       rel="noopener noreferrer"
                       className="celimax-doctor__btn-cta"
                     >
-                      <span>Agendar com {currentDoctor.name.split(' ')[0]}</span>
+                      <span>Agendar com {currentDoctor.name.replace(/^Dr\.\s*/, '').split(' ')[0]}</span>
                       <span className="celimax-doctor__btn-badge" aria-hidden="true">
                         <ArrowUpRight size={18} />
                       </span>
                     </a>
                   </div>
 
-                  {/* Doctor pagination indicator (Figma node 5389:1883) */}
+                  {/* Doctor pagination indicator */}
                   <div className="celimax-doctor__pagination-wrap">
                     <div className="celimax-doctor__page-arrows">
                       <button
@@ -579,19 +581,18 @@ export function App() {
                     </div>
 
                     <div className="celimax-doctor__page-numbers" aria-label="Navegar entre especialistas">
-                      {Array.from({ length: 11 }).map((_, idx) => {
-                        const targetSpecialistIdx = idx % SPECIALISTS.length;
-                        const isActive = currentDoctorIndex === targetSpecialistIdx;
+                      {SPECIALISTS.map((spec, idx) => {
+                        const isActive = currentDoctorIndex === idx;
                         const numStr = (idx + 1).toString().padStart(2, '0');
                         return (
                           <button
-                            key={idx}
+                            key={spec.id}
                             type="button"
                             className={`celimax-doctor__page-num ${
                               isActive ? 'celimax-doctor__page-num--active' : ''
                             }`}
-                            onClick={() => setCurrentDoctorIndex(targetSpecialistIdx)}
-                            aria-label={`Ver especialista ${numStr}`}
+                            onClick={() => setCurrentDoctorIndex(idx)}
+                            aria-label={`Ver especialista ${numStr} - ${spec.name}`}
                             aria-current={isActive ? 'true' : undefined}
                           >
                             {numStr}
