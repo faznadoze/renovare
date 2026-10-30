@@ -4815,6 +4815,7 @@ ol {
 .review-story.is-sequenced .review-story__lily {
   grid-area: 1 / 1;
   opacity: 1;
+  overflow: visible;
   transform-origin: 50% 50%;
 }
 

@@ -21,6 +21,19 @@ const LILY_PETALS = [
   'M28.0727 26.3606C42.908 26.3691 56.5134 31.5759 67.1729 40.2569C66.4112 56.8125 70.68 73.5552 79.9815 88.0127C50.531 83.2061 28.0917 57.6946 28.0741 26.8768L28.0727 26.3606ZM59.7095 64.0937C59.7132 69.2336 63.4646 73.4861 68.3817 74.2719C67.4524 71.6071 66.6695 68.9025 66.0256 66.1725C64.2812 64.8181 62.0919 64.0081 59.7095 64.0067V64.0937Z',
 ];
 
+// Where each petal waits before the lily forms: fraction of the stage from its centre,
+// a turn and a size, so the opening screen already holds the mark's own pieces
+const PETAL_SCATTER = [
+  { x: -0.36, y: -0.3, rotate: -40, scale: 2.2 },
+  { x: 0.3, y: -0.34, rotate: 25, scale: 1.8 },
+  { x: 0.42, y: 0.02, rotate: 60, scale: 2.4 },
+  { x: 0.26, y: 0.32, rotate: -15, scale: 1.6 },
+  { x: -0.08, y: 0.4, rotate: 35, scale: 2 },
+  { x: -0.4, y: 0.24, rotate: -55, scale: 2.3 },
+  { x: -0.46, y: -0.04, rotate: 15, scale: 1.7 },
+  { x: 0.06, y: -0.42, rotate: -30, scale: 1.9 },
+];
+
 interface ReviewStorySectionProps {
   reviews: GoogleReviewItem[];
 }
@@ -124,15 +137,44 @@ export function ReviewStorySection({ reviews }: ReviewStorySectionProps) {
             },
           });
 
-          // The lily forms: each petal turns into place around the centre of the mark
-          tl.from(petals, {
-            autoAlpha: 0,
-            scale: 0.6,
-            rotate: -50,
-            svgOrigin: '90 90',
-            duration: 0.6,
-            stagger: 0.09,
-          }).addLabel('formed');
+          // The lily forms: its eight petals are already on screen when the section arrives,
+          // large and soft, scattered across the stage; scrolling gathers them into the mark.
+          // Offsets are fractions of the stage, converted to the SVG's own units.
+          // Scatter around the middle of the screen (phones keep the mark high), smaller and
+          // narrower on phones so the pieces stay in view
+          const spreadX = desktop ? 1 : 0.82;
+          const petalScale = desktop ? 1 : 0.65;
+          const lilyUnit = () => Math.max(0.01, lily.getBoundingClientRect().width / 180);
+          const centreShiftY = () => {
+            const stageBox = stage.getBoundingClientRect();
+            const lilyBox = lily.getBoundingClientRect();
+            return stageBox.top + stageBox.height / 2 - (lilyBox.top + lilyBox.height / 2);
+          };
+          const scatterX = (idx: number) =>
+            (PETAL_SCATTER[idx % PETAL_SCATTER.length].x * stage.offsetWidth * spreadX) / lilyUnit();
+          const scatterY = (idx: number) =>
+            (PETAL_SCATTER[idx % PETAL_SCATTER.length].y * stage.offsetHeight + centreShiftY()) / lilyUnit();
+          tl.fromTo(
+            petals,
+            {
+              x: scatterX,
+              y: scatterY,
+              rotate: (idx: number) => PETAL_SCATTER[idx % PETAL_SCATTER.length].rotate,
+              scale: (idx: number) => PETAL_SCATTER[idx % PETAL_SCATTER.length].scale * petalScale,
+              opacity: 0.16,
+              transformOrigin: '50% 50%',
+            },
+            {
+              x: 0,
+              y: 0,
+              rotate: 0,
+              scale: 1,
+              opacity: 1,
+              duration: 0.9,
+              ease: 'power3.inOut',
+              stagger: 0.06,
+            }
+          ).addLabel('formed');
 
           // Then it steps back to a watermark so the words can sit on it
           tl.to(lily, { opacity: 0.06, scale: 1.06, duration: 0.6, ease: 'power2.inOut' }, 'formed+=0.25');
