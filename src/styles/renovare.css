@@ -7339,3 +7339,19 @@ html.lenis {
     padding-inline: 16px;
   }
 }
+
+/* Phones and tablets: the protocol name and its note both sit above the result card */
+@media (max-width: 1099px) {
+  .ba-story .ba-story__name {
+    order: 1;
+  }
+
+  .ba-story .ba-story__desc {
+    order: 2;
+  }
+
+  .ba-story .ba-story__card .celimax-ba-card {
+    order: 3;
+    margin-top: 4px;
+  }
+}

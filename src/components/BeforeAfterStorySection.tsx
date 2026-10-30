@@ -78,10 +78,15 @@ export function BeforeAfterStorySection() {
           },
         });
 
-        // The stacked cards rise and cover the title; the second waits a little smaller behind
+        // The stacked cards rise and cover the title; the second waits smaller and dimmed behind
         tl.addLabel('title')
           .fromTo(cards[0], { y: below }, { y: 0, duration: 1 })
-          .fromTo(cards[1], { y: below, scale: 0.92 }, { y: 28, scale: 0.92, duration: 1 }, '<0.08')
+          .fromTo(
+            cards[1],
+            { y: below, scale: 0.92, opacity: 0.35 },
+            { y: 28, scale: 0.92, opacity: 0.35, duration: 1 },
+            '<0.08'
+          )
           .to(head, { autoAlpha: 0, y: -32, duration: 0.5, ease: 'power2.in' }, '<0.45');
 
         // First protocol name and note
@@ -92,7 +97,7 @@ export function BeforeAfterStorySection() {
         // The top card lifts away with its note, revealing the next
         tl.to(texts[0], { autoAlpha: 0, y: -40, duration: 0.4, ease: 'power2.in' }, '+=0.5')
           .to(cards[0], { y: above, duration: 1, ease: 'power2.inOut' }, '<')
-          .to(cards[1], { y: 0, scale: 1, duration: 0.8, ease: 'power2.out' }, '<0.25')
+          .to(cards[1], { y: 0, scale: 1, opacity: 1, duration: 0.8, ease: 'power2.out' }, '<0.25')
           .fromTo(texts[1], { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.55, stagger: 0.1 }, '>-0.25')
           .addLabel('case-2');
 
