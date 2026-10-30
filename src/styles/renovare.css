@@ -6919,3 +6919,21 @@ html.lenis {
     font-size: min(1.24em, 13.2vw);
   }
 }
+
+/* Visual editor: protocol names in Cormorant Garamond; notes at 12px, capped at 300px */
+.ba-story .ba-story__case--1 .ba-story__name,
+.ba-story .ba-story__case--2 .ba-story__name {
+  font-family: var(--font-serif);
+}
+
+.ba-story .ba-story__case--1 .ba-story__desc {
+  font-size: 12px;
+  width: 300px;
+  max-width: 300px;
+}
+
+.ba-story .ba-story__case--2 .ba-story__desc {
+  font-size: 12px;
+  width: 100%;
+  max-width: 300px;
+}
