@@ -12,17 +12,20 @@ import { buildWhatsAppUrl } from '../data/renovareContent';
  * of section links.
  */
 
+// Section links in page order; BLACK (the campaign) is set in gold
 const SECTIONS = [
   { href: '#manifesto', label: 'Sobre' },
+  { href: '#black-renovare', label: 'BLACK', gold: true },
   { href: '#procedimentos', label: 'Protocolos' },
   { href: '#antes-depois', label: 'Antes & Depois' },
   { href: '#diferenciais', label: 'Avaliações' },
   { href: '#especialistas', label: 'Especialistas' },
+  { href: '#faq', label: 'Dúvidas' },
 ];
 
 const MOBILE_SECTIONS = [
   { href: '#manifesto', label: 'Sobre a Renovare' },
-  { href: '#black-renovare', label: 'Black Renovare' },
+  { href: '#black-renovare', label: 'BLACK', gold: true },
   { href: '#procedimentos', label: 'Protocolos' },
   { href: '#antes-depois', label: 'Antes & Depois' },
   { href: '#diferenciais', label: 'Avaliações' },
@@ -138,7 +141,11 @@ export function SiteHeader() {
           </span>
         </a>
         {SECTIONS.map((section) => (
-          <a key={section.href} href={section.href} className="site-header__item">
+          <a
+            key={section.href}
+            href={section.href}
+            className={`site-header__item ${section.gold ? 'site-header__item--gold' : ''}`}
+          >
             {section.label}
           </a>
         ))}
@@ -188,7 +195,9 @@ export function SiteHeader() {
               <a
                 key={section.href}
                 href={section.href}
-                className="site-header__panel-item site-header__panel-link"
+                className={`site-header__panel-item site-header__panel-link ${
+                  section.gold ? 'site-header__panel-link--gold' : ''
+                }`}
                 onClick={() => setMenuOpen(false)}
               >
                 {section.label}

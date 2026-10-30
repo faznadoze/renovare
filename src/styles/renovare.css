@@ -6950,13 +6950,27 @@ html.lenis {
   text-decoration: none;
 }
 
-/* Wide screens: the two desktop pills replace the phone pill */
-@media (min-width: 1180px) {
+/* BLACK (the campaign) in gold, dark enough to read on the white chips */
+.site-header__item--gold,
+.site-header__panel-link--gold {
+  color: #8A6B1E;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* Wide screens: the two desktop pills replace the phone pill (seven sections need ~1280px) */
+@media (min-width: 1280px) {
   .site-header__pill {
     display: flex;
   }
 
   .site-header__mobile {
     display: none;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .site-header__item {
+    padding: 0 13px;
   }
 }
