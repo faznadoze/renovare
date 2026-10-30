@@ -3346,7 +3346,7 @@ ol {
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: clamp(1.85rem, 3.2vw, 4.5rem);
-  line-height: 0.84;
+  line-height: 45px;
   letter-spacing: -0.03em;
   color: #F2F0E4;
   margin: 0 0 24px 0;
@@ -3543,7 +3543,7 @@ ol {
     font-family: var(--font-sans);
     font-weight: 600;
     font-size: var(--hero-title-size);
-    line-height: calc(var(--hero-title-size) * 1.05);
+    line-height: 45px;
     letter-spacing: -0.035em;
     color: #FFFFFF;
   }
@@ -5898,7 +5898,7 @@ html.is-loading body {
 
   .celimax-hero--editorial .celimax-hero__title {
     font-size: clamp(2.45rem, 11.4vw, 3.25rem);
-    line-height: 0.94;
+    line-height: 45px;
     letter-spacing: -0.045em;
     margin-bottom: 20px;
   }
