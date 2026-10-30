@@ -72,6 +72,9 @@ export interface FaqItem {
   topic: string;
   question: string;
   answer: string;
+  imageSrc: string;
+  imageAlt: string;
+  imagePosition?: string;
 }
 
 export interface GoogleReviewItem {
@@ -506,30 +509,45 @@ export const FAQ_ITEMS: FaqItem[] = [
     question: 'Como funcionam as condições da Black da Renovare?',
     answer:
       'Durante a temporada da Black (com fechamento em 27 de novembro de 2026), liberamos lotes limitados de avaliação e pacotes combinados com condições especiais para pacientes agendadas pelo WhatsApp, mantendo o mesmo tempo de cabine e rigor clínico de todo o ano.',
+    imageSrc: './assets/people/pri-capa.jpg',
+    imageAlt: 'Profissional sorrindo em uma sala de atendimento da clínica',
+    imagePosition: '62% center',
   },
   {
     topic: 'Avaliação',
     question: 'Por que todo tratamento na Renovare começa por uma avaliação?',
     answer:
       'Porque nenhum corpo responde igual a um protocolo pronto. Na avaliação presencial em Betim analisamos se o seu incômodo vem de gordura localizada, retenção linfática ou flacidez dérmica, garantindo que você invista apenas no procedimento certo para a sua fisiologia.',
+    imageSrc: './assets/people/faq-avaliacao.webp',
+    imageAlt: 'Profissional à mesa com um modelo de composição corporal usado na avaliação',
+    imagePosition: '58% center',
   },
   {
     topic: 'Criolipólise',
     question: 'Em quanto tempo vejo o resultado da Criolipólise e ela dói?',
     answer:
       'O resfriamento controlado gera uma sensação inicial de frio intenso seguida de dormência local nos primeiros minutos, tornando a sessão muito tranquila. A eliminação natural das células tratadas começa a ser notada a partir de 30 dias, atingindo seu ápice entre 60 e 90 dias, potencializada pelo nosso protocolo pós-crio.',
+    imageSrc: './assets/people/treatment-emagrecimento.jpg',
+    imageAlt: 'Paciente deitada recebendo um cuidado corporal na maca',
+    imagePosition: '40% center',
   },
   {
     topic: 'Seca-Barriga',
     question: 'Qual a diferença entre o Seca-Barriga e o Protocolo de Emagrecimento?',
     answer:
       'O Seca-Barriga foca na região abdominal e cintura para desinchar, drenar retenção e atacar a gordura abdominal localizada. Já o Protocolo de Emagrecimento olha para o corpo inteiro ao longo de semanas, combinando redução global de medidas, estímulo metabólico e preservação da firmeza da pele.',
+    imageSrc: './assets/people/treatment-secabarriga.jpg',
+    imageAlt: 'Mãos de profissional realizando massagem de drenagem nas costas de uma paciente',
+    imagePosition: 'center 35%',
   },
   {
     topic: 'Rotina',
     question: 'Preciso me afastar do trabalho após as sessões?',
     answer:
       'Não. Todos os nossos procedimentos são não cirúrgicos e permitem retorno imediato à sua rotina em Betim. Atendemos das 08h às 19h30 justamente para encaixar suas sessões com conforto antes ou depois do seu expediente.',
+    imageSrc: './assets/people/hero-woman-natural.jpg',
+    imageAlt: 'Retrato de uma mulher com a pele natural e cabelo preso',
+    imagePosition: 'center 30%',
   },
 ];
 

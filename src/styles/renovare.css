@@ -4372,126 +4372,320 @@ ol {
   padding: 0 clamp(20px, 4vw, 40px);
 }
 
-.celimax-faq-grid {
+/* FAQ topic index: topics select one answer, one picture and one WhatsApp question */
+.faq-index {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 48px;
-  align-items: flex-start;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
 }
 
-@media (min-width: 860px) {
-  .celimax-faq-grid {
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: 60px;
-  }
+.faq-index__head {
+  max-width: 760px;
 }
 
-.celimax-faq-left {
-  display: flex;
-  flex-direction: column;
-}
-
-.celimax-faq-left__title {
+.faq-index__title {
   font-family: var(--font-sans);
+  font-size: clamp(2.6rem, 9vw, 4.5rem);
   font-weight: 800;
-  font-size: clamp(2rem, 3.2vw, 2.85rem);
-  line-height: 1.15;
-  letter-spacing: -0.03em;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
   color: #171E12;
-  margin-bottom: 8px;
+  text-wrap: balance;
 }
 
-.celimax-faq-left__subtitle {
-  font-size: 1.05rem;
-  line-height: 1.6;
-  color: #3D4837;
-  margin-bottom: 28px;
+.faq-index__lead {
+  max-width: 34rem;
+  margin-top: 18px;
+  font-size: 1.125rem;
+  line-height: 1.55;
+  color: #171E12;
+  text-wrap: pretty;
 }
 
-.celimax-faq-left__frame {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  border-radius: 28px;
-  overflow: hidden;
-  box-shadow: 0 16px 36px -10px rgba(25, 35, 18, 0.12);
-}
-
-.celimax-faq-left__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.celimax-faq-stack {
+.faq-index__topics {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 4px;
 }
 
-.celimax-faq-card {
-  background: #FFFFFF;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 6px 20px -4px rgba(25, 35, 18, 0.06);
-  border: 1px solid rgba(71, 90, 56, 0.08);
-  transition: background-color 0.3s var(--ease-out), border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
-}
-
-.celimax-faq-card--open {
-  background: var(--moss-pale);
-  border-color: rgba(71, 90, 56, 0.2);
-  box-shadow: 0 10px 28px -6px rgba(71, 90, 56, 0.2);
-}
-
-.celimax-faq-trigger {
-  width: 100%;
+.faq-index__topic {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 22px 24px;
-  background: none;
-  border: none;
-  text-align: left;
+  gap: 16px;
+  width: 100%;
+  min-height: 56px;
+  padding: 12px 18px 12px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
   font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: 1.08rem;
-  color: #182212;
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #3B4734;
+  text-align: start;
   cursor: pointer;
   touch-action: manipulation;
+  transition:
+    background-color 200ms var(--ease-out),
+    color 200ms var(--ease-out),
+    transform 150ms var(--ease-out);
 }
 
-.celimax-faq-card--open .celimax-faq-trigger {
-  color: #121A0C;
-}
-
-.celimax-faq-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: rgba(71, 90, 56, 0.08);
-  color: var(--olive-dark);
+.faq-index__topic svg {
   flex-shrink: 0;
-  transition: transform 0.25s var(--ease-out);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 200ms var(--ease-out),
+    transform 200ms var(--ease-out);
 }
 
-.celimax-faq-card--open .celimax-faq-icon {
-  background: rgba(18, 26, 12, 0.12);
-  color: #121A0C;
-  transform: rotate(45deg);
+.faq-index__topic.is-active {
+  background: var(--moss-pale);
+  color: #171E12;
 }
 
-.celimax-faq-body {
-  padding: 0 24px 22px;
-  font-size: 0.98rem;
-  line-height: 1.65;
+.faq-index__topic.is-active svg {
+  opacity: 1;
+  transform: none;
+}
+
+.faq-index__topic:active {
+  transform: scale(0.96);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .faq-index__topic:not(.is-active):hover {
+    background: #E2E8DC;
+    color: #171E12;
+  }
+}
+
+.faq-index__panel {
+  display: grid;
+  border-radius: 28px;
+  background: #FFFFFF;
+  padding: clamp(28px, 3.4vw, 44px);
+}
+
+.faq-index__answer {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition:
+    opacity 220ms var(--ease-out),
+    transform 220ms var(--ease-out),
+    visibility 0s linear 220ms;
+}
+
+.faq-index__answer.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 360ms var(--ease-out) 80ms,
+    transform 420ms var(--ease-out) 80ms,
+    visibility 0s;
+}
+
+.faq-index__question {
+  font-family: var(--font-sans);
+  font-size: clamp(1.4rem, 1.9vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: -0.03em;
+  color: #171E12;
+  text-wrap: balance;
+}
+
+.faq-index__text {
+  margin-top: 18px;
+  max-width: 62ch;
+  font-size: 1.0625rem;
+  line-height: 1.62;
+  color: #171E12;
+  text-wrap: pretty;
+}
+
+.faq-index__ask {
+  margin-top: 28px;
+  gap: 14px;
+  white-space: nowrap;
+  box-shadow: none;
+}
+
+.faq-index__hours {
+  margin-top: 14px;
+  font-size: 0.9375rem;
   color: #4C5844;
 }
 
-.celimax-faq-card--open .celimax-faq-body {
-  color: #26331C;
+.faq-index__figure {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 28px;
+  aspect-ratio: 4 / 3;
+  background: #DDE3D6;
+}
+
+.faq-index__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.04);
+  transition:
+    opacity 520ms var(--ease-out),
+    transform 1100ms var(--ease-out);
+}
+
+.faq-index__img.is-active {
+  opacity: 1;
+  transform: none;
+}
+
+@media (min-width: 760px) and (max-width: 1099px) {
+  .faq-index {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    column-gap: 32px;
+    row-gap: 40px;
+  }
+
+  .faq-index__head {
+    grid-column: 1 / -1;
+  }
+
+  .faq-index__topics {
+    grid-column: 1;
+    grid-row: 2 / span 2;
+  }
+
+  .faq-index__topic {
+    gap: 10px;
+    padding: 12px 14px 12px 18px;
+    font-size: 1.1875rem;
+    white-space: nowrap;
+  }
+
+  .faq-index__figure {
+    grid-column: 2;
+    grid-row: 2;
+    aspect-ratio: 16 / 10;
+  }
+
+  .faq-index__panel {
+    grid-column: 2;
+    grid-row: 3;
+  }
+}
+
+@media (min-width: 1100px) {
+  .faq-index {
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.28fr) minmax(0, 0.9fr);
+    grid-template-rows: auto 1fr;
+    column-gap: 40px;
+    row-gap: 48px;
+  }
+
+  .faq-index__head {
+    grid-column: 1 / 3;
+  }
+
+  .faq-index__topics {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .faq-index__panel {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: start;
+  }
+
+  .faq-index__figure {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
+}
+
+@media (max-width: 759px) {
+  .faq-index__topics {
+    flex-direction: row;
+    gap: 8px;
+    margin-inline: calc(-1 * clamp(20px, 4vw, 40px));
+    padding-inline: clamp(20px, 4vw, 40px);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: clamp(20px, 4vw, 40px);
+    scrollbar-width: none;
+  }
+
+  .faq-index__topics::-webkit-scrollbar {
+    display: none;
+  }
+
+  .faq-index__topic {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 48px;
+    padding: 10px 20px;
+    background: #FFFFFF;
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+
+  .faq-index__topic svg {
+    display: none;
+  }
+
+  .faq-index__figure {
+    aspect-ratio: 16 / 10;
+    border-radius: 22px;
+  }
+
+  .faq-index__panel {
+    border-radius: 22px;
+    padding: 24px 20px;
+  }
+
+  .faq-index__question {
+    font-size: 1.375rem;
+  }
+
+  .faq-index__text {
+    font-size: 1rem;
+  }
+
+  .faq-index__ask {
+    width: 100%;
+    justify-content: space-between;
+    min-height: 54px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-index__answer,
+  .faq-index__answer.is-active,
+  .faq-index__img,
+  .faq-index__img.is-active {
+    transform: none;
+  }
+
+  .faq-index__topic:active {
+    transform: none;
+  }
 }
 
 /* 9. MONUMENTAL FOOTER WITH CELIMAX ARCHITECTURAL WORDMARK */
@@ -5169,54 +5363,8 @@ html.is-loading body {
     gap: 8px;
   }
 
-  /* FAQ: ruled accordion, open answer becomes the lime band */
   .celimax-faq-section {
     padding: 80px 0;
-  }
-
-  .celimax-faq-grid {
-    gap: 32px;
-  }
-
-  .celimax-faq-left__frame {
-    aspect-ratio: 16 / 9;
-    border-radius: 22px;
-  }
-
-  .celimax-faq-stack {
-    gap: 0;
-    border-bottom: 1px solid rgba(71, 90, 56, 0.18);
-  }
-
-  .celimax-faq-card,
-  .celimax-faq-card--open {
-    margin-inline: calc(-1 * clamp(20px, 4vw, 40px));
-    padding-inline: clamp(20px, 4vw, 40px);
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  .celimax-faq-card {
-    background:
-      linear-gradient(rgba(71, 90, 56, 0.18), rgba(71, 90, 56, 0.18))
-      center top / calc(100% - 2 * clamp(20px, 4vw, 40px)) 1px no-repeat;
-  }
-
-  .celimax-faq-card--open {
-    background: var(--moss-pale);
-  }
-
-  .celimax-faq-trigger {
-    gap: 18px;
-    padding: 21px 0;
-    font-size: 1.02rem;
-    line-height: 1.32;
-  }
-
-  .celimax-faq-body {
-    padding: 0 0 24px;
-    font-size: 0.95rem;
   }
 
   .coupon-submit-bar {

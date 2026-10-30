@@ -7,8 +7,6 @@ import {
   ArrowUpRight,
   ChevronRight,
   ChevronLeft,
-  Plus,
-  Minus,
   MapPin,
   Clock,
   MessageCircle,
@@ -50,7 +48,8 @@ const REVIEW_COLUMNS = [
 
 export function App() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [openFaqIndex, setOpenFaqIndex] = useState<number>(0); // First item open matching Celimax
+  const [activeFaqIndex, setActiveFaqIndex] = useState<number>(0);
+  const faqTabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [currentDoctorIndex, setCurrentDoctorIndex] = useState<number>(0);
   const [patientName, setPatientName] = useState('');
   const [patientGoal, setPatientGoal] = useState('Ciclo Seca-Barriga & Desintoxicação');
@@ -113,6 +112,27 @@ export function App() {
     const text = `Olá! Meu nome é ${patientName}. Gostaria de agendar minha avaliação na Renovare para o objetivo: ${patientGoal}. Minha preferência de horário é: ${patientPeriod}.`;
     window.open(buildWhatsAppUrl(text), '_blank', 'noopener,noreferrer');
   };
+
+  // Tabs pattern: arrows, Home and End move focus and selection together
+  const handleFaqTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const last = FAQ_ITEMS.length - 1;
+    const nextIndex =
+      event.key === 'ArrowDown' || event.key === 'ArrowRight'
+        ? index === last ? 0 : index + 1
+        : event.key === 'ArrowUp' || event.key === 'ArrowLeft'
+          ? index === 0 ? last : index - 1
+          : event.key === 'Home'
+            ? 0
+            : event.key === 'End'
+              ? last
+              : null;
+    if (nextIndex === null) return;
+    event.preventDefault();
+    setActiveFaqIndex(nextIndex);
+    faqTabRefs.current[nextIndex]?.focus();
+  };
+
+  const faqHoursNote = `Resposta pelo WhatsApp, de ${CLINIC_HOURS.toLowerCase()}.`;
 
   // GSAP Choreographed scroll reveals with @gsap/react + useGSAP
   useGSAP(
@@ -694,57 +714,100 @@ export function App() {
           </div>
         </section>
 
-        {/* 8. FAQ WITH EDITORIAL PORTRAIT */}
+        {/* 8. FAQ: TOPIC INDEX WITH ANSWER, PICTURE AND TOPIC-AWARE WHATSAPP QUESTION */}
         <section id="faq" className="celimax-faq-section js-section-reveal">
           <div className="celimax-faq-section__container">
-            <div className="celimax-faq-grid">
-              {/* Left Column */}
-              <div className="celimax-faq-left js-reveal-item">
-                <h2 className="celimax-faq-left__title">
-                  Dúvidas Frequentes
-                </h2>
-                <p className="celimax-faq-left__subtitle">
-                  Tudo o que você precisa saber antes de sua primeira sessão na clínica.
+            <div className="faq-index">
+              <header className="faq-index__head js-reveal-item">
+                <h2 className="faq-index__title">Dúvidas frequentes</h2>
+                <p className="faq-index__lead">
+                  O que mais nos perguntam antes da primeira sessão, respondido pela equipe da clínica.
+                  Escolha um assunto.
                 </p>
-                <div className="celimax-faq-left__frame">
-                  <img
-                    src="./assets/people/hero-woman-glow.jpg"
-                    alt="Rosto sereno com pele radiante e cuidada"
-                    className="celimax-faq-left__img"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
+              </header>
 
-              {/* Right Column: Accordion Stack */}
-              <div className="celimax-faq-stack js-reveal-item">
+              <div
+                className="faq-index__topics js-reveal-item"
+                role="tablist"
+                aria-label="Assuntos das dúvidas frequentes"
+              >
                 {FAQ_ITEMS.map((item, idx) => {
-                  const isOpen = openFaqIndex === idx;
+                  const isActive = idx === activeFaqIndex;
                   return (
-                    <article
+                    <button
                       key={item.topic}
-                      className={`celimax-faq-card ${isOpen ? 'celimax-faq-card--open' : ''}`}
+                      ref={(node) => {
+                        faqTabRefs.current[idx] = node;
+                      }}
+                      id={`faq-tab-${idx}`}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      aria-controls={`faq-panel-${idx}`}
+                      tabIndex={isActive ? 0 : -1}
+                      className={`faq-index__topic ${isActive ? 'is-active' : ''}`}
+                      onClick={() => setActiveFaqIndex(idx)}
+                      onKeyDown={(event) => handleFaqTabKeyDown(event, idx)}
                     >
-                      <button
-                        type="button"
-                        className="celimax-faq-trigger"
-                        onClick={() => setOpenFaqIndex(isOpen ? -1 : idx)}
-                        aria-expanded={isOpen}
-                      >
-                        <span>{item.question}</span>
-                        <span className="celimax-faq-icon" aria-hidden="true">
-                          {isOpen ? <Minus size={16} /> : <Plus size={16} />}
-                        </span>
-                      </button>
-                      {isOpen && (
-                        <div className="celimax-faq-body">
-                          <p>{item.answer}</p>
-                        </div>
-                      )}
-                    </article>
+                      <span>{item.topic}</span>
+                      <ChevronRight size={20} strokeWidth={2} aria-hidden="true" />
+                    </button>
                   );
                 })}
               </div>
+
+              {/* Every answer stays mounted in one grid cell, so the card keeps the tallest height and never jumps */}
+              <div className="faq-index__panel js-reveal-item">
+                {FAQ_ITEMS.map((item, idx) => {
+                  const isActive = idx === activeFaqIndex;
+                  return (
+                    <div
+                      key={item.topic}
+                      id={`faq-panel-${idx}`}
+                      role="tabpanel"
+                      aria-labelledby={`faq-tab-${idx}`}
+                      tabIndex={isActive ? 0 : -1}
+                      inert={!isActive}
+                      className={`faq-index__answer ${isActive ? 'is-active' : ''}`}
+                    >
+                      <p className="faq-index__question">{item.question}</p>
+                      <p className="faq-index__text">{item.answer}</p>
+                      <a
+                        href={buildWhatsAppUrl(
+                          `Olá! Li as dúvidas frequentes no site da Renovare e tenho uma pergunta sobre ${item.topic}.`
+                        )}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="celimax-ba__btn-whatsapp faq-index__ask"
+                        aria-label={`Perguntar sobre ${item.topic} no WhatsApp`}
+                      >
+                        <span>Perguntar sobre {item.topic}</span>
+                        <span className="celimax-ba__arrow-badge" aria-hidden="true">
+                          <ArrowUpRight size={18} />
+                        </span>
+                      </a>
+                      <p className="faq-index__hours">{faqHoursNote}</p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <figure className="faq-index__figure js-reveal-item">
+                {FAQ_ITEMS.map((item, idx) => {
+                  const isActive = idx === activeFaqIndex;
+                  return (
+                    <img
+                      key={item.topic}
+                      src={item.imageSrc}
+                      alt={isActive ? item.imageAlt : ''}
+                      aria-hidden={isActive ? undefined : true}
+                      loading="lazy"
+                      className={`faq-index__img ${isActive ? 'is-active' : ''}`}
+                      style={{ objectPosition: item.imagePosition }}
+                    />
+                  );
+                })}
+              </figure>
             </div>
           </div>
         </section>
