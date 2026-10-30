@@ -6950,3 +6950,10 @@ html.lenis {
     color: #1A2412;
   }
 }
+
+/* Mobile: the specialist cards carry the detail; keep the section header concise */
+@media (max-width: 719px) {
+  .celimax-doctor-stage__quote {
+    display: none;
+  }
+}
