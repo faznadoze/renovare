@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="856.757" height="465.629" viewBox="0 0 856.757 465.629" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse id="Wine shadow" cx="428.378" cy="232.814" rx="428.378" ry="232.814" fill="url(#paint0_radial_0_39)"/>
+<defs>
+<radialGradient id="paint0_radial_0_39" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(428.378 232.814) scale(428.378 232.814)">
+<stop stop-color="#475A38"/>
+<stop offset="0.15" stop-color="#475A38"/>
+<stop offset="1" stop-color="#475A38" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>
