@@ -6355,7 +6355,7 @@ html.is-loading body {
     justify-content: flex-end;
     gap: 0;
     min-height: 560px;
-    padding: clamp(210px, 60vw, 260px) 20px 20px;
+    padding: 230px 20px 26px;
     border-radius: 22px;
     overflow: hidden;
     background: #1A2412;
@@ -6373,7 +6373,7 @@ html.is-loading body {
   .celimax-doctor-card .celimax-doctor-stage__portrait {
     position: absolute;
     inset: 0 0 auto;
-    height: 62%;
+    height: 78.27%;
     z-index: -1;
     width: 100%;
     max-width: none;
@@ -6392,7 +6392,9 @@ html.is-loading body {
   .celimax-doctor-card::after {
     content: '';
     position: absolute;
-    inset: 0;
+    inset: 0 0 auto;
+    /* Figma's gradient layer runs 612px on a 560px card */
+    height: 109.3%;
     z-index: -1;
     background: linear-gradient(
       180deg,
@@ -6412,15 +6414,10 @@ html.is-loading body {
     transition: none;
   }
 
-  .celimax-doctor-card .celimax-doctor-stage__spec-title {
-    margin-bottom: 8px;
-  }
-
+  /* Figma 5625:9125: name, role, specialty line and CTA; the bio lives on desktop */
+  .celimax-doctor-card .celimax-doctor-stage__spec-title,
   .celimax-doctor-card .celimax-doctor-stage__spec-bio {
-    font-size: 0.9rem;
-    line-height: 1.55;
-    padding-bottom: 16px;
-    margin-bottom: 16px;
+    display: none;
   }
 
   /* Focus tags repeat the bio; hide them on narrow cards to keep one-screen height */
@@ -6429,14 +6426,52 @@ html.is-loading body {
   }
 
   .celimax-doctor-card .celimax-doctor-stage__meta-row {
-    gap: 16px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 0;
     margin-bottom: 0;
   }
 
+  .celimax-doctor-card .celimax-doctor-stage__name {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 29.4px;
+    letter-spacing: -0.98px;
+    color: #FFFFFF;
+  }
+
+  .celimax-doctor-card .celimax-doctor-stage__role {
+    margin: 0;
+    padding: 4px 0 8px;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.25;
+    color: rgba(248, 247, 247, 0.86);
+  }
+
+  .celimax-doctor-card .celimax-doctor-stage__reg {
+    margin: 0 0 24px;
+    padding-top: 8px;
+    border-top: 1.8px solid rgba(71, 90, 56, 0.8);
+    font-family: var(--font-sans);
+    font-size: 14.08px;
+    font-weight: 600;
+    line-height: 21.824px;
+    color: #DBE4A9;
+  }
+
   .celimax-doctor-card .celimax-doctor__btn-cta {
+    width: 100%;
+    justify-content: space-between;
     gap: 12px;
-    padding-inline-start: 18px;
-    font-size: 0.94rem;
+    padding: 6px 6px 6px 18px;
+    font-size: 15.04px;
+    font-weight: 600;
+    line-height: 23.312px;
     white-space: nowrap;
   }
 
