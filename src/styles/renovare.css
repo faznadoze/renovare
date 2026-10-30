@@ -6820,28 +6820,21 @@ html.lenis {
   transition: color 0.25s ease, transform 0.16s var(--ease-out);
 }
 
-/* The white fill lives on its own layer so it can fade without touching the label.
-   At rest the fills overlap by 1px and only the ends are rounded: one seamless bar. */
+/* Each chip is its own rounded fill (as on the reference): neighbours touch, so only the
+   corner notches show between them. A 1px overlap hides the sub-pixel seam that
+   fractional widths would otherwise open as a dark line. */
 .site-header__item::before {
   content: '';
   position: absolute;
-  inset: 0 -1px;
+  inset: 0;
   z-index: -1;
-  border-radius: 0;
+  border-radius: 8px;
   background: #FFFFFF;
-  transition: opacity 0.25s ease, border-radius 0.25s ease, inset 0.25s ease;
+  transition: opacity 0.25s ease;
 }
 
-.site-header__pill > .site-header__item:nth-child(2)::before,
-.site-header__mobile-row > .site-header__item:first-child::before {
-  inset: 0 -1px 0 0;
-  border-radius: 8px 0 0 8px;
-}
-
-.site-header__pill > .site-header__item:last-child::before,
-.site-header__mobile-row > .site-header__item:last-child::before {
-  inset: 0 0 0 -1px;
-  border-radius: 0 8px 8px 0;
+.site-header__item + .site-header__item {
+  margin-left: -1px;
 }
 
 .site-header__item:active {
@@ -6863,10 +6856,6 @@ html.lenis {
     color: #FFFFFF;
   }
 
-  .site-header .site-header__item:hover::before {
-    inset: 0;
-    border-radius: 8px;
-  }
 }
 
 .site-header:has(.site-header__item:focus-visible) .site-header__item:not(:focus-visible) {
@@ -6881,10 +6870,6 @@ html.lenis {
   color: #FFFFFF;
 }
 
-.site-header .site-header__item:focus-visible::before {
-  inset: 0;
-  border-radius: 8px;
-}
 
 .site-header__item:focus-visible {
   outline: 2px solid var(--moss-pale);
@@ -6920,10 +6905,7 @@ html.lenis {
   font-weight: 600;
 }
 
-.site-header__item--cta::before,
-.site-header__pill > .site-header__item--cta::before {
-  inset: 0;
-  border-radius: 8px;
+.site-header__item--cta::before {
   background: var(--moss-pale);
 }
 
