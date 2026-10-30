@@ -4397,59 +4397,61 @@ ol {
   .review-story.is-sequenced .review-story__slot--6 { --a: 150deg; --r: 1.07; }
 }
 
-/* ---------- Sequenced: phones, tablets and short screens ---------- */
+/* ---------- Sequenced: phones, tablets and short screens ----------
+   Same idea as desktop: the lily and the turning statements hold the centre of the
+   screen, smaller cards spiral around it, three above and three below */
 @media (max-width: 1099px), (max-height: 699px) {
-  .review-story.is-sequenced .review-story__stage {
-    --story-top: 76px;
-    --story-center-h: clamp(220px, 34svh, 320px);
-    --story-card-h: 152px;
-    --story-peek: 46px;
-  }
-
   .review-story.is-sequenced .review-story__center {
-    top: var(--story-top);
-    height: var(--story-center-h);
-    padding-inline: 20px;
+    top: 0;
+    bottom: 0;
+    padding-inline: 24px;
   }
 
   .review-story.is-sequenced .review-story__lily {
-    width: calc(var(--story-center-h) * 0.644);
-    height: calc(var(--story-center-h) * 0.644);
+    width: min(60vw, 260px);
+    height: min(60vw, 260px);
   }
 
   .review-story.is-sequenced .review-story__line {
-    max-width: 16ch;
-    font-size: clamp(2rem, 8.4vw, 3rem);
+    max-width: 14ch;
+    font-size: clamp(1.9rem, 8vw, 2.8rem);
   }
 
   .review-story.is-sequenced .review-story__cards {
-    top: calc(var(--story-top) + var(--story-center-h) + 16px);
-    left: 16px;
-    right: 16px;
-    max-width: 460px;
-    height: calc(var(--story-card-h) + 5 * var(--story-peek));
-    margin-inline: auto;
+    inset: 0;
   }
 
   .review-story.is-sequenced .review-story__slot {
-    left: 0;
-    right: 0;
-    height: var(--story-card-h);
+    --x: 50%;
+    --y: 50%;
+    --tilt: 0deg;
+    width: min(240px, 64vw);
+    left: var(--x);
+    top: var(--y);
+    transform: translate(-50%, -50%) rotate(var(--tilt));
   }
 
   .review-story.is-sequenced .review-story__card {
-    height: 100%;
-    padding: 16px 18px;
-    gap: 10px;
+    padding: 14px 16px;
+    gap: 8px;
   }
 
-  /* A loose, hand-stacked deck rather than a ruled column */
-  .review-story.is-sequenced .review-story__slot--1 { top: 0; transform: translateX(-6px) rotate(-1.2deg); }
-  .review-story.is-sequenced .review-story__slot--2 { top: var(--story-peek); transform: translateX(9px) rotate(1deg); }
-  .review-story.is-sequenced .review-story__slot--3 { top: calc(2 * var(--story-peek)); transform: translateX(-11px) rotate(-0.6deg); }
-  .review-story.is-sequenced .review-story__slot--4 { top: calc(3 * var(--story-peek)); transform: translateX(5px) rotate(1.4deg); }
-  .review-story.is-sequenced .review-story__slot--5 { top: calc(4 * var(--story-peek)); transform: translateX(-4px) rotate(-1.5deg); }
-  .review-story.is-sequenced .review-story__slot--6 { top: calc(5 * var(--story-peek)); transform: translateX(10px) rotate(0.8deg); }
+  /* Pairs arrive one above, one below, each further from the centre */
+  .review-story.is-sequenced .review-story__slot--1 { --x: 36%; --y: 33%; --tilt: -1.2deg; }
+  .review-story.is-sequenced .review-story__slot--2 { --x: 64%; --y: 67%; --tilt: 1deg; }
+  .review-story.is-sequenced .review-story__slot--3 { --x: 66%; --y: 24%; --tilt: 1.4deg; }
+  .review-story.is-sequenced .review-story__slot--4 { --x: 34%; --y: 76%; --tilt: -0.8deg; }
+  .review-story.is-sequenced .review-story__slot--5 { --x: 40%; --y: 15%; --tilt: -0.6deg; }
+  .review-story.is-sequenced .review-story__slot--6 { --x: 60%; --y: 85%; --tilt: 1.2deg; }
+
+  /* Overlaps only ever hide a card's date line, never a name: above the centre the inner
+     card sits on top, below it the outer one does */
+  .review-story.is-sequenced .review-story__slot--1,
+  .review-story.is-sequenced .review-story__slot--6 { z-index: 3; }
+  .review-story.is-sequenced .review-story__slot--3,
+  .review-story.is-sequenced .review-story__slot--4 { z-index: 2; }
+  .review-story.is-sequenced .review-story__slot--5,
+  .review-story.is-sequenced .review-story__slot--2 { z-index: 1; }
 
   .review-story.is-sequenced .review-story__slot--2 .review-story__card,
   .review-story.is-sequenced .review-story__slot--5 .review-story__card {
@@ -4461,25 +4463,31 @@ ol {
     background: #E7E4DA;
   }
 
-  .review-story.is-sequenced .review-quiet__quote {
+  .review-story.is-sequenced .review-quiet__author {
     font-size: 0.875rem;
-    line-height: 1.5;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+  }
+
+  .review-story.is-sequenced .review-quiet__quote {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .review-story.is-sequenced .review-quiet__time {
+    font-size: 0.75rem;
   }
 }
 
-/* Short phones: a tighter deck so the whole story fits one screen */
-@media (max-width: 1099px) and (max-height: 760px), (max-height: 699px) {
-  .review-story.is-sequenced .review-story__stage {
-    --story-center-h: clamp(190px, 30svh, 260px);
-    --story-card-h: 128px;
-    --story-peek: 34px;
+/* Tablets have room for a wider card and a third line of the review */
+@media (min-width: 600px) and (max-width: 1099px) and (min-height: 700px) {
+  .review-story.is-sequenced .review-story__slot {
+    width: min(300px, 40vw);
   }
 
   .review-story.is-sequenced .review-quiet__quote {
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
   }
 }
 
