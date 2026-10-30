@@ -66,21 +66,23 @@ export function App() {
         .fromTo('.celimax-hero__right', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85 }, '-=0.55')
         .fromTo('.celimax-hero__bg-frame', { scale: 1.03, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 1.2 }, 0);
 
-      // Generic section reveals
+      // Progressive entrance without leaving unscrollable content hidden
       const sections = gsap.utils.toArray<HTMLElement>('.js-section-reveal');
       sections.forEach((sec) => {
+        const items = sec.querySelectorAll('.js-reveal-item');
+        if (!items.length) return;
         gsap.fromTo(
-          sec.querySelectorAll('.js-reveal-item'),
-          { y: 22, autoAlpha: 0 },
+          items,
+          { y: 16, opacity: 0.3 },
           {
             y: 0,
-            autoAlpha: 1,
-            stagger: 0.09,
-            duration: 0.75,
+            opacity: 1,
+            stagger: 0.07,
+            duration: 0.6,
             ease: EMIL_EASE_OUT,
             scrollTrigger: {
               trigger: sec,
-              start: 'top 82%',
+              start: 'top 94%',
               once: true,
             },
           }
@@ -119,9 +121,6 @@ export function App() {
           </nav>
 
           <div className="celimax-nav__actions">
-            <a href="#faq" className="celimax-btn-black-renovare">
-              BLACK RENOVARE
-            </a>
             <a
               href={buildWhatsAppUrl(
                 'Olá! Vim pelo site da Renovare e gostaria de agendar uma avaliação estética personalizada em Betim.'
@@ -130,7 +129,8 @@ export function App() {
               rel="noopener noreferrer"
               className="celimax-btn-cta"
             >
-              <span>Agendar Avaliação</span>
+              <span className="celimax-btn-cta__full">Agendar Avaliação</span>
+              <span className="celimax-btn-cta__short">Agendar</span>
               <span className="celimax-btn-arrow-circle" aria-hidden="true">
                 <ArrowUpRight size={14} />
               </span>
@@ -140,52 +140,61 @@ export function App() {
       </div>
 
       <main id="topo">
-        {/* 2. HERO SECTION: WARM BOTANICAL EDITORIAL STAGE (Figma node 5389:141) */}
-        <section className="celimax-hero">
-          {/* Background photograph of Dra. Priscila at desk (image 4 - node 5389:1421) */}
-          <div className="celimax-hero__bg-frame" aria-hidden="true">
-            <img
-              src="./assets/figma/hero-bg-figma.png"
-              alt=""
-              className="celimax-hero__bg-img"
-              fetchPriority="high"
-            />
-          </div>
-
-          {/* Vignette & atmospheric blend overlay (Group 10 - node 5389:1428) */}
-          <div className="celimax-hero__vignette" aria-hidden="true" />
-
-          {/* Container:align (node 5389:193) */}
+        {/* 2. HERO SECTION: EDITORIAL BOTÂNICO LIMPO */}
+        <section className="celimax-hero celimax-hero--editorial">
           <div className="celimax-hero__container">
             <div className="celimax-hero__grid">
-              {/* Col 1: Heading 1 (node 5389:148) */}
+              {/* Col 1: Heading & Actions */}
               <div className="celimax-hero__copy">
+                <div className="celimax-hero__meta-location">
+                  <MapPin size={15} aria-hidden="true" />
+                  <span>Rua do Rosário, 1181 · Bairro Angola · Betim</span>
+                </div>
                 <h1 className="celimax-hero__title">
-                  <span className="celimax-hero__title-line">Revele a sua beleza</span>
+                  <span className="celimax-hero__title-line">Revele a sua beleza real </span>
                   <span className="celimax-hero__title-line">
-                    real a cada <em className="celimax-hero__title-italic">novo</em>
-                  </span>
-                  <span className="celimax-hero__title-line">
-                    <em className="celimax-hero__title-italic">despertar</em>
+                    a cada <em className="celimax-hero__title-italic">novo despertar</em>
                   </span>
                 </h1>
+                <p className="celimax-hero__desc">
+                  Ciência estética de precisão, protocolos integrativos e acolhimento humano em Betim para
+                  despertar o viço natural, o contorno e a vitalidade que já pertencem ao seu corpo.
+                </p>
+
+                <div className="celimax-hero__actions-row">
+                  <a
+                    href={buildWhatsAppUrl(
+                      'Olá! Vim pelo site da Renovare e gostaria de agendar uma avaliação estética personalizada em Betim.'
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="celimax-hero__btn-main"
+                  >
+                    <span>Agendar Avaliação no WhatsApp</span>
+                    <span className="celimax-hero__arrow-square" aria-hidden="true">
+                      <ArrowUpRight size={18} strokeWidth={2.4} />
+                    </span>
+                  </a>
+                  <a href="#procedimentos" className="celimax-hero__btn-secondary">
+                    <span>Conhecer Protocolos</span>
+                  </a>
+                </div>
               </div>
 
-              {/* Col 2: Container (node 5389:1369) */}
-              <div className="celimax-hero__right">
-                <div className="celimax-hero__divider">
-                  <p className="celimax-hero__desc">
-                    Ciência estética de precisão, protocolos integrativos e acolhimento humano em Betim para
-                    despertar o viço natural, o contorno e a vitalidade que já pertencem ao seu corpo.
-                  </p>
+              {/* Col 2: Dra. Priscila Editorial Portrait */}
+              <div className="celimax-hero__visual">
+                <div className="celimax-hero__portrait-frame">
+                  <img
+                    src="./assets/figma/hero-bg-figma.png"
+                    alt="Dra. Priscila Couto na Clínica Renovare em Betim"
+                    className="celimax-hero__portrait-img"
+                    fetchPriority="high"
+                  />
+                  <div className="celimax-hero__portrait-badge">
+                    <span className="celimax-hero__badge-title">Dra. Priscila Couto</span>
+                    <span className="celimax-hero__badge-sub">Biomédica Esteta · Renovare Betim</span>
+                  </div>
                 </div>
-
-                <a href="#manifesto" className="celimax-hero__btn-conhecer">
-                  <span>Venha Conhecer</span>
-                  <span className="celimax-hero__arrow-square" aria-hidden="true">
-                    <ArrowUpRight size={18} strokeWidth={2.2} />
-                  </span>
-                </a>
               </div>
             </div>
           </div>
@@ -194,14 +203,14 @@ export function App() {
         {/* 3. MANIFESTO / GENTLE BEAUTY SECTION WITH 3-PHOTO TRIPTYCH */}
         <section id="manifesto" className="celimax-manifesto js-section-reveal">
           <div className="celimax-manifesto__header js-reveal-item">
-            <span className="celimax-eyebrow">Filosofia Renovare</span>
-            <h2 className="celimax-manifesto__quote">
-              Não acreditamos em consertar. Acreditamos em{' '}
+            <h2 className="celimax-manifesto__title">Filosofia Renovare</h2>
+            <blockquote className="celimax-manifesto__quote">
+              “Não acreditamos em consertar. Acreditamos em{' '}
               <em className="editorial-serif">revelar</em> —{' '}
-              <span className="celimax-manifesto__dimmed">
-                a versão de você que já existia antes do mundo ditar quem você deveria ser.
+              <span className="celimax-manifesto__highlight">
+                a versão de você que já existia antes do mundo ditar quem você deveria ser.”
               </span>
-            </h2>
+            </blockquote>
             <p className="celimax-manifesto__sub">
               A Renovare nasceu em Betim para ser um lugar de pausa e acolhimento. Sem padrões inatingíveis
               ou promessas artificiais: cada protocolo é planejado para realçar a sua anatomia com
@@ -242,7 +251,6 @@ export function App() {
           <div className="celimax-procedures__container">
             <div className="celimax-split-header js-reveal-item">
               <div>
-                <span className="celimax-eyebrow celimax-eyebrow--start">Nossos Procedimentos</span>
                 <h2 className="celimax-section-title">
                   Tecnologias que respeitam sua <em className="editorial-serif">natureza</em>
                 </h2>
@@ -264,7 +272,6 @@ export function App() {
               {/* Card 01 */}
               <article className="celimax-card">
                 <div>
-                  <div className="celimax-card__num">01</div>
                   <h3 className="celimax-card__title">Criolipólise de Alta Definição</h3>
                   <p className="celimax-card__desc">
                     Remodelagem corporal por congelamento seguro e seletivo das células de gordura. Elimina
@@ -284,10 +291,9 @@ export function App() {
                 </a>
               </article>
 
-              {/* Card 02 (THE TILTED PALE MOSS HIGHLIGHT CARD) */}
-              <article className="celimax-card celimax-card--tilted">
+              {/* Card 02 */}
+              <article className="celimax-card celimax-card--highlight">
                 <div>
-                  <div className="celimax-card__num">02</div>
                   <h3 className="celimax-card__title">Ciclo Seca-Barriga & Detox</h3>
                   <p className="celimax-card__desc">
                     Sinergia exclusiva de drenagem linfática médica, ultrassom cavitacional e ativos
@@ -311,7 +317,6 @@ export function App() {
               {/* Card 03 */}
               <article className="celimax-card">
                 <div>
-                  <div className="celimax-card__num">03</div>
                   <h3 className="celimax-card__title">
                     Emagrecimento <br />
                     Integrativo &amp; Firmeza
@@ -342,9 +347,8 @@ export function App() {
         <section id="antes-depois" className="celimax-ba-section js-section-reveal">
           <div className="celimax-ba-section__container">
             <div className="celimax-ba-header js-reveal-item">
-              <span className="celimax-eyebrow">Resultados Comprovados</span>
               <h2 className="celimax-section-title">
-                Antes & Depois: testemunhe o poder da <em className="editorial-serif">estética integrativa</em>
+                Resultados Reais na <em className="editorial-serif">Renovare</em>
               </h2>
               <p className="celimax-manifesto__sub" style={{ marginTop: '12px' }}>
                 Arraste o cursor horizontalmente em cada imagem para comparar a evolução real das nossas
@@ -394,7 +398,6 @@ export function App() {
         <section id="diferenciais" className="celimax-pillars js-section-reveal">
           <div className="celimax-pillars__container">
             <div className="celimax-pillars__header js-reveal-item">
-              <span className="celimax-eyebrow">NOSSAS CLIENTES FALARAM</span>
               <h2 className="celimax-section-title">
                 Por que escolher a <em className="editorial-serif">Renovare</em> em Betim?
               </h2>
@@ -408,7 +411,7 @@ export function App() {
               {/* Left Pillars */}
               <div className="celimax-pillar-stack">
                 <div className="celimax-pillar-card">
-                  <span className="celimax-pillar-card__badge">01. Corpo Clínico Experiente</span>
+                  <span className="celimax-pillar-card__badge">Corpo Clínico Experiente</span>
                   <h3 className="celimax-pillar-card__title">Especialistas Qualificadas</h3>
                   <p className="celimax-pillar-card__text">
                     Biomédicas estetas e profissionais de saúde com capacitação contínua e olhar ético,
@@ -417,7 +420,7 @@ export function App() {
                 </div>
 
                 <div className="celimax-pillar-card">
-                  <span className="celimax-pillar-card__badge">02. Cuidado Personalizado</span>
+                  <span className="celimax-pillar-card__badge">Cuidado Personalizado</span>
                   <h3 className="celimax-pillar-card__title">Planos Sob Medida</h3>
                   <p className="celimax-pillar-card__text">
                     Não vendemos pacotes engessados de balcão. Cada plano é formulado a partir da sua
@@ -444,7 +447,7 @@ export function App() {
               {/* Right Pillars */}
               <div className="celimax-pillar-stack">
                 <div className="celimax-pillar-card">
-                  <span className="celimax-pillar-card__badge">03. Tecnologia Padrão Ouro</span>
+                  <span className="celimax-pillar-card__badge">Tecnologia Padrão Ouro</span>
                   <h3 className="celimax-pillar-card__title">Equipamentos ANVISA</h3>
                   <p className="celimax-pillar-card__text">
                     Aparelhos de alta precisão 100% regulamentados e calibrados periodicamente, garantindo
@@ -453,7 +456,7 @@ export function App() {
                 </div>
 
                 <div className="celimax-pillar-card">
-                  <span className="celimax-pillar-card__badge">04. Resultados Duradouros</span>
+                  <span className="celimax-pillar-card__badge">Resultados Duradouros</span>
                   <h3 className="celimax-pillar-card__title">Acompanhamento Contínuo</h3>
                   <p className="celimax-pillar-card__text">
                     Monitoramento assistido antes, durante e no pós-sessão com registro fotográfico clínico
@@ -498,11 +501,8 @@ export function App() {
               {/* Stage Header */}
               <div className="celimax-doctor-stage__header">
                 <div>
-                  <span className="celimax-eyebrow celimax-eyebrow--light celimax-eyebrow--start">
-                    Nossa equipe
-                  </span>
                   <h2 className="celimax-doctor-stage__title">
-                    Equipe qualificada que você pode confiar
+                    Corpo Clínico Especializado
                   </h2>
                 </div>
                 <p className="celimax-doctor-stage__quote">
@@ -613,10 +613,12 @@ export function App() {
             <div className="celimax-faq-grid">
               {/* Left Column */}
               <div className="celimax-faq-left js-reveal-item">
-                <span className="celimax-eyebrow celimax-eyebrow--start">Dúvidas Frequentes</span>
                 <h2 className="celimax-faq-left__title">
-                  Tudo o que você precisa saber antes de sua <em className="editorial-serif">primeira sessão</em>
+                  Dúvidas Frequentes
                 </h2>
+                <p className="celimax-faq-left__subtitle">
+                  Tudo o que você precisa saber antes de sua primeira sessão na clínica.
+                </p>
                 <div className="celimax-faq-left__frame">
                   <img
                     src="./assets/people/hero-woman-glow.jpg"
@@ -761,8 +763,8 @@ export function App() {
                 </div>
 
                 <button type="submit" className="coupon-submit-bar">
-                  <span>Enviar para o WhatsApp ({WHATSAPP_DISPLAY})</span>
-                  <ArrowUpRight size={20} aria-hidden="true" />
+                  <span className="coupon-submit-bar__text">Enviar para o WhatsApp</span>
+                  <ArrowUpRight size={20} strokeWidth={1.7} aria-hidden="true" />
                 </button>
               </form>
             </div>

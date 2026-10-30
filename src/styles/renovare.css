@@ -2379,30 +2379,58 @@ ol {
 }
 
 .coupon-submit-bar {
-  margin-top: 6px;
-  height: 56px;
-  padding-inline: 24px;
-  border-radius: var(--radius-pill);
-  background-color: var(--moss-pale);
-  color: var(--onyx);
-  font-size: var(--step-body);
-  font-weight: 700;
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  transition:
-    background-color 160ms var(--ease-out),
-    transform 160ms var(--ease-out);
+  padding: 0 24px;
+  gap: 32px;
+  width: 287px;
+  max-width: 100%;
+  height: 56px;
+  background: #DBE4A9;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: transform 0.2s var(--ease-out), background-color 0.2s var(--ease-out);
+  touch-action: manipulation;
+  user-select: none;
+  box-sizing: border-box;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .coupon-submit-bar:hover {
-    background-color: var(--moss-tint);
+    background-color: #ECF2CB;
+    transform: translateY(-1px);
   }
 }
 
 .coupon-submit-bar:active {
   transform: scale(0.98);
+}
+
+.coupon-submit-bar__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 187px;
+  height: 26px;
+  font-family: 'Aileron', var(--font-sans);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16.48px;
+  line-height: 26px;
+  text-align: center;
+  color: #0F0F0F;
+  white-space: nowrap;
+}
+
+.coupon-submit-bar svg {
+  width: 20px;
+  height: 20px;
+  color: #0F0F0F;
+  flex-shrink: 0;
 }
 
 /* ==========================================================================
@@ -2922,13 +2950,13 @@ ol {
   align-items: center;
   justify-content: space-between;
   padding: 10px 16px 10px 20px;
-  background: rgba(255, 255, 255, 0.88);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.94);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(71, 90, 56, 0.12);
   border-radius: 999px;
-  box-shadow: 0 12px 36px -8px rgba(15, 23, 10, 0.12), 0 2px 8px -2px rgba(15, 23, 10, 0.04);
-  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 10, 0.08);
+  transition: transform 0.25s var(--ease-out);
 }
 
 .celimax-nav__brand {
@@ -3076,308 +3104,243 @@ ol {
   }
 }
 
-/* 2. HERO: WARM BOTANICAL EDITORIAL STAGE (Figma node 5389:141) */
-.celimax-hero {
-  position: relative;
-  min-height: 982px;
-  height: 982px;
-  display: flex;
-  align-items: flex-end;
-  padding-bottom: 100px;
-  padding-top: 120px;
-  background-color: #1A2412;
-  background-image:
-    radial-gradient(ellipse 1134px 295px at 75% 30%, rgba(95, 118, 76, 0.4) 0%, rgba(66, 84, 52, 0.54) 17.5%, rgba(49, 63, 38, 0.68) 35%, rgba(38, 50, 29, 0.81) 52.5%, rgba(30, 40, 22, 0.95) 70%, #151D0F 100%),
-    linear-gradient(180deg, #2A3620 0%, #1A2412 100%);
-  color: var(--polar-white);
-  overflow: hidden;
+.celimax-btn-cta__short {
+  display: none;
 }
 
-@media (max-width: 960px) {
-  .celimax-hero {
-    height: auto;
-    min-height: 100svh;
-    padding-top: 120px;
-    padding-bottom: 60px;
+@media (max-width: 768px) {
+  .celimax-nav-wrapper {
+    top: 12px;
+    padding: 0 12px;
+  }
+  .celimax-nav {
+    padding: 8px 14px;
+  }
+  .celimax-nav__symbol {
+    width: 30px;
+    height: 30px;
+  }
+  .celimax-nav__wordmark {
+    display: none; /* Mostra o ícone no lugar do logotipo no mobile */
+  }
+  .celimax-btn-cta {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    gap: 6px;
+  }
+  .celimax-btn-arrow-circle {
+    width: 18px;
+    height: 18px;
   }
 }
 
-/* Background image of Dra. Priscila at desk (image 4 - node 5389:1421) */
-.celimax-hero__bg-frame {
-  position: absolute;
-  inset: -5% 0 0;
-  width: 100%;
-  height: 110%;
-  pointer-events: none;
-  z-index: 1;
+@media (max-width: 480px) {
+  .celimax-btn-cta__full {
+    display: none;
+  }
+  .celimax-btn-cta__short {
+    display: inline;
+  }
+  .celimax-btn-cta {
+    padding: 8px 12px;
+    font-size: 0.82rem;
+  }
 }
 
-.celimax-hero__bg-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-  display: block;
-}
-
-/* Figma Vignette & Atmospheric Green Blend (Group 10 - node 5389:1428) */
-.celimax-hero__vignette {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  background:
-    /* Left text scrim for maximum legibility */
-    radial-gradient(ellipse 75% 85% at 15% 85%, rgba(20, 28, 14, 0.94) 0%, rgba(25, 36, 18, 0.8) 45%, transparent 75%),
-    /* Right text scrim for paragraph & button legibility */
-    radial-gradient(ellipse 70% 80% at 85% 85%, rgba(20, 28, 14, 0.94) 0%, rgba(25, 36, 18, 0.8) 45%, transparent 75%),
-    /* Bottom edge blend seamlessly joining with Manifesto */
-    linear-gradient(to top, rgba(20, 28, 14, 0.98) 0%, rgba(20, 28, 14, 0.65) 18%, transparent 40%),
-    /* Top navbar scrim */
-    linear-gradient(to bottom, rgba(20, 28, 14, 0.85) 0%, rgba(20, 28, 14, 0.3) 14%, transparent 28%),
-    /* Overall soft corner vignette */
-    radial-gradient(ellipse 85% 75% at 50% 40%, transparent 30%, rgba(30, 42, 22, 0.5) 70%, rgba(20, 28, 14, 0.9) 100%);
-}
-
-.celimax-hero__container {
-  width: 100%;
-  max-width: 1512px;
-  margin: 0 auto;
-  padding: 0 clamp(20px, 4.2vw, 64px);
+/* 2. HERO: EDITORIAL BOTÂNICO LIMPO */
+.celimax-hero--editorial {
   position: relative;
-  z-index: 3;
+  min-height: auto;
+  padding-top: clamp(120px, 14vh, 160px);
+  padding-bottom: clamp(64px, 8vh, 110px);
+  background-color: var(--polar-white);
+  color: var(--onyx);
+  overflow: hidden;
 }
 
-.celimax-hero__grid {
+.celimax-hero--editorial .celimax-hero__container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 3.5vw, 40px);
+  position: relative;
+  z-index: 2;
+}
+
+.celimax-hero--editorial .celimax-hero__grid {
   display: grid;
   grid-template-columns: 1fr;
-  align-items: flex-end;
+  align-items: center;
   gap: 40px;
 }
 
 @media (min-width: 960px) {
-  .celimax-hero__grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.75fr);
-    gap: 60px;
+  .celimax-hero--editorial .celimax-hero__grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: 56px;
   }
 }
 
-.celimax-hero__copy {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  max-width: 624px;
-}
-
-.celimax-hero__title {
-  font-family: var(--font-sans);
+.celimax-hero__meta-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
   font-weight: 600;
-  font-size: clamp(2.3rem, 4.65vw, 4.4rem);
+  color: var(--olive-dark);
+  background: rgba(71, 90, 56, 0.08);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 24px;
+}
+
+.celimax-hero--editorial .celimax-hero__title {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: clamp(1.85rem, 3.8vw, 3.85rem);
   line-height: 1.05;
-  letter-spacing: -0.035em;
-  color: #FFFFFF;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
+  letter-spacing: -0.03em;
+  color: #1D2817;
+  margin: 0 0 24px 0;
 }
 
-.celimax-hero__title-line {
-  display: block;
-}
-
-.celimax-hero__title-italic {
+.celimax-hero--editorial .celimax-hero__title-italic {
   font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 400;
-  font-size: clamp(3.3rem, 6.7vw, 6.375rem);
-  line-height: 0.95;
-  color: var(--moss-pale);
+  font-weight: 500;
+  font-size: 1.08em;
+  color: var(--olive-dark);
   letter-spacing: -0.01em;
 }
 
-.celimax-hero__right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  max-width: 540px;
-}
-
-.celimax-hero__divider {
-  width: 100%;
-  border-top: 0.75px solid #F2F0E4;
-  padding-top: 12px;
-  margin-bottom: 36px;
-}
-
-.celimax-hero__desc {
+.celimax-hero--editorial .celimax-hero__desc {
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: clamp(1.05rem, 1.3vw, 1.23rem);
-  line-height: 1.6;
-  color: rgba(248, 247, 247, 0.82);
-  margin: 0;
+  font-size: clamp(1.05rem, 1.25vw, 1.2rem);
+  line-height: 1.65;
+  color: #2D3A24;
+  max-width: 580px;
+  margin: 0 0 36px 0;
 }
 
-.celimax-hero__btn-conhecer {
-  display: inline-flex;
-  align-items: center;
-  gap: 24px;
-  background-color: #FFFFFF;
-  color: var(--onyx);
-  font-family: var(--font-sans);
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.95;
-  text-decoration: none;
-  padding: 8px 8px 8px 18px;
-  border-radius: 88px;
-  box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.35);
-  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
-  touch-action: manipulation;
-  user-select: none;
-  white-space: nowrap;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .celimax-hero__btn-conhecer:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 34px -6px rgba(0, 0, 0, 0.45);
-  }
-}
-
-.celimax-hero__btn-conhecer:active {
-  transform: scale(0.97);
-}
-
-.celimax-hero__arrow-square {
+.celimax-hero__actions-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 16px;
-  background-color: #C4CD97;
-  color: #0F0F0F;
-  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .celimax-hero__btn-main {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background-color: var(--moss-pale);
-  color: #172110;
+  background-color: var(--olive-dark);
+  color: var(--polar-white);
+  font-family: var(--font-sans);
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.95rem;
   text-decoration: none;
-  padding: 14px 28px;
+  padding: 14px 24px;
   border-radius: 999px;
-  box-shadow: 0 10px 30px -6px rgba(219, 228, 169, 0.35);
-  transition: transform 0.2s var(--ease-out), background-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+  transition: transform 0.2s var(--ease-out), background-color 0.2s var(--ease-out);
   touch-action: manipulation;
   user-select: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .celimax-hero__btn-main:hover {
-    background-color: #E7EFB8;
-    transform: translateY(-2px);
-    box-shadow: 0 14px 36px -6px rgba(219, 228, 169, 0.45);
+    background-color: #38472B;
+    transform: translateY(-1px);
   }
 }
 
-.celimax-hero__btn-main:active {
-  transform: scale(0.97);
-}
-
-/* Social Proof Floating Badge */
-.celimax-proof-pill {
+.celimax-hero__btn-secondary {
   display: inline-flex;
   align-items: center;
-  gap: 16px;
-  padding: 10px 18px;
-  background: rgba(30, 40, 22, 0.72);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(219, 228, 169, 0.25);
-  border-radius: 999px;
-}
-
-.celimax-proof-avatars {
-  display: flex;
-  align-items: center;
-}
-
-.celimax-proof-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 2px solid #1E2816;
-  margin-left: -8px;
-  object-fit: cover;
-}
-
-.celimax-proof-avatar:first-child {
-  margin-left: 0;
-}
-
-.celimax-proof-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.celimax-proof-stars {
-  color: #F8C64E;
-  font-size: 0.85rem;
-  letter-spacing: 0.1em;
-}
-
-.celimax-proof-label {
-  font-size: 0.8rem;
+  color: #384533;
+  font-family: var(--font-sans);
   font-weight: 600;
-  color: rgba(248, 247, 247, 0.9);
+  font-size: 0.95rem;
+  text-decoration: none;
+  padding: 14px 20px;
+  border-radius: 999px;
+  transition: color 0.2s var(--ease-out);
 }
 
-/* Hero Portrait Frame */
-.celimax-hero__visual {
-  position: relative;
+@media (hover: hover) and (pointer: fine) {
+  .celimax-hero__btn-secondary:hover {
+    color: var(--olive-dark);
+  }
+}
+
+.celimax-hero__arrow-square {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--moss-pale);
+  color: #172110;
 }
 
-.celimax-hero__img-frame {
+.celimax-hero__visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.celimax-hero__portrait-frame {
   position: relative;
   width: 100%;
-  max-width: 480px;
+  max-width: 440px;
   aspect-ratio: 4 / 5;
-  border-radius: 40px;
+  border-radius: 36px;
   overflow: hidden;
-  box-shadow: 0 24px 60px -12px rgba(10, 15, 6, 0.6);
-  border: 1px solid rgba(219, 228, 169, 0.2);
+  background-color: var(--stone-warm);
+  border: 1px solid rgba(71, 90, 56, 0.15);
 }
 
-.celimax-hero__img {
+.celimax-hero__portrait-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 25%;
   display: block;
 }
 
-.celimax-hero__glow-disc {
+.celimax-hero__portrait-badge {
   position: absolute;
-  width: 120%;
-  height: 120%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(219, 228, 169, 0.18) 0%, rgba(71, 90, 56, 0.05) 60%, transparent 80%);
-  pointer-events: none;
-  z-index: 0;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.94);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  padding: 12px 18px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border: 1px solid rgba(71, 90, 56, 0.1);
+}
+
+.celimax-hero__badge-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #172110;
+}
+
+.celimax-hero__badge-sub {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #55634D;
 }
 
 /* 3. MANIFESTO / GENTLE BEAUTY SECTION */
 .celimax-manifesto {
-  padding: clamp(80px, 12vh, 140px) 0;
+  padding: clamp(64px, 10vh, 120px) 0;
   background-color: var(--polar-white);
   color: var(--onyx);
   text-align: center;
@@ -3389,76 +3352,41 @@ ol {
   padding: 0 20px;
 }
 
-.celimax-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: var(--olive-dark);
-  margin-bottom: 20px;
-}
-
-.celimax-eyebrow::before,
-.celimax-eyebrow::after {
-  content: '';
-  display: inline-block;
-  width: 115px;
-  height: 1.2px;
-}
-
-.celimax-eyebrow::before {
-  background: linear-gradient(to right, rgba(219, 228, 169, 0), rgba(71, 90, 56, 0.8));
-}
-
-.celimax-eyebrow::after {
-  background: linear-gradient(to right, rgba(71, 90, 56, 0.8), rgba(219, 228, 169, 0));
-}
-
-.celimax-eyebrow--start::before {
-  display: none;
-}
-
-.celimax-eyebrow--light {
-  color: #FFFFFF;
-}
-
-.celimax-eyebrow--light::before {
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8));
-}
-
-.celimax-eyebrow--light::after {
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
-}
-
-.celimax-manifesto__quote {
+.celimax-manifesto__title {
   font-family: var(--font-sans);
   font-weight: 700;
-  font-size: clamp(1.8rem, 3.2vw, 2.75rem);
-  line-height: 1.25;
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  line-height: 1.15;
   letter-spacing: -0.025em;
   color: #171E12;
   margin-bottom: 24px;
 }
 
+.celimax-manifesto__quote {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(1.25rem, 1.8vw, 1.65rem);
+  line-height: 1.45;
+  color: #26331E;
+  margin: 0 auto 24px auto;
+  max-width: 760px;
+}
+
 .celimax-manifesto__quote em {
   font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 400;
+  font-weight: 600;
   color: var(--olive-dark);
-  font-size: 1.15em;
 }
 
-.celimax-manifesto__dimmed {
-  color: rgba(23, 30, 18, 0.28);
+.celimax-manifesto__highlight {
+  color: #38482F;
 }
 
 .celimax-manifesto__sub {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   line-height: 1.65;
-  color: #4A5642;
+  color: #3B4734;
   max-width: 680px;
   margin: 0 auto;
 }
@@ -3600,42 +3528,39 @@ ol {
 .celimax-card {
   position: relative;
   background-color: #EFF2EC;
-  border-radius: 28px;
-  padding: 44px 34px 40px;
-  box-shadow: 0 10px 32px -6px rgba(24, 34, 18, 0.05);
+  border-radius: 24px;
+  padding: 36px 30px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 480px;
-  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+  min-height: auto;
+  transition: transform 0.2s var(--ease-out);
+}
+
+@media (min-width: 900px) {
+  .celimax-card {
+    min-height: 380px;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
   .celimax-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 18px 40px -8px rgba(24, 34, 18, 0.1);
+    transform: translateY(-4px);
   }
 }
 
-/* THE FAMOUS TILTED HIGHLIGHT CARD IN PALE MOSS GREEN (-10.79deg per Figma) */
-.celimax-card--tilted {
+.celimax-card--highlight {
   background-color: var(--moss-pale);
   color: #15200E;
-  box-shadow: 0 20px 50px -10px rgba(71, 90, 56, 0.3);
-  z-index: 3;
+  border: 1px solid rgba(71, 90, 56, 0.2);
 }
 
-@media (min-width: 900px) {
-  .celimax-card--tilted {
-    transform: rotate(-10.79deg);
-    min-height: 490px;
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .celimax-card--tilted:hover {
-      transform: rotate(-6deg) translateY(-6px) scale(1.02);
-      box-shadow: 0 26px 56px -8px rgba(71, 90, 56, 0.38);
-    }
-  }
+.celimax-card--highlight .celimax-card__title {
+  color: #15200E;
+}
+
+.celimax-card--highlight .celimax-card__desc {
+  color: #2D3A24;
 }
 
 .celimax-card__num {
@@ -4364,7 +4289,14 @@ ol {
   line-height: 1.15;
   letter-spacing: -0.03em;
   color: #171E12;
-  margin-bottom: 32px;
+  margin-bottom: 8px;
+}
+
+.celimax-faq-left__subtitle {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #3D4837;
+  margin-bottom: 28px;
 }
 
 .celimax-faq-left__frame {
