@@ -4744,8 +4744,8 @@ ol {
 
 .review-story__lily {
   display: block;
-  width: 120px;
-  height: 120px;
+  width: 84px;
+  height: 84px;
   opacity: 0.35;
 }
 
@@ -4848,8 +4848,8 @@ ol {
   }
 
   .review-story.is-sequenced .review-story__lily {
-    width: min(56vh, 520px);
-    height: min(56vh, 520px);
+    width: min(39.2vh, 364px);
+    height: min(39.2vh, 364px);
   }
 
   .review-story.is-sequenced .review-story__line {
@@ -4898,8 +4898,8 @@ ol {
   }
 
   .review-story.is-sequenced .review-story__lily {
-    width: calc(var(--story-center-h) * 0.92);
-    height: calc(var(--story-center-h) * 0.92);
+    width: calc(var(--story-center-h) * 0.644);
+    height: calc(var(--story-center-h) * 0.644);
   }
 
   .review-story.is-sequenced .review-story__line {
