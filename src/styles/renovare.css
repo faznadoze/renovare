@@ -3008,7 +3008,6 @@ ol {
   }
 }
 
-
 /* ==========================================================================
    FIGMA REFERENCE: CELIMAX EDITORIAL REDESIGN SYSTEM FOR RENOVARE
    Skills applied:
@@ -3270,417 +3269,11 @@ ol {
   }
 }
 
-/* 2. HERO: EDITORIAL BOTÂNICO LIMPO */
-.celimax-hero--editorial {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  width: 100%;
-  min-height: 100svh;
-  background-color: var(--stone-warm);
-  color: var(--onyx);
-  overflow: hidden;
-}
-
-.celimax-hero--editorial .celimax-hero__container {
-  width: 100%;
-  min-height: 100svh;
-  position: relative;
-}
-
-.celimax-hero--editorial .celimax-hero__grid {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: flex-end;
-  width: 100%;
-  min-height: 100svh;
-}
-
-.celimax-hero__backdrop {
-  position: absolute;
-  left: 0;
-  bottom: -13.5%;
-  width: 140%;
-  height: 111%;
-  overflow: hidden;
-  background-color: var(--stone-warm);
-  border: 1px solid rgba(71, 90, 56, 0.15);
-}
-
-.celimax-hero__overlay {
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  bottom: -13.5%;
-  width: 140%;
-  height: 111%;
-  border: 1px solid rgba(71, 90, 56, 0.15);
-  background:
-    radial-gradient(ellipse 64% 92% at 4% 72%, #475A38 0%, rgba(71, 90, 56, 0.78) 42%, rgba(71, 90, 56, 0) 100%),
-    radial-gradient(ellipse 48% 72% at 31% 106%, #1A2412 0%, rgba(26, 36, 18, 0.74) 38%, rgba(26, 36, 18, 0) 100%);
-  pointer-events: none;
-}
-
-.celimax-hero__backdrop-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.celimax-hero__copy {
-  position: relative;
-  width: min(720px, calc(100% - 40px));
-  margin-left: clamp(20px, 11vw, 172px);
-  padding-bottom: clamp(72px, 17vh, 136px);
-}
-
-.celimax-hero__spacer {
-  width: 100%;
-  height: 58px;
-}
-
-.celimax-hero--editorial .celimax-hero__title {
-  font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: clamp(1.85rem, 3.2vw, 4.5rem);
-  line-height: 45px;
-  letter-spacing: -0.03em;
-  color: #F2F0E4;
-  margin: 0 0 24px 0;
-}
-
-.celimax-hero--editorial .celimax-hero__title-italic {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 500;
-  font-size: var(--serif-scale);
-  line-height: 0.91;
-  color: var(--moss-pale);
-  letter-spacing: -0.009em;
-}
-
-.celimax-hero--editorial .celimax-hero__desc {
-  font-family: var(--font-sans);
-  font-weight: 400;
-  font-size: clamp(1.05rem, 1.25vw, 1.2rem);
-  line-height: 1.65;
-  color: #F2F0E4;
-  max-width: 580px;
-  margin: 0 0 36px 0;
-}
-
-.celimax-hero__actions-row {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.celimax-hero__btn-main {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  background-color: var(--olive-dark);
-  color: var(--polar-white);
-  font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: 0.95rem;
-  text-decoration: none;
-  padding: 14px 24px;
-  border-radius: 999px;
-  transition: transform 0.2s var(--ease-out), background-color 0.2s var(--ease-out);
-  touch-action: manipulation;
-  user-select: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .celimax-hero__btn-main:hover {
-    background-color: #38472B;
-    transform: translateY(-1px);
-  }
-}
-
-.celimax-hero__btn-secondary {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  color: var(--moss-pale);
-  background: rgba(255, 255, 255, 0.15);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 0.95rem;
-  text-decoration: none;
-  padding: 14px 20px;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  transition: color 0.2s var(--ease-out);
-}
-
-.celimax-hero__btn-secondary::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  padding: 1px;
-  border-radius: inherit;
-  background: radial-gradient(circle at center, transparent 0%, #FFFFFF 100%);
-  -webkit-mask:
-    linear-gradient(#FFFFFF 0 0) content-box,
-    linear-gradient(#FFFFFF 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .celimax-hero__btn-secondary:hover {
-    color: var(--moss-tint);
-  }
-}
-
-.celimax-hero__arrow-square {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background-color: var(--moss-pale);
-  color: #172110;
-}
-
-@media (max-width: 720px) {
-  .celimax-hero__backdrop {
-    left: -42%;
-    width: 190%;
-  }
-
-  .celimax-hero__overlay {
-    left: -42%;
-    width: 190%;
-  }
-
-  .celimax-hero__copy {
-    padding-bottom: 72px;
-  }
-
-  .celimax-hero__spacer {
-    height: 96px;
-  }
-}
-
-/* Desktop-only hero pieces stay out of the mobile layout */
-.celimax-hero__btn-label--desktop,
-.celimax-hero__arrow-img,
-.celimax-hero__ratings {
-  display: none;
-}
-
 /* 2b. HERO DESKTOP (Figma "Section" 5564:7053): headline left, rule + paragraph + CTA right */
-@media (min-width: 721px) {
-  .celimax-hero--editorial {
-    --hero-title-size: clamp(48px, 5.5vw, 70.4px);
-    background-color: #1A2412;
-    background-image:
-      url("data:image/svg+xml;utf8,<svg viewBox='0 0 1512 982' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)' opacity='1'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(0 -88.38 -181.44 0 1134 294.6)'><stop stop-color='rgba(95,118,76,0.4)' offset='0'/><stop stop-color='rgba(66,84,52,0.5375)' offset='0.175'/><stop stop-color='rgba(49,63,38,0.675)' offset='0.35'/><stop stop-color='rgba(38,50,29,0.8125)' offset='0.525'/><stop stop-color='rgba(30,40,22,0.95)' offset='0.7'/><stop stop-color='rgba(21,29,15,1)' offset='1'/></radialGradient></defs></svg>"),
-      linear-gradient(180deg, #2A3620 0%, #1A2412 100%);
-  }
-
-  .celimax-hero--editorial .celimax-hero__grid {
-    padding: 120px 0 100px;
-  }
-
-  /* Image box from the frame: 2044 x 1409 at (-40, -265) inside 1512 x 982 */
-  .celimax-hero__backdrop {
-    left: -2.646%;
-    top: -26.986%;
-    bottom: auto;
-    width: 135.185%;
-    height: 143.483%;
-    border: 0;
-    background-color: transparent;
-    transform-origin: 50% 45%;
-    will-change: transform;
-  }
-
-  .celimax-hero__backdrop::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      url("data:image/svg+xml;utf8,<svg viewBox='0 0 2044 1409' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)' opacity='1'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-7.55 -84.45 91.665 -8.195 1384 1359)'><stop stop-color='rgba(26,36,18,0.8)' offset='0.29376'/><stop stop-color='rgba(71,90,56,0)' offset='1'/></radialGradient></defs></svg>"),
-      url("data:image/svg+xml;utf8,<svg viewBox='0 0 2044 1409' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)' opacity='1'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(49.35 -92.7 134.48 71.591 53.5 1251.5)'><stop stop-color='rgba(71,90,56,0.8)' offset='0.29376'/><stop stop-color='rgba(71,90,56,0)' offset='1'/></radialGradient></defs></svg>");
-    background-size: 100% 100%;
-    pointer-events: none;
-  }
-
-  .celimax-hero__overlay,
-  .celimax-hero__spacer,
-  .celimax-hero__btn-secondary,
-  .celimax-hero__btn-label--mobile,
-  .celimax-hero__arrow-icon {
-    display: none;
-  }
-
-  .celimax-hero__copy {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 40px;
-    align-items: end;
-    width: 100%;
-    margin: 0;
-    padding: 0 64px;
-  }
-
-  .celimax-hero--editorial .celimax-hero__title {
-    max-width: 8.864em;
-    margin: 0;
-    padding-bottom: 24px;
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: var(--hero-title-size);
-    line-height: 45px;
-    letter-spacing: -0.035em;
-    color: #FFFFFF;
-  }
-
-  .celimax-hero--editorial .celimax-hero__title-separator {
-    font-weight: 700;
-  }
-
-  .celimax-hero--editorial .celimax-hero__title-italic {
-    font-family: "Cormorant Garamond:Italic", var(--font-serif);
-    font-style: italic;
-    font-weight: 400;
-    font-size: calc(var(--hero-title-size) * 1.4489);
-    line-height: calc(var(--hero-title-size) * 1.05);
-    letter-spacing: calc(var(--hero-title-size) * -0.01);
-    color: #DBE4A9;
-  }
-
-  .celimax-hero__aside {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    max-width: 600px;
-  }
-
-  .celimax-hero__desc-wrap {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    padding: 12px 0 36px;
-    border-top: 0.75px solid #F2F0E4;
-  }
-
-  .celimax-hero--editorial .celimax-hero__desc {
-    max-width: 540px;
-    margin: 0;
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 19.656px;
-    line-height: 31.45px;
-    color: rgba(248, 247, 247, 0.82);
-  }
-
-  .celimax-hero__actions-row {
-    position: relative;
-    z-index: 1;
-  }
-
-  .celimax-hero__btn-main {
-    gap: 24px;
-    padding: 8px 8px 8px 18px;
-    border-radius: 88px;
-    background-color: #FFFFFF;
-    color: #0F0F0F;
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 31.45px;
-  }
-
-  .celimax-hero__btn-label--desktop {
-    display: inline;
-    white-space: nowrap;
-  }
-
-  .celimax-hero__btn-main .celimax-hero__arrow-square {
-    width: 31.45px;
-    height: 31.45px;
-    border-radius: 16px;
-    background-color: #C4CD97;
-  }
-
-  .celimax-hero__arrow-img {
-    display: block;
-    flex-shrink: 0;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .celimax-hero__btn-main:hover {
-      background-color: var(--moss-tint);
-    }
-  }
-}
-
-@media (min-width: 1024px) {
-  .celimax-hero__copy {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.75fr);
-    gap: 60px;
-  }
-
-  .celimax-hero__aside {
-    max-width: none;
-  }
-}
 
 /* Right-aligned stack above the rule keeps the portrait's face clear; it tightens on short screens */
-@media (min-width: 1280px) {
-  .celimax-hero__ratings {
-    --rating-step: clamp(56px, calc(20vh - 50px), 146px);
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 100%;
-    height: 460px;
-    pointer-events: none;
-  }
-
-  .celimax-hero__ratings .review-rating.celimax-hero__rating {
-    position: absolute;
-    top: auto;
-    left: auto;
-    right: 0;
-    margin-top: 0;
-    visibility: hidden;
-    opacity: 0;
-  }
-
-  /* Quiet paper cards over the dark hero: three lines of the review keep the stack compact */
-  .celimax-hero__ratings .celimax-hero__rating .review-quiet__quote {
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-  }
-
-  .celimax-hero__ratings .celimax-hero__rating.review-rating--slot-1 { bottom: 16px; z-index: 3; }
-  .celimax-hero__ratings .celimax-hero__rating.review-rating--slot-2 { right: -32px; bottom: calc(16px + var(--rating-step)); z-index: 2; }
-  .celimax-hero__ratings .celimax-hero__rating.review-rating--slot-3 { bottom: calc(16px + 2 * var(--rating-step)); z-index: 1; }
-}
 
 /* Short laptop screens: two cards keep the stack clear of the navigation */
-@media (min-width: 1280px) and (max-height: 719px) {
-  .celimax-hero__ratings .celimax-hero__rating.review-rating--slot-3 {
-    display: none;
-  }
-}
 
 /* 3. MANIFESTO / GENTLE BEAUTY SECTION */
 .celimax-manifesto {
@@ -4563,91 +4156,6 @@ ol {
   border-radius: 8.845px;
   background: #FFFFFF;
   box-shadow: 5.528px 3.87px 11.056px 0 rgba(0, 0, 0, 0.08);
-}
-
-/* Staggered rows read as a loose scatter where the stage is too narrow */
-.review-rating:nth-of-type(even) {
-  margin-top: 28px;
-}
-
-.review-rating__photo-wrap {
-  flex-shrink: 0;
-  padding-top: 27.64px;
-  overflow: hidden;
-}
-
-.review-rating__photo {
-  position: relative;
-  width: 114.697px;
-  height: 113.878px;
-  border-top-right-radius: 56.875px;
-  background: #475A38;
-}
-
-.review-rating__stars {
-  position: absolute;
-  left: 24.08px;
-  top: 83.79px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4.916px;
-  border-radius: 43.011px;
-  background: rgba(255, 255, 255, 0.68);
-}
-
-.review-rating__stars img {
-  display: block;
-  flex-shrink: 0;
-}
-
-.review-rating__body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-self: stretch;
-  gap: 14.373px;
-  width: 211.724px;
-  min-width: 0;
-  padding: 16.584px 39.802px 16.584px 0;
-}
-
-.review-rating__name {
-  font-family: "Manrope:Bold", "Manrope", var(--font-sans);
-  font-size: 17.69px;
-  font-weight: 700;
-  line-height: 13.267px;
-  color: #050505;
-  white-space: nowrap;
-  text-transform: capitalize;
-  max-width: calc(100% + 39.802px);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding-block: 2px;
-}
-
-.review-rating__text {
-  width: 189.612px;
-  max-width: calc(100% + 39.802px);
-  font-family: "Manrope:Regular", "Manrope", var(--font-sans);
-  font-size: 8.845px;
-  font-weight: 400;
-  line-height: 13.267px;
-  color: #868686;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  line-clamp: 4;
-  overflow: hidden;
-}
-
-.review-rating__time {
-  font-family: "Manrope:ExtraBold", "Manrope", var(--font-sans);
-  font-size: 6.634px;
-  font-weight: 800;
-  line-height: 4.975px;
-  color: #050505;
-  white-space: nowrap;
 }
 
 /* Quiet variant (testimonials section): paper surface, the words lead */
@@ -5871,82 +5379,7 @@ html.is-loading body {
     margin-right: auto;
   }
 
-  /* Hero: a dark reading floor beneath the portrait */
-  .celimax-hero__backdrop,
-  .celimax-hero__overlay {
-    border: 0;
-    transform: translateY(-15%);
-  }
-
-  .celimax-hero--editorial .celimax-hero__grid::before {
-    content: '';
-    position: absolute;
-    inset: 38% 0 0;
-    z-index: -1;
-    background: linear-gradient(180deg, rgba(26, 36, 18, 0) 0%, rgba(26, 36, 18, 0.72) 38%, #1A2412 100%);
-    pointer-events: none;
-  }
-
-  .celimax-hero__copy {
-    width: auto;
-    margin: 0 20px;
-    padding-bottom: 32px;
-  }
-
-  .celimax-hero__spacer {
-    display: none;
-  }
-
-  .celimax-hero--editorial .celimax-hero__title {
-    font-size: clamp(2.45rem, 11.4vw, 3.25rem);
-    line-height: 45px;
-    letter-spacing: -0.045em;
-    margin-bottom: 20px;
-  }
-
-  .celimax-hero--editorial .celimax-hero__title-line {
-    display: block;
-    text-wrap: balance;
-  }
-
-  .celimax-hero--editorial .celimax-hero__title-italic {
-    display: block;
-    margin-top: 4px;
-    font-size: var(--serif-scale);
-  }
-
-  .celimax-hero--editorial .celimax-hero__desc {
-    font-size: 0.98rem;
-    line-height: 1.58;
-    color: rgba(242, 240, 228, 0.86);
-    margin-bottom: 28px;
-  }
-
-  .celimax-hero__actions-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-
-  .celimax-hero__btn-main {
-    justify-content: space-between;
-    padding: 8px 8px 8px 22px;
-    min-height: 54px;
-    background-color: var(--moss-pale);
-    color: #172110;
-  }
-
-  .celimax-hero__btn-main .celimax-hero__arrow-square {
-    width: 38px;
-    height: 38px;
-    background-color: #1A2412;
-    color: var(--moss-pale);
-  }
-
-  .celimax-hero__btn-secondary {
-    justify-content: center;
-    min-height: 50px;
-  }
+  
 
   /* Manifesto: left-aligned typographic statement, then a swipeable triptych */
   .celimax-manifesto {
@@ -7353,5 +6786,132 @@ html.lenis {
   .ba-story .ba-story__card .celimax-ba-card {
     order: 3;
     margin-top: 4px;
+  }
+}
+
+/* ==========================================================================
+   HERO — full-bleed video. On scroll the frame insets a little and rounds its
+   corners (clip-path driven by --hero-inset / --hero-radius from GSAP), revealing
+   the next section's colour. Only the headline sits on the picture.
+   ========================================================================== */
+.video-hero {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  background: var(--polar-white);
+}
+
+.video-hero__frame {
+  --hero-inset: 0px;
+  --hero-radius: 0px;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #1A2412;
+  clip-path: inset(var(--hero-inset) round var(--hero-radius));
+}
+
+.video-hero__media {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+}
+
+.video-hero__poster,
+.video-hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Neutral scrim under the headline only; the rest of the picture stays clear */
+.video-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 20, 10, 0.28) 0%, rgba(15, 20, 10, 0) 26%, rgba(15, 20, 10, 0) 48%, rgba(15, 20, 10, 0.62) 100%);
+  pointer-events: none;
+}
+
+.video-hero__content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 var(--page-margin) clamp(40px, 9vh, 96px);
+}
+
+.video-hero__title {
+  max-width: 11em;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(2.6rem, 5.4vw, 5.2rem);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: #FFFFFF;
+  text-wrap: balance;
+}
+
+.video-hero__title-italic {
+  font-family: "Cormorant Garamond:Italic", var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.32em;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  color: var(--moss-pale);
+}
+
+.video-hero__toggle {
+  position: absolute;
+  right: var(--page-margin);
+  bottom: clamp(40px, 9vh, 96px);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(15, 20, 10, 0.42);
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-out), transform 0.16s var(--ease-out);
+}
+
+.video-hero__toggle:active {
+  transform: scale(0.94);
+}
+
+.video-hero__toggle:focus-visible {
+  outline: 2px solid var(--moss-pale);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .video-hero__toggle:hover {
+    background: rgba(15, 20, 10, 0.62);
+  }
+}
+
+@media (max-width: 720px) {
+  .video-hero__title {
+    max-width: 9.5em;
+    font-size: clamp(2.4rem, 11vw, 3.4rem);
+    line-height: 1;
+  }
+
+  .video-hero__title-italic {
+    display: block;
+    margin-top: 0.06em;
+  }
+
+  .video-hero__toggle {
+    width: 36px;
+    height: 36px;
+    bottom: auto;
+    top: 76px;
   }
 }

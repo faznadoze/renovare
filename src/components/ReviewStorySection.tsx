@@ -260,7 +260,6 @@ export function ReviewStorySection({ reviews }: ReviewStorySectionProps) {
               <ReviewRatingCard
                 review={review}
                 slot={idx + 1}
-                variant="quiet"
                 revealOnScroll={false}
                 className="review-story__card"
               />

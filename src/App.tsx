@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CustomEase } from 'gsap/CustomEase';
-import { SplitText } from 'gsap/SplitText';
 import { useGSAP } from '@gsap/react';
 import {
   ArrowUpRight,
@@ -15,9 +14,9 @@ import {
 import { RenovareLogo } from './components/RenovareLogo';
 import { BeforeAfterStorySection } from './components/BeforeAfterStorySection';
 import { LoadingScreen, LOADING_DURATION_MS } from './components/LoadingScreen';
-import { ReviewRatingCard } from './components/ReviewRatingCard';
 import { BlackRenovareSection } from './components/BlackRenovareSection';
 import { ReviewStorySection } from './components/ReviewStorySection';
+import { VideoHero } from './components/VideoHero';
 import { scrollPageTo, shouldSmoothScroll, snapThroughLenis, startSmoothScroll } from './animations/smoothScroll';
 import {
   CLINIC_ADDRESS,
@@ -30,15 +29,9 @@ import {
   GOOGLE_REVIEWS_SHARE_URL,
 } from './data/renovareContent';
 
-gsap.registerPlugin(ScrollTrigger, CustomEase, SplitText, useGSAP);
+gsap.registerPlugin(ScrollTrigger, CustomEase, useGSAP);
 
 const EMIL_EASE_OUT = CustomEase.create('emilEaseOut', 'M0,0 C0.23,1 0.32,1 1,1');
-// Fast in, slow through the middle (slope ~0.27, never zero), fast out: a drift that never parks
-const HERO_DRIFT_EASE = CustomEase.create(
-  'heroDrift',
-  'M0,0 C0.2,0.38 0.35,0.46 0.5,0.5 0.65,0.54 0.8,0.62 1,1'
-);
-
 const MANIFESTO_SEGMENTS = [
   { text: 'Não viemos consertar você. Viemos' },
   { text: 'revelar', emphasis: true },
@@ -233,86 +226,6 @@ export function App() {
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReducedMotion) return;
 
-      // Hero entrances begin as the loading screen dissolves
-      const heroStart = LOADING_DURATION_MS / 1000 + 0.12;
-
-      // Headline and paragraph arrive line by line, split on the lines the reader actually sees;
-      // autoSplit re-splits after the web font loads or the viewport changes and keeps progress
-      SplitText.create('.celimax-hero__title', {
-        type: 'lines',
-        linesClass: 'celimax-hero__split-line',
-        autoSplit: true,
-        onSplit: (self) =>
-          gsap.from(self.lines, {
-            yPercent: 60,
-            autoAlpha: 0,
-            duration: 1,
-            ease: EMIL_EASE_OUT,
-            stagger: 0.14,
-            delay: heroStart,
-          }),
-      });
-      SplitText.create('.celimax-hero__desc', {
-        type: 'lines',
-        linesClass: 'celimax-hero__split-line',
-        autoSplit: true,
-        onSplit: (self) =>
-          gsap.from(self.lines, {
-            yPercent: 80,
-            autoAlpha: 0,
-            duration: 0.8,
-            ease: EMIL_EASE_OUT,
-            stagger: 0.08,
-            delay: heroStart + 0.45,
-          }),
-      });
-
-      const heroTl = gsap.timeline({
-        delay: heroStart,
-        defaults: { duration: 0.85, ease: EMIL_EASE_OUT },
-      });
-      heroTl
-        .fromTo('.celimax-hero__actions-row', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.8 }, 0.75)
-        .fromTo('.celimax-hero__right', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85 }, 0.3)
-        .fromTo('.celimax-hero__bg-frame', { scale: 1.03, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 1.2 }, 0);
-
-      const heroMedia = gsap.matchMedia();
-
-      // Desktop parallax: the backdrop grows and drifts slower than the page while the hero scrolls away
-      heroMedia.add('(min-width: 721px)', () => {
-        gsap.fromTo(
-          '.celimax-hero__backdrop',
-          { scale: 1, yPercent: 0 },
-          {
-            scale: 1.16,
-            yPercent: 9,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: '.celimax-hero',
-              start: 'top top',
-              end: 'bottom top',
-              scrub: 0.6,
-            },
-          }
-        );
-      });
-
-      // Desktop rating cards: 2s after the loading delay each card drifts up in one continuous
-      // move: it fades in rising, slows (never stops) mid-way, then keeps rising as it fades out
-      heroMedia.add('(min-width: 1280px)', () => {
-        const ratingCards = gsap.utils.toArray<HTMLElement>('.celimax-hero__rating');
-        if (!ratingCards.length) return;
-        const DRIFT = 5.6;
-        const drift = gsap.timeline({ delay: LOADING_DURATION_MS / 1000 + 0.12 + 2 });
-        ratingCards.forEach((card, idx) => {
-          const at = idx * 0.18;
-          drift
-            .fromTo(card, { y: 64 }, { y: -72, duration: DRIFT, ease: HERO_DRIFT_EASE }, at)
-            .fromTo(card, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1, ease: 'power2.out' }, at)
-            .to(card, { autoAlpha: 0, duration: 1.6, ease: 'power1.in' }, at + DRIFT - 1.6);
-        });
-      });
-
       // Manifesto words ink from gray to olive as the statement crosses the viewport
       gsap.to('.celimax-manifesto__word', {
         color: '#475A38',
@@ -449,82 +362,8 @@ export function App() {
       </div>
 
       <main id="topo">
-        {/* 2. HERO SECTION: EDITORIAL BOTÂNICO LIMPO */}
-        <section className="celimax-hero celimax-hero--editorial">
-          <div className="celimax-hero__container">
-            <div className="celimax-hero__backdrop" aria-hidden="true">
-              <img
-                src="./assets/figma/hero-bg-figma.png"
-                alt=""
-                className="celimax-hero__backdrop-img"
-                fetchPriority="high"
-              />
-            </div>
-            <div className="celimax-hero__overlay" aria-hidden="true" />
-            <div className="celimax-hero__grid">
-              <div className="celimax-hero__copy">
-                <div className="celimax-hero__spacer" aria-hidden="true" />
-                <div className="celimax-hero__heading-col">
-                  <h1 className="celimax-hero__title">
-                    <span className="celimax-hero__title-line">Revele a sua beleza real a cada</span>
-                    <span className="celimax-hero__title-separator" aria-hidden="true"> </span>
-                    <span className="celimax-hero__title-italic">novo despertar</span>
-                  </h1>
-                </div>
-
-                <div className="celimax-hero__aside">
-                  {/* Desktop only: three real reviews rise from behind the paragraph, then retreat */}
-                  <div className="celimax-hero__ratings" aria-hidden="true">
-                    {scatteredReviews.slice(0, 3).map((review, idx) => (
-                      <ReviewRatingCard
-                        key={review.id}
-                        review={review}
-                        slot={idx + 1}
-                        revealOnScroll={false}
-                        variant="quiet"
-                        className="celimax-hero__rating"
-                      />
-                    ))}
-                  </div>
-
-                  <div className="celimax-hero__desc-wrap">
-                    <p className="celimax-hero__desc">
-                      Ciência estética de precisão, protocolos integrativos e acolhimento humano em Betim para
-                      despertar o viço natural, o contorno e a vitalidade que já pertencem ao seu corpo.
-                    </p>
-                  </div>
-
-                  <div className="celimax-hero__actions-row">
-                  <a
-                    href={buildWhatsAppUrl(
-                      'Olá! Vim pelo site da Renovare e gostaria de agendar uma avaliação estética personalizada em Betim.'
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="celimax-hero__btn-main"
-                  >
-                    <span className="celimax-hero__btn-label celimax-hero__btn-label--desktop">Venha Conhecer</span>
-                    <span className="celimax-hero__btn-label celimax-hero__btn-label--mobile">Agende sua avaliação</span>
-                    <span className="celimax-hero__arrow-square" aria-hidden="true">
-                      <img
-                        className="celimax-hero__arrow-img"
-                        src="./assets/c256d.svg"
-                        alt=""
-                        width={22.4}
-                        height={22.4}
-                      />
-                      <ArrowUpRight className="celimax-hero__arrow-icon" size={18} strokeWidth={2.4} />
-                    </span>
-                  </a>
-                  <a href="#procedimentos" className="celimax-hero__btn-secondary">
-                    <span>Conhecer Protocolos</span>
-                  </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* 2. HERO: FULL-BLEED VIDEO THAT INSETS WITH ROUNDED CORNERS AS THE PAGE SCROLLS */}
+        <VideoHero introDelay={LOADING_DURATION_MS / 1000 + 0.12} />
 
         {/* 3. MANIFESTO / GENTLE BEAUTY SECTION WITH 3-PHOTO TRIPTYCH */}
         <section id="manifesto" className="celimax-manifesto js-section-reveal">
