@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CustomEase } from 'gsap/CustomEase';
+import { SplitText } from 'gsap/SplitText';
 import { useGSAP } from '@gsap/react';
 import {
   ArrowUpRight,
@@ -29,7 +30,7 @@ import {
   GOOGLE_REVIEWS_SHARE_URL,
 } from './data/renovareContent';
 
-gsap.registerPlugin(ScrollTrigger, CustomEase, useGSAP);
+gsap.registerPlugin(ScrollTrigger, CustomEase, SplitText, useGSAP);
 
 const EMIL_EASE_OUT = CustomEase.create('emilEaseOut', 'M0,0 C0.23,1 0.32,1 1,1');
 // Fast in, slow through the middle (slope ~0.27, never zero), fast out: a drift that never parks
@@ -233,13 +234,46 @@ export function App() {
       if (prefersReducedMotion) return;
 
       // Hero entrances begin as the loading screen dissolves
+      const heroStart = LOADING_DURATION_MS / 1000 + 0.12;
+
+      // Headline and paragraph arrive line by line, split on the lines the reader actually sees;
+      // autoSplit re-splits after the web font loads or the viewport changes and keeps progress
+      SplitText.create('.celimax-hero__title', {
+        type: 'lines',
+        linesClass: 'celimax-hero__split-line',
+        autoSplit: true,
+        onSplit: (self) =>
+          gsap.from(self.lines, {
+            yPercent: 60,
+            autoAlpha: 0,
+            duration: 1,
+            ease: EMIL_EASE_OUT,
+            stagger: 0.14,
+            delay: heroStart,
+          }),
+      });
+      SplitText.create('.celimax-hero__desc', {
+        type: 'lines',
+        linesClass: 'celimax-hero__split-line',
+        autoSplit: true,
+        onSplit: (self) =>
+          gsap.from(self.lines, {
+            yPercent: 80,
+            autoAlpha: 0,
+            duration: 0.8,
+            ease: EMIL_EASE_OUT,
+            stagger: 0.08,
+            delay: heroStart + 0.45,
+          }),
+      });
+
       const heroTl = gsap.timeline({
-        delay: LOADING_DURATION_MS / 1000 + 0.12,
+        delay: heroStart,
         defaults: { duration: 0.85, ease: EMIL_EASE_OUT },
       });
       heroTl
-        .fromTo('.celimax-hero__copy', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85 })
-        .fromTo('.celimax-hero__right', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85 }, '-=0.55')
+        .fromTo('.celimax-hero__actions-row', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.8 }, 0.75)
+        .fromTo('.celimax-hero__right', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85 }, 0.3)
         .fromTo('.celimax-hero__bg-frame', { scale: 1.03, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 1.2 }, 0);
 
       const heroMedia = gsap.matchMedia();
