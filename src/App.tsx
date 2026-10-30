@@ -83,6 +83,9 @@ export function App() {
   const [activeFaqIndex, setActiveFaqIndex] = useState<number>(0);
   const [scatteredReviews] = useState(pickRandomReviews);
   const faqTabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  // Desktop: the FAQ is pinned and scroll picks the topic (see useGSAP)
+  const faqPinRef = useRef<ScrollTrigger | null>(null);
+  const faqScrollTargetRef = useRef<number | null>(null);
   const [currentDoctorIndex, setCurrentDoctorIndex] = useState<number>(0);
   const [patientName, setPatientName] = useState('');
   const [patientGoal, setPatientGoal] = useState('Ciclo Seca-Barriga & Desintoxicação');
@@ -194,9 +197,26 @@ export function App() {
               : null;
     if (nextIndex === null) return;
     event.preventDefault();
-    setActiveFaqIndex(nextIndex);
+    selectFaq(nextIndex);
     faqTabRefs.current[nextIndex]?.focus();
   };
+
+  // When the FAQ is pinned, a topic lives at a scroll position: go there instead of
+  // only switching state, and ignore the topics passed on the way
+  function selectFaq(index: number) {
+    const pin = faqPinRef.current;
+    if (pin && FAQ_ITEMS.length > 1) {
+      faqScrollTargetRef.current = index;
+      window.setTimeout(() => {
+        faqScrollTargetRef.current = null;
+      }, 1400);
+      window.scrollTo({
+        top: pin.start + (pin.end - pin.start) * (index / (FAQ_ITEMS.length - 1)),
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      });
+    }
+    setActiveFaqIndex(index);
+  }
 
   const faqHoursNote = `Resposta pelo WhatsApp, de ${CLINIC_HOURS.toLowerCase()}.`;
 
@@ -325,6 +345,47 @@ export function App() {
       reviewMedia.add('(min-width: 1280px)', () => {
         if (!reviewStage || !reviewCards.length) return;
         return createReviewOrbit(reviewStage, reviewCards);
+      });
+
+      // Desktop FAQ: the topic index is pinned and each topic owns a stretch of scroll
+      const faqMedia = gsap.matchMedia();
+      faqMedia.add('(min-width: 1100px) and (min-height: 720px)', () => {
+        const faqIndex = document.querySelector<HTMLElement>('.faq-index');
+        const topicCount = FAQ_ITEMS.length;
+        if (!faqIndex || topicCount < 2) return;
+        let current = -1;
+
+        const pin = ScrollTrigger.create({
+          trigger: faqIndex,
+          // Centred when it fits; otherwise held just below the fixed header
+          start: () => (faqIndex.offsetHeight + 160 < window.innerHeight ? 'center center' : 'top 88px'),
+          end: () => `+=${(topicCount - 1) * window.innerHeight * 0.7}`,
+          pin: true,
+          refreshPriority: 1,
+          invalidateOnRefresh: true,
+          snap: {
+            snapTo: 1 / (topicCount - 1),
+            duration: { min: 0.2, max: 0.5 },
+            delay: 0.08,
+            ease: 'power2.inOut',
+          },
+          onUpdate: (self) => {
+            const next = Math.round(self.progress * (topicCount - 1));
+            const target = faqScrollTargetRef.current;
+            if (target !== null) {
+              if (next !== target) return;
+              faqScrollTargetRef.current = null;
+            }
+            if (next === current) return;
+            current = next;
+            setActiveFaqIndex(next);
+          },
+        });
+        faqPinRef.current = pin;
+
+        return () => {
+          faqPinRef.current = null;
+        };
       });
 
       // Progressive entrance without leaving unscrollable content hidden
@@ -870,7 +931,7 @@ export function App() {
                       aria-controls={`faq-panel-${idx}`}
                       tabIndex={isActive ? 0 : -1}
                       className={`faq-index__topic ${isActive ? 'is-active' : ''}`}
-                      onClick={() => setActiveFaqIndex(idx)}
+                      onClick={() => selectFaq(idx)}
                       onKeyDown={(event) => handleFaqTabKeyDown(event, idx)}
                     >
                       <span>{item.topic}</span>
