@@ -16,6 +16,7 @@ import {
 import { RenovareLogo } from './components/RenovareLogo';
 import { BeforeAfterSlider } from './components/BeforeAfterSlider';
 import { LoadingScreen, LOADING_DURATION_MS } from './components/LoadingScreen';
+import { GoogleReviewCard } from './components/GoogleReviewCard';
 import {
   CLINIC_ADDRESS,
   CLINIC_HOURS,
@@ -23,6 +24,8 @@ import {
   buildWhatsAppUrl,
   SPECIALISTS,
   FAQ_ITEMS,
+  FEATURED_GOOGLE_REVIEWS,
+  GOOGLE_REVIEWS_SHARE_URL,
 } from './data/renovareContent';
 
 gsap.registerPlugin(ScrollTrigger, CustomEase, useGSAP);
@@ -38,6 +41,12 @@ const MANIFESTO_TEXT = MANIFESTO_SEGMENTS.map((segment) => segment.text).join(' 
 const MANIFESTO_WORDS = MANIFESTO_SEGMENTS.flatMap((segment) =>
   segment.text.split(' ').map((word) => ({ word, emphasis: Boolean(segment.emphasis) }))
 );
+
+const REVIEW_COLUMNS = [
+  FEATURED_GOOGLE_REVIEWS.slice(0, 3),
+  FEATURED_GOOGLE_REVIEWS.slice(3, 5),
+  FEATURED_GOOGLE_REVIEWS.slice(5, 8),
+];
 
 export function App() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -99,6 +108,25 @@ export function App() {
           end: 'bottom 42%',
           scrub: 0.7,
         },
+      });
+
+      // Testimonials pop in once; each group entering the viewport reveals in random order
+      const reviewCards = gsap.utils.toArray<HTMLElement>('.js-review-pop');
+      gsap.set(reviewCards, { autoAlpha: 0, scale: 0.9, y: 18 });
+      ScrollTrigger.batch(reviewCards, {
+        start: 'top 90%',
+        once: true,
+        interval: 0.15,
+        onEnter: (batch) =>
+          gsap.to(gsap.utils.shuffle([...batch]), {
+            autoAlpha: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.62,
+            ease: 'back.out(1.5)',
+            stagger: 0.11,
+            overwrite: true,
+          }),
       });
 
       // Progressive entrance without leaving unscrollable content hidden
@@ -426,7 +454,7 @@ export function App() {
           </div>
         </section>
 
-        {/* 6. PILLARS AROUND CENTRAL ELEMENT ("Why you choose Renovare" - Figma node 5389:424) */}
+        {/* 6. GOOGLE TESTIMONIALS AROUND CENTRAL ELEMENT ("Why you choose Renovare") */}
         <section id="diferenciais" className="celimax-pillars js-section-reveal">
           <div className="celimax-pillars__container">
             <div className="celimax-pillars__header js-reveal-item">
@@ -434,68 +462,53 @@ export function App() {
                 Por que escolher a <em className="editorial-serif">Renovare</em> em Betim?
               </h2>
               <p className="celimax-manifesto__sub" style={{ marginTop: '12px' }}>
-                Conheça os pilares que tornam nossos protocolos seguros, transformadores e reconhecidos pela
-                ética e naturalidade.
+                Avaliações reais de pacientes que escolheram a Renovare, publicadas no Google.
               </p>
             </div>
 
-            <div className="celimax-pillars__stage js-reveal-item">
-              {/* Left Pillars */}
+            <div className="celimax-pillars__stage celimax-pillars__stage--reviews">
               <div className="celimax-pillar-stack">
-                <div className="celimax-pillar-card">
-                  <span className="celimax-pillar-card__badge">Corpo Clínico Experiente</span>
-                  <h3 className="celimax-pillar-card__title">Especialistas Qualificadas</h3>
-                  <p className="celimax-pillar-card__text">
-                    Biomédicas estetas e profissionais de saúde com capacitação contínua e olhar ético,
-                    garantindo segurança anatômica em cada procedimento.
-                  </p>
-                </div>
-
-                <div className="celimax-pillar-card">
-                  <span className="celimax-pillar-card__badge">Cuidado Personalizado</span>
-                  <h3 className="celimax-pillar-card__title">Planos Sob Medida</h3>
-                  <p className="celimax-pillar-card__text">
-                    Não vendemos pacotes engessados de balcão. Cada plano é formulado a partir da sua
-                    Avaliação 360°, respeitando seu histórico, biotipo e rotina.
-                  </p>
-                </div>
+                {REVIEW_COLUMNS[0].map((review) => (
+                  <GoogleReviewCard key={review.id} review={review} />
+                ))}
               </div>
 
-              {/* Center Botanical Piece */}
-              <div className="celimax-pillars__centerpiece">
-                <div className="celimax-centerpiece-disc">
-                  <RenovareLogo
-                    variant="symbol"
-                    color="#475A38"
-                    className="celimax-centerpiece-logo"
-                    ariaLabel="Lírio Renovare"
-                  />
-                </div>
-                <p className="celimax-centerpiece-caption">
-                  “Beleza real não precisa de filtro.”
-                </p>
-              </div>
-
-              {/* Right Pillars */}
               <div className="celimax-pillar-stack">
-                <div className="celimax-pillar-card">
-                  <span className="celimax-pillar-card__badge">Tecnologia Padrão Ouro</span>
-                  <h3 className="celimax-pillar-card__title">Equipamentos ANVISA</h3>
-                  <p className="celimax-pillar-card__text">
-                    Aparelhos de alta precisão 100% regulamentados e calibrados periodicamente, garantindo
-                    máxima entrega de energia e total biossegurança.
+                <div className="celimax-pillars__centerpiece">
+                  <div className="celimax-centerpiece-disc">
+                    <RenovareLogo
+                      variant="symbol"
+                      color="#475A38"
+                      className="celimax-centerpiece-logo"
+                      ariaLabel="Lírio Renovare"
+                    />
+                  </div>
+                  <p className="celimax-centerpiece-caption">
+                    “Beleza real não precisa de filtro.”
                   </p>
                 </div>
-
-                <div className="celimax-pillar-card">
-                  <span className="celimax-pillar-card__badge">Resultados Duradouros</span>
-                  <h3 className="celimax-pillar-card__title">Acompanhamento Contínuo</h3>
-                  <p className="celimax-pillar-card__text">
-                    Monitoramento assistido antes, durante e no pós-sessão com registro fotográfico clínico
-                    para consolidar resultados duradouros.
-                  </p>
-                </div>
+                {REVIEW_COLUMNS[1].map((review) => (
+                  <GoogleReviewCard key={review.id} review={review} />
+                ))}
               </div>
+
+              <div className="celimax-pillar-stack">
+                {REVIEW_COLUMNS[2].map((review) => (
+                  <GoogleReviewCard key={review.id} review={review} />
+                ))}
+              </div>
+            </div>
+
+            <div className="celimax-center-cta celimax-pillars__cta js-reveal-item">
+              <a
+                href={GOOGLE_REVIEWS_SHARE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="celimax-btn-outline"
+              >
+                <span>Ver todas as avaliações no Google</span>
+                <ArrowUpRight size={16} />
+              </a>
             </div>
           </div>
         </section>

@@ -645,3 +645,19 @@ export const GOOGLE_REVIEWS: GoogleReviewItem[] = [
       'https://lh3.googleusercontent.com/a-/ALV-UjWVgI4AvpXi0BtK-7UCUIM7qOe9mk9B1vF6r6Tul0uqLDs80O5l=s120-c-rp-mo-br100',
   },
 ];
+
+// Eight most descriptive real Google reviews, ordered for balanced columns on the page
+const FEATURED_REVIEW_AUTHORS = [
+  'Julia Freitas',
+  'Angélica Lopes',
+  'Fernanda Coelho',
+  'Rosy Alves Costa',
+  'kathia bernardes',
+  'Beatriz Lages',
+  'Keila Torres',
+  'Leandra Silva',
+];
+
+export const FEATURED_GOOGLE_REVIEWS: GoogleReviewItem[] = FEATURED_REVIEW_AUTHORS.map(
+  (author) => GOOGLE_REVIEWS.find((review) => review.author === author)
+).filter((review): review is GoogleReviewItem => Boolean(review));
