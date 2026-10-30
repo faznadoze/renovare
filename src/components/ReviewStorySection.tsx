@@ -48,14 +48,55 @@ export function ReviewStorySection({ reviews }: ReviewStorySectionProps) {
           if (!motion) return;
 
           const stage = section.querySelector<HTMLElement>('.review-story__stage');
+          const center = section.querySelector<HTMLElement>('.review-story__center');
           const lily = section.querySelector<SVGElement>('.review-story__lily');
           const petals = gsap.utils.toArray<SVGPathElement>('.review-story__petal', section);
           const lines = gsap.utils.toArray<HTMLElement>('.review-story__line', section);
           const cards = gsap.utils.toArray<HTMLElement>('.review-story__card', section);
-          if (!stage || !lily || lines.length < 3) return;
+          if (!stage || !center || !lily || lines.length < 3) return;
 
           section.classList.add('is-sequenced');
-          const enterY = desktop ? 36 : 56;
+
+          // Entrance borrowed from lassie.ai's "98%" infographic: every card travels a clockwise
+          // arc of an ellipse centred on the lily, growing to full size in the first half of the
+          // trip and landing on its parked slot. Slots come from the CSS layout, so the arc is
+          // measured backwards from where each card really ends up.
+          const SWEEP = (100 * Math.PI) / 180;
+          const orbits = cards.map(() => ({ dx: 0, dy: 0, rho: 0, end: 0, aspect: 1 }));
+          const travel = cards.map(() => ({ t: 0 }));
+
+          const measure = () => {
+            const stageBox = stage.getBoundingClientRect();
+            const centerBox = center.getBoundingClientRect();
+            const cx = centerBox.left + centerBox.width / 2;
+            const cy = centerBox.top + centerBox.height / 2;
+            const aspect = stageBox.width / Math.max(1, stageBox.height);
+            cards.forEach((card, idx) => {
+              const previous = card.style.transform;
+              card.style.transform = 'none';
+              const box = card.getBoundingClientRect();
+              card.style.transform = previous;
+              const dx = box.left + box.width / 2 - cx;
+              const dy = box.top + box.height / 2 - cy;
+              orbits[idx] = { dx, dy, aspect, rho: Math.hypot(dx, dy * aspect), end: Math.atan2(dy * aspect, dx) };
+            });
+          };
+
+          const place = (idx: number) => {
+            const { t } = travel[idx];
+            const orbit = orbits[idx];
+            const angle = orbit.end - SWEEP * (1 - t);
+            gsap.set(cards[idx], {
+              x: Math.cos(angle) * orbit.rho - orbit.dx,
+              y: (Math.sin(angle) * orbit.rho) / orbit.aspect - orbit.dy,
+              scale: 0.2 + 0.8 * Math.min(1, t * 2),
+              autoAlpha: Math.min(1, t * 4),
+            });
+          };
+
+          const placeAll = () => cards.forEach((_, idx) => place(idx));
+          measure();
+          placeAll();
 
           const tl = gsap.timeline({
             defaults: { ease: 'power3.out' },
@@ -68,6 +109,10 @@ export function ReviewStorySection({ reviews }: ReviewStorySectionProps) {
               refreshPriority: 2,
               invalidateOnRefresh: true,
               snap: { snapTo: 'labels', duration: { min: 0.2, max: 0.6 }, delay: 0.1, ease: 'power1.inOut' },
+              onRefresh: () => {
+                measure();
+                placeAll();
+              },
             },
           });
 
@@ -90,20 +135,25 @@ export function ReviewStorySection({ reviews }: ReviewStorySectionProps) {
             if (idx > 0) {
               tl.to(lines[idx - 1], { autoAlpha: 0, y: -24, duration: 0.4, ease: 'power2.in' }, at);
             }
-            tl.fromTo(line, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.55 }, idx === 0 ? at : '<0.2')
-              .fromTo(
-                pair,
-                { autoAlpha: 0, y: enterY, scale: 0.96 },
-                { autoAlpha: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.15 },
-                '<0.15'
-              )
-              .addLabel(`line-${idx + 1}`);
+            tl.fromTo(line, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.55 }, idx === 0 ? at : '<0.2');
+            pair.forEach((card, offset) => {
+              const cardIdx = cards.indexOf(card);
+              tl.to(
+                travel[cardIdx],
+                { t: 1, duration: 1.1, ease: 'power2.out', onUpdate: () => place(cardIdx) },
+                offset === 0 ? '<0.1' : '<0.18'
+              );
+            });
+            tl.addLabel(`line-${idx + 1}`);
           });
 
           // A short hold on the last statement before the section releases
           tl.to({}, { duration: 0.5 });
 
-          return () => section.classList.remove('is-sequenced');
+          return () => {
+            gsap.set(cards, { clearProps: 'transform,opacity,visibility' });
+            section.classList.remove('is-sequenced');
+          };
         }
       );
 
