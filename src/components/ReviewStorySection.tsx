@@ -197,15 +197,17 @@ export function ReviewStorySection({ reviews }: ReviewStorySectionProps) {
         </div>
 
         <div className="review-story__cards">
+          {/* The slot holds the parked position (never animated); GSAP moves only the card */}
           {reviews.map((review, idx) => (
-            <ReviewRatingCard
-              key={review.id}
-              review={review}
-              slot={idx + 1}
-              variant="quiet"
-              revealOnScroll={false}
-              className="review-story__card"
-            />
+            <div key={review.id} className={`review-story__slot review-story__slot--${idx + 1}`}>
+              <ReviewRatingCard
+                review={review}
+                slot={idx + 1}
+                variant="quiet"
+                revealOnScroll={false}
+                className="review-story__card"
+              />
+            </div>
           ))}
         </div>
       </div>

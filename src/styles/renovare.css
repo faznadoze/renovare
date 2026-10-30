@@ -4774,7 +4774,8 @@ ol {
 }
 
 .review-story .review-story__card {
-  width: auto;
+  width: 100%;
+  height: 100%;
   margin: 0;
 }
 
@@ -4828,12 +4829,18 @@ ol {
   position: absolute;
 }
 
-.review-story.is-sequenced .review-story__card {
+/* Slots carry position (and any organic offset) in their own transform; GSAP folds CSS
+   translate/rotate into the element it animates, so the animated card never holds them */
+.review-story.is-sequenced .review-story__slot {
   position: absolute;
+}
+
+.review-story.is-sequenced .review-story__card {
+  width: 100%;
   will-change: transform, opacity;
 }
 
-/* ---------- Sequenced: desktop, cards parked around the lily ---------- */
+/* ---------- Sequenced: desktop, a loose spiral around the lily ---------- */
 @media (min-width: 1100px) and (min-height: 700px) {
   .review-story.is-sequenced .review-story__center {
     top: 0;
@@ -4846,28 +4853,33 @@ ol {
   }
 
   .review-story.is-sequenced .review-story__line {
-    max-width: 560px;
-    font-size: clamp(2.6rem, 4vw, 4rem);
+    max-width: min(520px, 38vw);
+    font-size: clamp(2.4rem, 3.8vw, 4rem);
   }
 
+  /* Irregular angles on an ellipse, radius growing card by card (the first pair sits
+     closest, the last furthest), as in lassie.ai's infographic */
   .review-story.is-sequenced .review-story__cards {
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: min(1200px, calc(100% - 2 * clamp(20px, 4vw, 40px)));
-    transform: translateX(-50%);
+    inset: 0;
+    --rx: min(36vw, 560px);
+    --ry: min(31svh, 300px);
   }
 
-  .review-story.is-sequenced .review-story__card {
-    width: 320px;
+  .review-story.is-sequenced .review-story__slot {
+    --a: 0deg;
+    --r: 1;
+    width: clamp(270px, 22vw, 320px);
+    left: calc(50% + cos(var(--a)) * var(--r) * var(--rx));
+    top: calc(50% + 20px + sin(var(--a)) * var(--r) * var(--ry));
+    transform: translate(-50%, -50%);
   }
 
-  .review-story.is-sequenced .review-rating--slot-1 { top: clamp(96px, 16%, 170px); left: 0; }
-  .review-story.is-sequenced .review-rating--slot-2 { bottom: 7%; right: 0; }
-  .review-story.is-sequenced .review-rating--slot-3 { top: clamp(96px, 16%, 170px); right: 0; }
-  .review-story.is-sequenced .review-rating--slot-4 { bottom: 7%; left: 0; }
-  .review-story.is-sequenced .review-rating--slot-5 { top: clamp(84px, 9%, 120px); left: calc(50% - 160px); }
-  .review-story.is-sequenced .review-rating--slot-6 { bottom: 4%; left: calc(50% - 160px); }
+  .review-story.is-sequenced .review-story__slot--1 { --a: -128deg; --r: 0.95; }
+  .review-story.is-sequenced .review-story__slot--2 { --a: -80deg; --r: 0.93; }
+  .review-story.is-sequenced .review-story__slot--3 { --a: -27deg; --r: 1.04; }
+  .review-story.is-sequenced .review-story__slot--4 { --a: 31deg; --r: 1.02; }
+  .review-story.is-sequenced .review-story__slot--5 { --a: 93deg; --r: 1.03; }
+  .review-story.is-sequenced .review-story__slot--6 { --a: 150deg; --r: 1.07; }
 }
 
 /* ---------- Sequenced: phones, tablets and short screens ---------- */
@@ -4904,20 +4916,35 @@ ol {
     margin-inline: auto;
   }
 
-  .review-story.is-sequenced .review-story__card {
+  .review-story.is-sequenced .review-story__slot {
     left: 0;
     right: 0;
     height: var(--story-card-h);
+  }
+
+  .review-story.is-sequenced .review-story__card {
+    height: 100%;
     padding: 16px 18px;
     gap: 10px;
   }
 
-  .review-story.is-sequenced .review-rating--slot-1 { top: 0; }
-  .review-story.is-sequenced .review-rating--slot-2 { top: var(--story-peek); background: #EEEBE3; }
-  .review-story.is-sequenced .review-rating--slot-3 { top: calc(2 * var(--story-peek)); background: #E7E4DA; }
-  .review-story.is-sequenced .review-rating--slot-4 { top: calc(3 * var(--story-peek)); }
-  .review-story.is-sequenced .review-rating--slot-5 { top: calc(4 * var(--story-peek)); background: #EEEBE3; }
-  .review-story.is-sequenced .review-rating--slot-6 { top: calc(5 * var(--story-peek)); background: #E7E4DA; }
+  /* A loose, hand-stacked deck rather than a ruled column */
+  .review-story.is-sequenced .review-story__slot--1 { top: 0; transform: translateX(-6px) rotate(-1.2deg); }
+  .review-story.is-sequenced .review-story__slot--2 { top: var(--story-peek); transform: translateX(9px) rotate(1deg); }
+  .review-story.is-sequenced .review-story__slot--3 { top: calc(2 * var(--story-peek)); transform: translateX(-11px) rotate(-0.6deg); }
+  .review-story.is-sequenced .review-story__slot--4 { top: calc(3 * var(--story-peek)); transform: translateX(5px) rotate(1.4deg); }
+  .review-story.is-sequenced .review-story__slot--5 { top: calc(4 * var(--story-peek)); transform: translateX(-4px) rotate(-1.5deg); }
+  .review-story.is-sequenced .review-story__slot--6 { top: calc(5 * var(--story-peek)); transform: translateX(10px) rotate(0.8deg); }
+
+  .review-story.is-sequenced .review-story__slot--2 .review-story__card,
+  .review-story.is-sequenced .review-story__slot--5 .review-story__card {
+    background: #EEEBE3;
+  }
+
+  .review-story.is-sequenced .review-story__slot--3 .review-story__card,
+  .review-story.is-sequenced .review-story__slot--6 .review-story__card {
+    background: #E7E4DA;
+  }
 
   .review-story.is-sequenced .review-quiet__quote {
     font-size: 0.875rem;
