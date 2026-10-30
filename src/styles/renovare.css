@@ -6771,7 +6771,7 @@ html.lenis {
   top: 16px;
   display: none;
   align-items: center;
-  gap: 4px;
+  gap: 0;
   height: 40px;
   pointer-events: auto;
 }
@@ -6866,6 +6866,7 @@ html.lenis {
 }
 
 .site-header__item--cta {
+  background: var(--moss-pale);
   font-weight: 600;
 }
 
@@ -6891,7 +6892,7 @@ html.lenis {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4px;
+  gap: 0;
 }
 
 .site-header__menu-btn {
