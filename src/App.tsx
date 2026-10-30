@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { RenovareLogo } from './components/RenovareLogo';
 import { BeforeAfterSlider } from './components/BeforeAfterSlider';
+import { LoadingScreen, LOADING_DURATION_MS } from './components/LoadingScreen';
 import {
   CLINIC_ADDRESS,
   CLINIC_HOURS,
@@ -67,8 +68,11 @@ export function App() {
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReducedMotion) return;
 
-      // Hero entrances
-      const heroTl = gsap.timeline({ defaults: { duration: 0.85, ease: EMIL_EASE_OUT } });
+      // Hero entrances begin as the loading screen dissolves
+      const heroTl = gsap.timeline({
+        delay: LOADING_DURATION_MS / 1000 + 0.12,
+        defaults: { duration: 0.85, ease: EMIL_EASE_OUT },
+      });
       heroTl
         .fromTo('.celimax-hero__copy', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85 })
         .fromTo('.celimax-hero__right', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85 }, '-=0.55')
@@ -102,6 +106,8 @@ export function App() {
 
   return (
     <div ref={containerRef} className="celimax-theme-wrapper">
+      <LoadingScreen />
+
       {/* 1. FLOATING ISLAND NAVBAR */}
       <div className="celimax-nav-wrapper">
         <header className={`celimax-nav ${isHeaderFilled ? 'celimax-nav--filled' : ''}`}>

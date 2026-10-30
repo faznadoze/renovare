@@ -4515,6 +4515,136 @@ ol {
 }
 
 /* ==========================================================================
+   LOADING SCREEN: 3s botanical bloom with bottom progress line
+   ========================================================================== */
+html.is-loading,
+html.is-loading body {
+  overflow: hidden;
+}
+
+.renovare-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(71, 90, 56, 0.55) 0%, rgba(26, 36, 18, 0) 46%),
+    #1A2412;
+  color: var(--moss-pale);
+  transition:
+    opacity 520ms var(--ease-out),
+    visibility 0s linear 520ms;
+}
+
+.renovare-loader--exit {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.renovare-loader__mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(88px, 18vw, 128px);
+  aspect-ratio: 1;
+  transition: transform 520ms var(--ease-out);
+}
+
+.renovare-loader--exit .renovare-loader__mark {
+  transform: scale(1.08);
+}
+
+.renovare-loader__symbol {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(0.88) rotate(-36deg);
+  animation:
+    renovare-loader-bloom 1400ms var(--ease-out) 120ms forwards,
+    renovare-loader-breathe 1600ms var(--ease-in-out) 1520ms infinite alternate;
+}
+
+.renovare-loader__halo {
+  position: absolute;
+  inset: -38%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(219, 228, 169, 0.2) 0%, rgba(219, 228, 169, 0) 66%);
+  opacity: 0;
+  transform: scale(0.7);
+  animation: renovare-loader-halo 1800ms var(--ease-out) 260ms forwards;
+}
+
+.renovare-loader__track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  overflow: hidden;
+  background: rgba(219, 228, 169, 0.12);
+}
+
+.renovare-loader__bar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(219, 228, 169, 0.45) 0%, var(--moss-pale) 100%);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: renovare-loader-progress 3000ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes renovare-loader-bloom {
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes renovare-loader-breathe {
+  from {
+    transform: scale(1) rotate(0deg);
+  }
+  to {
+    transform: scale(1.04) rotate(6deg);
+  }
+}
+
+@keyframes renovare-loader-halo {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes renovare-loader-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .renovare-loader__symbol,
+  .renovare-loader__halo {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
+  }
+
+  .renovare-loader__bar {
+    animation-duration: 3000ms !important;
+  }
+
+  .renovare-loader--exit .renovare-loader__mark {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
    MOBILE EDITORIAL COLUMN
    On phones, typography and hairline rules carry the structure. Photography
    moves horizontally, and the lime band marks only featured or open content.
