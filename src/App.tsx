@@ -448,25 +448,31 @@ export function App() {
           <div className="celimax-triptych js-reveal-item">
             <div className="celimax-triptych__card celimax-triptych__card--side">
               <img
-                src="./assets/people/hero-woman-natural.jpg"
-                alt="Mulher cuidando da pele com suavidade"
+                src="./assets/clinic/manta-termica.jpg"
+                alt="Profissional ajustando a manta térmica sobre a paciente relaxada na maca"
                 className="celimax-triptych__img"
+                width={1000}
+                height={1329}
                 loading="lazy"
               />
             </div>
             <div className="celimax-triptych__card celimax-triptych__card--center">
               <img
-                src="./assets/people/manifesto-woman-mirror.jpg"
-                alt="Mulher se olhando com afeto no espelho"
+                src="./assets/clinic/facial-marcacao.jpg"
+                alt="Profissional da Renovare marcando o rosto da paciente antes de um procedimento facial"
                 className="celimax-triptych__img"
+                width={1000}
+                height={1428}
                 loading="lazy"
               />
             </div>
             <div className="celimax-triptych__card celimax-triptych__card--side">
               <img
-                src="./assets/people/hero-woman-portrait.jpg"
-                alt="Sorriso natural e pele saudável"
+                src="./assets/clinic/criolipolise-sessao.jpg"
+                alt="Paciente relaxada durante uma sessão de criolipólise no abdômen"
                 className="celimax-triptych__img"
+                width={1000}
+                height={1330}
                 loading="lazy"
               />
             </div>
