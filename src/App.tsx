@@ -181,6 +181,45 @@ export function App() {
         .fromTo('.celimax-hero__right', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85 }, '-=0.55')
         .fromTo('.celimax-hero__bg-frame', { scale: 1.03, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 1.2 }, 0);
 
+      const heroMedia = gsap.matchMedia();
+
+      // Desktop parallax: the backdrop grows and drifts slower than the page while the hero scrolls away
+      heroMedia.add('(min-width: 721px)', () => {
+        gsap.fromTo(
+          '.celimax-hero__backdrop',
+          { scale: 1, yPercent: 0 },
+          {
+            scale: 1.16,
+            yPercent: 9,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '.celimax-hero',
+              start: 'top top',
+              end: 'bottom top',
+              scrub: 0.6,
+            },
+          }
+        );
+      });
+
+      // Desktop rating cards: 2s after the loading delay they rise from behind the paragraph, hold 3s, retreat
+      heroMedia.add('(min-width: 1280px)', () => {
+        const ratingCards = gsap.utils.toArray<HTMLElement>('.celimax-hero__rating');
+        if (!ratingCards.length) return;
+        gsap
+          .timeline({ delay: LOADING_DURATION_MS / 1000 + 0.12 + 2 })
+          .fromTo(
+            ratingCards,
+            { autoAlpha: 0, y: 56 },
+            { autoAlpha: 1, y: 0, duration: 0.9, ease: EMIL_EASE_OUT, stagger: 0.16 }
+          )
+          .to(
+            ratingCards,
+            { autoAlpha: 0, y: 40, duration: 0.7, ease: 'power2.in', stagger: { each: 0.12, from: 'end' } },
+            '+=3'
+          );
+      });
+
       // Manifesto words ink from gray to olive as the statement crosses the viewport
       gsap.to('.celimax-manifesto__word', {
         color: '#475A38',
@@ -303,17 +342,36 @@ export function App() {
             <div className="celimax-hero__grid">
               <div className="celimax-hero__copy">
                 <div className="celimax-hero__spacer" aria-hidden="true" />
-                <h1 className="celimax-hero__title">
-                  <span className="celimax-hero__title-line">Revele a sua beleza real a cada</span>
-                  <span className="celimax-hero__title-separator" aria-hidden="true"> </span>
-                  <span className="celimax-hero__title-italic">novo despertar</span>
-                </h1>
-                <p className="celimax-hero__desc">
-                  Ciência estética de precisão, protocolos integrativos e acolhimento humano em Betim para
-                  despertar o viço natural, o contorno e a vitalidade que já pertencem ao seu corpo.
-                </p>
+                <div className="celimax-hero__heading-col">
+                  <h1 className="celimax-hero__title">
+                    <span className="celimax-hero__title-line">Revele a sua beleza real a cada</span>
+                    <span className="celimax-hero__title-separator" aria-hidden="true"> </span>
+                    <span className="celimax-hero__title-italic">novo despertar</span>
+                  </h1>
+                </div>
 
-                <div className="celimax-hero__actions-row">
+                <div className="celimax-hero__aside">
+                  {/* Desktop only: three real reviews rise from behind the paragraph, then retreat */}
+                  <div className="celimax-hero__ratings" aria-hidden="true">
+                    {scatteredReviews.slice(0, 3).map((review, idx) => (
+                      <ReviewRatingCard
+                        key={review.id}
+                        review={review}
+                        slot={idx + 1}
+                        revealOnScroll={false}
+                        className="celimax-hero__rating"
+                      />
+                    ))}
+                  </div>
+
+                  <div className="celimax-hero__desc-wrap">
+                    <p className="celimax-hero__desc">
+                      Ciência estética de precisão, protocolos integrativos e acolhimento humano em Betim para
+                      despertar o viço natural, o contorno e a vitalidade que já pertencem ao seu corpo.
+                    </p>
+                  </div>
+
+                  <div className="celimax-hero__actions-row">
                   <a
                     href={buildWhatsAppUrl(
                       'Olá! Vim pelo site da Renovare e gostaria de agendar uma avaliação estética personalizada em Betim.'
@@ -322,14 +380,23 @@ export function App() {
                     rel="noopener noreferrer"
                     className="celimax-hero__btn-main"
                   >
-                    <span>Agende sua avaliação</span>
+                    <span className="celimax-hero__btn-label celimax-hero__btn-label--desktop">Venha Conhecer</span>
+                    <span className="celimax-hero__btn-label celimax-hero__btn-label--mobile">Agende sua avaliação</span>
                     <span className="celimax-hero__arrow-square" aria-hidden="true">
-                      <ArrowUpRight size={18} strokeWidth={2.4} />
+                      <img
+                        className="celimax-hero__arrow-img"
+                        src="./assets/c256d.svg"
+                        alt=""
+                        width={22.4}
+                        height={22.4}
+                      />
+                      <ArrowUpRight className="celimax-hero__arrow-icon" size={18} strokeWidth={2.4} />
                     </span>
                   </a>
                   <a href="#procedimentos" className="celimax-hero__btn-secondary">
                     <span>Conhecer Protocolos</span>
                   </a>
+                  </div>
                 </div>
               </div>
             </div>

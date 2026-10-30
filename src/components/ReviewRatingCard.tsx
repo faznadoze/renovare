@@ -3,14 +3,20 @@ import type { GoogleReviewItem } from '../data/renovareContent';
 interface ReviewRatingCardProps {
   review: GoogleReviewItem;
   slot: number;
+  /** Joins the testimonials scroll reveal; off for cards animated elsewhere (hero) */
+  revealOnScroll?: boolean;
+  className?: string;
 }
 
 // Figma "card-rating": olive photo block with a star pill, real Google review text on the right
-export function ReviewRatingCard({ review, slot }: ReviewRatingCardProps) {
+export function ReviewRatingCard({ review, slot, revealOnScroll = true, className }: ReviewRatingCardProps) {
   const stars = Math.max(0, Math.min(5, Math.round(review.rating)));
+  const classes = ['review-rating', revealOnScroll && 'js-review-pop', `review-rating--slot-${slot}`, className]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <article className={`review-rating js-review-pop review-rating--slot-${slot}`}>
+    <article className={classes}>
       <div className="review-rating__photo-wrap">
         <div className="review-rating__photo">
           <div className="review-rating__stars" role="img" aria-label={`${stars} de 5 estrelas`}>
