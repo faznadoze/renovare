@@ -2938,31 +2938,26 @@ ol {
   z-index: 999;
   display: flex;
   justify-content: center;
-  padding: 0 16px;
   pointer-events: none;
 }
 
 .celimax-nav {
   pointer-events: auto;
   width: 100%;
-  max-width: 1250px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 32px;
   padding: 10px 16px 10px 20px;
   background: rgba(255, 255, 255, 0.94);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(71, 90, 56, 0.12);
-  border-radius: 999px;
-  box-shadow: 0 10px 30px -10px rgba(15, 23, 10, 0.08);
+  -webkit-backdrop-filter: blur(40px);
+  backdrop-filter: blur(40px);
   transition: transform 0.25s var(--ease-out);
 }
 
 .celimax-nav__brand {
   display: flex;
   align-items: center;
-  gap: 10px;
   text-decoration: none;
   color: var(--olive-dark);
 }
@@ -2973,18 +2968,11 @@ ol {
   color: var(--olive-dark);
 }
 
-.celimax-nav__wordmark {
-  font-family: var(--font-sans);
-  font-weight: 800;
-  font-size: 1.15rem;
-  letter-spacing: -0.03em;
-  color: var(--olive-dark);
-  text-transform: lowercase;
-}
-
 .celimax-nav__links {
   display: none;
+  flex: 1;
   align-items: center;
+  justify-content: flex-end;
   gap: 28px;
   list-style: none;
 }
@@ -3064,10 +3052,9 @@ ol {
   font-weight: 700;
   font-size: 0.9rem;
   text-decoration: none;
-  padding: 10px 20px;
+  padding: 4px 4px 4px 20px;
   border-radius: 999px;
-  box-shadow: 0 4px 14px -3px rgba(71, 90, 56, 0.25);
-  transition: transform 0.2s var(--ease-out), background-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+  transition: transform 0.2s var(--ease-out), background-color 0.2s var(--ease-out);
   touch-action: manipulation;
   user-select: none;
 }
@@ -3076,7 +3063,6 @@ ol {
   .celimax-btn-cta:hover {
     background-color: #E5EEB8;
     transform: translateY(-1px);
-    box-shadow: 0 8px 20px -4px rgba(71, 90, 56, 0.32);
   }
 }
 
@@ -3088,9 +3074,9 @@ ol {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
   background: rgba(26, 36, 18, 0.12);
   color: #1A2412;
 }
@@ -3111,7 +3097,6 @@ ol {
 @media (max-width: 768px) {
   .celimax-nav-wrapper {
     top: 12px;
-    padding: 0 12px;
   }
   .celimax-nav {
     padding: 8px 14px;
@@ -3120,17 +3105,9 @@ ol {
     width: 30px;
     height: 30px;
   }
-  .celimax-nav__wordmark {
-    display: none; /* Mostra o ícone no lugar do logotipo no mobile */
-  }
   .celimax-btn-cta {
-    padding: 8px 14px;
     font-size: 0.85rem;
     gap: 6px;
-  }
-  .celimax-btn-arrow-circle {
-    width: 18px;
-    height: 18px;
   }
 }
 
@@ -3142,7 +3119,6 @@ ol {
     display: inline;
   }
   .celimax-btn-cta {
-    padding: 8px 12px;
     font-size: 0.82rem;
   }
 }

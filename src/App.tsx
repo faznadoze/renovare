@@ -99,7 +99,6 @@ export function App() {
         <header className="celimax-nav">
           <a href="#topo" className="celimax-nav__brand" aria-label="Renovare — Início">
             <RenovareLogo variant="symbol" color="#475A38" className="celimax-nav__symbol" />
-            <span className="celimax-nav__wordmark">renovare</span>
           </a>
 
           <nav className="celimax-nav__links" aria-label="Navegação principal">
@@ -132,7 +131,7 @@ export function App() {
               <span className="celimax-btn-cta__full">Agendar Avaliação</span>
               <span className="celimax-btn-cta__short">Agendar</span>
               <span className="celimax-btn-arrow-circle" aria-hidden="true">
-                <ArrowUpRight size={14} />
+                <ArrowUpRight size={25} />
               </span>
             </a>
           </div>
