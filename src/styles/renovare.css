@@ -6825,19 +6825,23 @@ html.lenis {
   line-height: 0.95;
   letter-spacing: -0.035em;
   color: #FFFFFF;
+  -webkit-text-stroke: 0.4px currentColor;
+  paint-order: stroke fill;
 }
 
 /* Second line: phrases share one grid cell, so the line keeps the widest width and never jumps */
 .video-hero__rotator {
   display: grid;
   justify-items: center;
-  font-family: "Cormorant Garamond:Italic", var(--font-serif);
+  font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 1.3em;
   line-height: 1;
   letter-spacing: -0.01em;
   color: var(--moss-pale);
+  -webkit-text-stroke: 0.35px currentColor;
+  paint-order: stroke fill;
   /* Tuck the italic line up under "Você merece" */
   margin-top: -0.18em;
 }
