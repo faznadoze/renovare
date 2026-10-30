@@ -704,23 +704,6 @@ export function App() {
                   );
                 })}
               </div>
-
-              <figure className="faq-index__figure js-reveal-item">
-                {FAQ_ITEMS.map((item, idx) => {
-                  const isActive = idx === activeFaqIndex;
-                  return (
-                    <img
-                      key={item.topic}
-                      src={item.imageSrc}
-                      alt={isActive ? item.imageAlt : ''}
-                      aria-hidden={isActive ? undefined : true}
-                      loading="lazy"
-                      className={`faq-index__img ${isActive ? 'is-active' : ''}`}
-                      style={{ objectPosition: item.imagePosition }}
-                    />
-                  );
-                })}
-              </figure>
             </div>
           </div>
         </section>
