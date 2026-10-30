@@ -359,18 +359,14 @@ export function App() {
               <BeforeAfterSlider
                 beforeImage="./assets/people/hero-woman-portrait.jpg"
                 afterImage="./assets/people/hero-woman-glow.jpg"
-                category="Rejuvenescimento Facial & Viço"
                 title="Renovação de Textura e Luminosidade"
-                description="Paciente apresentava opacidade e linhas finas de desidratação. Após o ciclo integrativo de bioestímulo e ativos dermocosméticos, a pele reconquistou viço e firmeza."
                 initialPosition={48}
               />
 
               <BeforeAfterSlider
                 beforeImage="./assets/people/treatment-secabarriga.jpg"
                 afterImage="./assets/people/treatment-crio.jpg"
-                category="Remodelação Abdominal"
                 title="Afinamento de Cintura & Redução de Medidas"
-                description="Combinação personalizada do Protocolo Seca-Barriga com Criolipólise de Alta Definição: redução notável de retenção hídrica e dobra adiposa com contorno harmonioso."
                 initialPosition={52}
               />
             </div>

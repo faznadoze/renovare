@@ -3689,18 +3689,15 @@ ol {
 }
 
 .celimax-ba-card {
-  background: #FFFFFF;
   border-radius: 28px;
-  padding: 16px 16px 24px;
   box-shadow: 0 14px 36px -10px rgba(25, 35, 18, 0.1);
-  border: 1px solid rgba(71, 90, 56, 0.08);
 }
 
 .celimax-ba-visual {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
-  border-radius: 20px;
+  border-radius: inherit;
   overflow: hidden;
   user-select: none;
   touch-action: pan-y;
@@ -3785,32 +3782,6 @@ ol {
   align-items: center;
   justify-content: center;
   color: #1E2816;
-}
-
-.celimax-ba-meta {
-  padding: 20px 8px 4px;
-}
-
-.celimax-ba-category {
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--olive-dark);
-}
-
-.celimax-ba-title {
-  font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: 1.25rem;
-  color: #171E12;
-  margin: 6px 0 10px;
-}
-
-.celimax-ba-desc {
-  font-size: 0.94rem;
-  line-height: 1.55;
-  color: #4C5844;
 }
 
 .celimax-center-cta {

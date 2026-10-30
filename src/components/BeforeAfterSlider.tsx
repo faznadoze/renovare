@@ -8,8 +8,6 @@ interface BeforeAfterSliderProps {
   beforeLabel?: string;
   afterLabel?: string;
   title: string;
-  category: string;
-  description: string;
   initialPosition?: number; // 0 to 100
 }
 
@@ -21,8 +19,6 @@ export function BeforeAfterSlider({
   beforeLabel = 'Antes',
   afterLabel = 'Depois',
   title,
-  category,
-  description,
   initialPosition = 50,
 }: BeforeAfterSliderProps) {
   const [sliderPosition, setSliderPosition] = useState(initialPosition);
@@ -186,12 +182,6 @@ export function BeforeAfterSlider({
             </svg>
           </div>
         </div>
-      </div>
-
-      <div className="celimax-ba-meta">
-        <span className="celimax-ba-category">{category}</span>
-        <h3 className="celimax-ba-title">{title}</h3>
-        <p className="celimax-ba-desc">{description}</p>
       </div>
     </div>
   );
