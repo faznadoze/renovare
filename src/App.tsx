@@ -293,8 +293,8 @@ export function App() {
           dealt
             .fromTo(
               card,
-              { yPercent: 80, rotate: tilt * 4, scale: 0.94 },
-              { yPercent: 0, rotate: tilt * 0.5, scale: 1, duration: 1, ease: 'power3.out' },
+              { yPercent: 80, rotate: tilt * 2, scale: 0.96 },
+              { yPercent: 0, rotate: 0, scale: 1, duration: 1, ease: 'power3.out' },
               0
             )
             .fromTo(card, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.16, ease: 'none' }, 0);
@@ -683,7 +683,7 @@ export function App() {
                 height={180}
               />
               {scatteredReviews.map((review, idx) => (
-                <ReviewRatingCard key={review.id} review={review} slot={idx + 1} />
+                <ReviewRatingCard key={review.id} review={review} slot={idx + 1} variant="quiet" />
               ))}
             </div>
 

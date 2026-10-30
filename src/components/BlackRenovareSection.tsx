@@ -123,7 +123,7 @@ export function BlackRenovareSection() {
     <section id="black-renovare" ref={sectionRef} className="black-renovare" aria-labelledby="black-renovare-title">
       <div
         className="black-renovare__grain"
-        style={{ backgroundImage: 'url(./assets/black/19adf.png)' }}
+        style={{ backgroundImage: 'url(./assets/black/grain-multiply.webp)' }}
         aria-hidden="true"
       />
 
