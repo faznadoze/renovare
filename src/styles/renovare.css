@@ -12,6 +12,15 @@
    - Typography: Aileron (Bold, Medium, Regular) + Cormorant Garamond Italic
    ========================================================================== */
 
+/* Figma imported face: Cormorant Garamond SemiBold Italic */
+@font-face {
+  font-family: "Cormorant Garamond:SemiBold Italic";
+  src: url("https://static.figma.com/font/CormorantGaramond-Italic_wght__1") format("woff2");
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+}
+
 :root {
   /* Core Palette Tokens */
   --olive-dark: #475A38;
@@ -3546,119 +3555,246 @@ ol {
   }
 }
 
+.celimax-procedures__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-family: var(--font-sans);
+  font-size: 13.12px;
+  font-weight: 400;
+  line-height: 20.336px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #475A38;
+}
+
+.celimax-procedures__eyebrow-rule {
+  width: 115.476px;
+  height: 1.118px;
+  background: linear-gradient(to right, rgba(71, 90, 56, 0.8), rgba(219, 228, 169, 0));
+}
+
+.celimax-procedures__all {
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid #475A38;
+  font-weight: 700;
+  font-size: 14.72px;
+  line-height: 22.816px;
+  color: #475A38;
+  white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .celimax-procedures__all:hover {
+    background-color: #EFF2EC;
+    color: #475A38;
+    border-color: #475A38;
+  }
+}
+
 .celimax-procedures__grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 28px;
-  align-items: center;
 }
 
-@media (min-width: 900px) {
-  .celimax-procedures__grid {
-    grid-template-columns: 1fr 1.05fr 1fr;
-    gap: 32px;
-  }
+.celimax-procedures__cell {
+  position: relative;
+  display: flex;
 }
 
 .celimax-card {
   position: relative;
+  flex: 1;
   background-color: #EFF2EC;
-  border-radius: 24px;
+  border-radius: 28px;
   padding: 36px 30px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: auto;
-  transition: transform 0.2s var(--ease-out);
-}
-
-@media (min-width: 900px) {
-  .celimax-card {
-    min-height: 380px;
-  }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .celimax-card:hover {
-    transform: translateY(-4px);
-  }
-}
-
-.celimax-card--highlight {
-  background-color: var(--moss-pale);
-  color: #15200E;
-  border: 1px solid rgba(71, 90, 56, 0.2);
-}
-
-.celimax-card--highlight .celimax-card__title {
-  color: #15200E;
-}
-
-.celimax-card--highlight .celimax-card__desc {
-  color: #2D3A24;
+  justify-content: flex-start;
 }
 
 .celimax-card__num {
   font-family: var(--font-sans);
-  font-weight: 800;
-  font-size: 2.35rem;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: var(--olive-dark);
-  margin-bottom: 30px;
-}
-
-.celimax-card--tilted .celimax-card__num {
-  color: #172110;
+  font-weight: 700;
+  font-size: 35.2px;
+  line-height: 54.56px;
+  letter-spacing: -1.408px;
+  color: #475A38;
+  transition: color 0.35s var(--ease-out);
 }
 
 .celimax-card__title {
+  padding-top: 24px;
   font-family: var(--font-sans);
   font-weight: 700;
-  font-size: 1.42rem;
-  line-height: 1.25;
-  letter-spacing: -0.025em;
+  font-size: 23.2px;
+  line-height: 29px;
+  letter-spacing: -0.464px;
   color: #182212;
-  margin-bottom: 16px;
 }
 
 .celimax-card__desc {
+  padding: 14px 0 24px;
   font-family: var(--font-sans);
-  font-size: 0.98rem;
-  line-height: 1.62;
+  font-weight: 400;
+  font-size: 15.68px;
+  line-height: 25.088px;
   color: #4C5844;
-  margin-bottom: 0;
-}
-
-.celimax-card--tilted .celimax-card__desc {
-  color: #26331C;
+  transition: color 0.35s var(--ease-out);
 }
 
 .celimax-card__link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  align-self: flex-start;
+  gap: 8px;
   font-family: var(--font-sans);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 14.72px;
+  line-height: 22.816px;
   text-decoration: none;
-  color: #182212;
-  margin-top: auto;
-  padding-top: 36px;
-  transition: gap 0.2s var(--ease-out), color 0.2s var(--ease-out);
+  color: #475A38;
+  border-radius: 6px;
+  transition: gap 0.2s var(--ease-out), color 0.35s var(--ease-out);
 }
 
-.celimax-card--tilted .celimax-card__link {
-  color: #172110;
+/* Two design arrows crossfade: olive at rest, ink on the lime card */
+.celimax-card__arrow {
+  position: relative;
+  width: 16.32px;
+  height: 16.32px;
+  flex-shrink: 0;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .celimax-card__link:hover {
-    gap: 10px;
-    color: var(--olive-dark);
+.celimax-card__arrow img {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  transition: opacity 0.35s var(--ease-out);
+}
+
+.celimax-card__arrow img + img {
+  opacity: 0;
+}
+
+@media (min-width: 900px) {
+  .celimax-procedures {
+    padding: 108px 0;
   }
-  .celimax-card--tilted .celimax-card__link:hover {
-    color: #000000;
+
+  .celimax-procedures__container {
+    max-width: 1360px;
+    padding: 0 40px;
+  }
+
+  .celimax-procedures .celimax-split-header {
+    align-items: flex-end;
+    gap: 32px;
+    margin-bottom: 56px;
+  }
+
+  .celimax-procedures .celimax-split-header > div {
+    min-width: 0;
+  }
+
+  .celimax-procedures__all {
+    flex-shrink: 0;
+  }
+
+  .celimax-section-title--procedures {
+    width: auto;
+    font-weight: 700;
+    font-size: clamp(2.25rem, 4.7vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  .celimax-section-title--procedures .editorial-serif {
+    font-family: "Cormorant Garamond:SemiBold Italic", var(--font-serif);
+    font-size: 1.3958em;
+    font-weight: 600;
+    letter-spacing: -0.48px;
+    line-height: 0;
+  }
+
+  .celimax-procedures__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  .celimax-card {
+    min-height: 424px;
+    transform-origin: 50% 50%;
+    transition:
+      transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.4s var(--ease-out);
+  }
+
+  .celimax-procedures__cell:hover,
+  .celimax-procedures__cell:focus-within {
+    z-index: 2;
+  }
+
+  /* Cards rest equal; the hovered or focused one fills lime, grows and tilts as in the design */
+  .celimax-procedures__cell:focus-within .celimax-card {
+    background-color: #DBE4A9;
+    transform: rotate(-10.79deg) scale(1.02);
+  }
+
+  .celimax-procedures__cell:focus-within .celimax-card__num,
+  .celimax-procedures__cell:focus-within .celimax-card__link {
+    color: #172110;
+  }
+
+  .celimax-procedures__cell:focus-within .celimax-card__desc {
+    color: #27351D;
+  }
+
+  .celimax-procedures__cell:focus-within .celimax-card__arrow img {
+    opacity: 0;
+  }
+
+  .celimax-procedures__cell:focus-within .celimax-card__arrow img + img {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 900px) and (hover: hover) and (pointer: fine) {
+  .celimax-procedures__cell:hover .celimax-card {
+    background-color: #DBE4A9;
+    transform: rotate(-10.79deg) scale(1.02);
+  }
+
+  .celimax-procedures__cell:hover .celimax-card__num,
+  .celimax-procedures__cell:hover .celimax-card__link {
+    color: #172110;
+  }
+
+  .celimax-procedures__cell:hover .celimax-card__desc {
+    color: #27351D;
+  }
+
+  .celimax-procedures__cell:hover .celimax-card__arrow img {
+    opacity: 0;
+  }
+
+  .celimax-procedures__cell:hover .celimax-card__arrow img + img {
+    opacity: 1;
+  }
+
+  .celimax-card__link:hover {
+    gap: 12px;
+  }
+}
+
+@media (min-width: 900px) and (prefers-reduced-motion: reduce) {
+  .celimax-procedures__cell:hover .celimax-card,
+  .celimax-procedures__cell:focus-within .celimax-card {
+    transform: none;
   }
 }
 
@@ -5138,7 +5274,11 @@ html.is-loading body {
     color: var(--olive-dark);
   }
 
-  .celimax-card--highlight {
+  .celimax-card__num {
+    display: none;
+  }
+
+  .celimax-procedures__cell:nth-child(2) .celimax-card {
     margin-inline: calc(-1 * clamp(20px, 4vw, 40px));
     padding-inline: clamp(20px, 4vw, 40px);
     border: 0;
@@ -5152,8 +5292,14 @@ html.is-loading body {
     margin-bottom: 12px;
   }
 
+  .celimax-card__title {
+    padding-top: 0;
+  }
+
   .celimax-card__desc {
+    padding: 0;
     font-size: 0.95rem;
+    line-height: 1.62;
   }
 
   .celimax-card__link {

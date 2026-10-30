@@ -40,6 +40,30 @@ const MANIFESTO_WORDS = MANIFESTO_SEGMENTS.flatMap((segment) =>
   segment.text.split(' ').map((word) => ({ word, emphasis: Boolean(segment.emphasis) }))
 );
 
+const PROCEDURE_CARDS = [
+  {
+    title: 'Criolipólise de Alta Definição',
+    description:
+      'Remodelagem corporal por congelamento seguro e seletivo das células de gordura. Elimina gordura localizada em flancos, abdômen e culotes sem tempo de recuperação cirúrgico.',
+    linkLabel: 'Consultar protocolo',
+    whatsappMessage: 'Olá! Quero saber mais sobre a Criolipólise de Alta Definição na Renovare.',
+  },
+  {
+    title: 'Ciclo Seca-Barriga & Detox',
+    description:
+      'Sinergia exclusiva de drenagem linfática médica, ultrassom cavitacional e ativos termogênicos botânicos. Efeito imediato na redução de inchaço, desintoxicação tecidual e afinamento da cintura.',
+    linkLabel: 'Agendar Seca-Barriga',
+    whatsappMessage: 'Olá! Quero agendar o Ciclo Seca-Barriga & Detox exclusivo da Renovare.',
+  },
+  {
+    title: 'Emagrecimento Integrativo & Firmeza',
+    description:
+      'Abordagem 360° que combina estímulo de colágeno dérmico, bioimpedância periódica e acompanhamento individualizado para redução de medidas preservando o tônus e a vitalidade da pele.',
+    linkLabel: 'Consultar protocolo',
+    whatsappMessage: 'Olá! Gostaria de informações sobre o Protocolo de Emagrecimento Integrativo.',
+  },
+];
+
 const REVIEW_COLUMNS = [
   FEATURED_GOOGLE_REVIEWS.slice(0, 3),
   FEATURED_GOOGLE_REVIEWS.slice(3, 5),
@@ -363,11 +387,15 @@ export function App() {
           </div>
         </section>
 
-        {/* 4. PROCEDURES: ASYMMETRIC GRID WITH TILTED LIME HIGHLIGHT CARD */}
+        {/* 4. PROCEDURES: THREE EQUAL CARDS; HOVER OR FOCUS TILTS ONE INTO THE LIME FEATURE */}
         <section id="procedimentos" className="celimax-procedures js-section-reveal">
           <div className="celimax-procedures__container">
             <div className="celimax-split-header js-reveal-item">
               <div>
+                <p className="celimax-procedures__eyebrow">
+                  <span>Nossos Procedimentos</span>
+                  <span className="celimax-procedures__eyebrow-rule" aria-hidden="true" />
+                </p>
                 <h2 className="celimax-section-title celimax-section-title--procedures">
                   Tecnologias que respeitam sua <em className="editorial-serif">natureza</em>
                 </h2>
@@ -378,84 +406,40 @@ export function App() {
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="celimax-btn-outline"
+                className="celimax-btn-outline celimax-procedures__all"
               >
                 <span>Ver todos os protocolos</span>
-                <ArrowUpRight size={16} />
+                <img src="./assets/38f39.svg" alt="" width={16} height={16} />
               </a>
             </div>
 
             <div className="celimax-procedures__grid js-reveal-item">
-              {/* Card 01 */}
-              <article className="celimax-card">
-                <div>
-                  <h3 className="celimax-card__title">Criolipólise de Alta Definição</h3>
-                  <p className="celimax-card__desc">
-                    Remodelagem corporal por congelamento seguro e seletivo das células de gordura. Elimina
-                    gordura localizada em flancos, abdômen e culotes sem tempo de recuperação cirúrgico.
-                  </p>
+              {PROCEDURE_CARDS.map((card, idx) => (
+                // The cell owns the hover so the tilted card edge never flickers in and out of :hover
+                <div key={card.title} className="celimax-procedures__cell">
+                  <article className="celimax-card">
+                    <div>
+                      <p className="celimax-card__num" aria-hidden="true">
+                        {String(idx + 1).padStart(2, '0')}
+                      </p>
+                      <h3 className="celimax-card__title">{card.title}</h3>
+                      <p className="celimax-card__desc">{card.description}</p>
+                    </div>
+                    <a
+                      href={buildWhatsAppUrl(card.whatsappMessage)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="celimax-card__link"
+                    >
+                      <span>{card.linkLabel}</span>
+                      <span className="celimax-card__arrow" aria-hidden="true">
+                        <img src="./assets/38f39.svg" alt="" width={16} height={16} />
+                        <img src="./assets/2e1e7.svg" alt="" width={16.32} height={16.32} />
+                      </span>
+                    </a>
+                  </article>
                 </div>
-                <a
-                  href={buildWhatsAppUrl(
-                    'Olá! Quero saber mais sobre a Criolipólise de Alta Definição na Renovare.'
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="celimax-card__link"
-                >
-                  <span>Consultar protocolo</span>
-                  <ArrowUpRight size={16} />
-                </a>
-              </article>
-
-              {/* Card 02 */}
-              <article className="celimax-card celimax-card--highlight">
-                <div>
-                  <h3 className="celimax-card__title">Ciclo Seca-Barriga & Detox</h3>
-                  <p className="celimax-card__desc">
-                    Sinergia exclusiva de drenagem linfática médica, ultrassom cavitacional e ativos
-                    termogênicos botânicos. Efeito imediato na redução de inchaço, desintoxicação tecidual e
-                    afinamento da cintura.
-                  </p>
-                </div>
-                <a
-                  href={buildWhatsAppUrl(
-                    'Olá! Quero agendar o Ciclo Seca-Barriga & Detox exclusivo da Renovare.'
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="celimax-card__link"
-                >
-                  <span>Agendar Seca-Barriga</span>
-                  <ArrowUpRight size={16} />
-                </a>
-              </article>
-
-              {/* Card 03 */}
-              <article className="celimax-card">
-                <div>
-                  <h3 className="celimax-card__title">
-                    Emagrecimento <br />
-                    Integrativo &amp; Firmeza
-                  </h3>
-                  <p className="celimax-card__desc">
-                    Abordagem 360° que combina estímulo de colágeno dérmico, bioimpedância periódica e
-                    acompanhamento individualizado para redução de medidas preservando o tônus e a
-                    vitalidade da pele.
-                  </p>
-                </div>
-                <a
-                  href={buildWhatsAppUrl(
-                    'Olá! Gostaria de informações sobre o Protocolo de Emagrecimento Integrativo.'
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="celimax-card__link"
-                >
-                  <span>Consultar protocolo</span>
-                  <ArrowUpRight size={16} />
-                </a>
-              </article>
+              ))}
             </div>
           </div>
         </section>
