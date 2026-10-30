@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CustomEase } from 'gsap/CustomEase';
@@ -12,7 +12,6 @@ import {
   MapPin,
   Clock,
   MessageCircle,
-  Star,
 } from 'lucide-react';
 import { RenovareLogo } from './components/RenovareLogo';
 import { BeforeAfterSlider } from './components/BeforeAfterSlider';
@@ -143,12 +142,17 @@ export function App() {
         <section className="celimax-hero celimax-hero--editorial">
           <div className="celimax-hero__container">
             <div className="celimax-hero__grid">
-              {/* Col 1: Heading & Actions */}
+              <div className="celimax-hero__backdrop" aria-hidden="true">
+                <img
+                  src="./assets/figma/hero-bg-figma.png"
+                  alt=""
+                  className="celimax-hero__backdrop-img"
+                  fetchPriority="high"
+                />
+              </div>
+
               <div className="celimax-hero__copy">
-                <div className="celimax-hero__meta-location">
-                  <MapPin size={15} aria-hidden="true" />
-                  <span>Rua do Rosário, 1181 · Bairro Angola · Betim</span>
-                </div>
+                <div className="celimax-hero__spacer" aria-hidden="true" />
                 <h1 className="celimax-hero__title">
                   <span className="celimax-hero__title-line">Revele a sua beleza real </span>
                   <span className="celimax-hero__title-line">
@@ -169,7 +173,7 @@ export function App() {
                     rel="noopener noreferrer"
                     className="celimax-hero__btn-main"
                   >
-                    <span>Agendar Avaliação no WhatsApp</span>
+                    <span>Agende sua avaliação</span>
                     <span className="celimax-hero__arrow-square" aria-hidden="true">
                       <ArrowUpRight size={18} strokeWidth={2.4} />
                     </span>
@@ -177,22 +181,6 @@ export function App() {
                   <a href="#procedimentos" className="celimax-hero__btn-secondary">
                     <span>Conhecer Protocolos</span>
                   </a>
-                </div>
-              </div>
-
-              {/* Col 2: Dra. Priscila Editorial Portrait */}
-              <div className="celimax-hero__visual">
-                <div className="celimax-hero__portrait-frame">
-                  <img
-                    src="./assets/figma/hero-bg-figma.png"
-                    alt="Dra. Priscila Couto na Clínica Renovare em Betim"
-                    className="celimax-hero__portrait-img"
-                    fetchPriority="high"
-                  />
-                  <div className="celimax-hero__portrait-badge">
-                    <span className="celimax-hero__badge-title">Dra. Priscila Couto</span>
-                    <span className="celimax-hero__badge-sub">Biomédica Esteta · Renovare Betim</span>
-                  </div>
                 </div>
               </div>
             </div>
