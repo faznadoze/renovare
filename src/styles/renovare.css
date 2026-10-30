@@ -6920,7 +6920,7 @@ html.lenis {
   place-items: center;
   width: 44px;
   height: 44px;
-  border-radius: 50%;
+  border-radius: 8px;
   background: rgba(248, 247, 247, 0.08);
   color: rgba(248, 247, 247, 0.86);
   transition:
