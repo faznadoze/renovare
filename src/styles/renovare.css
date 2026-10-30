@@ -2932,7 +2932,7 @@ ol {
 /* 1. FLOATING ISLAND NAVBAR */
 .celimax-nav-wrapper {
   position: fixed;
-  top: 16px;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 999;
@@ -2949,23 +2949,39 @@ ol {
   justify-content: flex-end;
   gap: 32px;
   padding: 10px 16px 10px 20px;
+  background: transparent;
+  -webkit-backdrop-filter: blur(0);
+  backdrop-filter: blur(0);
+  transition:
+    background-color 0.3s var(--ease-out),
+    backdrop-filter 0.3s var(--ease-out),
+    -webkit-backdrop-filter 0.3s var(--ease-out),
+    box-shadow 0.3s var(--ease-out);
+}
+
+.celimax-nav--filled {
   background: rgba(255, 255, 255, 0.94);
   -webkit-backdrop-filter: blur(40px);
   backdrop-filter: blur(40px);
-  transition: transform 0.25s var(--ease-out);
+  box-shadow: 0 10px 30px -22px rgba(15, 23, 10, 0.35);
 }
 
 .celimax-nav__brand {
   display: flex;
   align-items: center;
   text-decoration: none;
+  color: #F2F0E4;
+  transition: color 0.3s var(--ease-out);
+}
+
+.celimax-nav--filled .celimax-nav__brand {
   color: var(--olive-dark);
 }
 
 .celimax-nav__symbol {
   width: 36px;
   height: 36px;
-  color: var(--olive-dark);
+  color: inherit;
 }
 
 .celimax-nav__links {
@@ -2980,15 +2996,22 @@ ol {
 .celimax-nav__link {
   font-size: 0.92rem;
   font-weight: 600;
-  color: #384232;
+  color: #F2F0E4;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  transition: color 0.2s var(--ease-out);
+  transition: color 0.3s var(--ease-out);
+}
+
+.celimax-nav--filled .celimax-nav__link {
+  color: #384232;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .celimax-nav__link:hover {
+    color: var(--moss-pale);
+  }
+  .celimax-nav--filled .celimax-nav__link:hover {
     color: var(--olive-dark);
   }
 }
@@ -3095,9 +3118,6 @@ ol {
 }
 
 @media (max-width: 768px) {
-  .celimax-nav-wrapper {
-    top: 12px;
-  }
   .celimax-nav {
     padding: 8px 14px;
   }

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CustomEase } from 'gsap/CustomEase';
@@ -35,8 +35,17 @@ export function App() {
   const [patientName, setPatientName] = useState('');
   const [patientGoal, setPatientGoal] = useState('Ciclo Seca-Barriga & Desintoxicação');
   const [patientPeriod, setPatientPeriod] = useState('Manhã (08h às 12h)');
+  const [isHeaderFilled, setIsHeaderFilled] = useState(false);
 
   const currentDoctor = SPECIALISTS[currentDoctorIndex];
+
+  useEffect(() => {
+    const updateHeaderFill = () => setIsHeaderFilled(window.scrollY > 24);
+
+    updateHeaderFill();
+    window.addEventListener('scroll', updateHeaderFill, { passive: true });
+    return () => window.removeEventListener('scroll', updateHeaderFill);
+  }, []);
 
   const handlePrevDoctor = () => {
     setCurrentDoctorIndex((prev) => (prev > 0 ? prev - 1 : SPECIALISTS.length - 1));
@@ -95,9 +104,9 @@ export function App() {
     <div ref={containerRef} className="celimax-theme-wrapper">
       {/* 1. FLOATING ISLAND NAVBAR */}
       <div className="celimax-nav-wrapper">
-        <header className="celimax-nav">
+        <header className={`celimax-nav ${isHeaderFilled ? 'celimax-nav--filled' : ''}`}>
           <a href="#topo" className="celimax-nav__brand" aria-label="Renovare — Início">
-            <RenovareLogo variant="symbol" color="#475A38" className="celimax-nav__symbol" />
+            <RenovareLogo variant="symbol" color="currentColor" className="celimax-nav__symbol" />
           </a>
 
           <nav className="celimax-nav__links" aria-label="Navegação principal">
