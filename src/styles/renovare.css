@@ -6906,3 +6906,41 @@ html.lenis {
   width: 100%;
   max-width: 300px;
 }
+
+/* Footer: Instagram and WhatsApp as round icon links */
+.celimax-footer-col .celimax-footer-social {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.celimax-footer-col .celimax-footer-social__link {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(248, 247, 247, 0.08);
+  color: rgba(248, 247, 247, 0.86);
+  transition:
+    background-color 0.2s var(--ease-out),
+    color 0.2s var(--ease-out),
+    transform 0.16s var(--ease-out);
+}
+
+.celimax-footer-col .celimax-footer-social__link:active {
+  transform: scale(0.95);
+}
+
+.celimax-footer-col .celimax-footer-social__link:focus-visible {
+  outline: 2px solid var(--moss-pale);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .celimax-footer-col .celimax-footer-social__link:hover {
+    background: var(--moss-pale);
+    color: #1A2412;
+  }
+}

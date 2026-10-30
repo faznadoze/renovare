@@ -17,6 +17,7 @@ import { LoadingScreen, LOADING_DURATION_MS } from './components/LoadingScreen';
 import { BlackRenovareSection } from './components/BlackRenovareSection';
 import { ReviewStorySection } from './components/ReviewStorySection';
 import { VideoHero } from './components/VideoHero';
+import { InstagramIcon, WhatsAppIcon } from './components/SocialIcons';
 import { scrollPageTo, shouldSmoothScroll, snapThroughLenis, startSmoothScroll } from './animations/smoothScroll';
 import {
   CLINIC_ADDRESS,
@@ -874,14 +875,16 @@ export function App() {
             {/* Col 4 */}
             <div className="celimax-footer-col">
               <h4>Redes Sociais</h4>
-              <ul>
+              <ul className="celimax-footer-social">
                 <li>
                   <a
-                    href="https://www.instagram.com/renovare_betim"
+                    href="https://www.instagram.com/renovarebetim"
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="celimax-footer-social__link"
+                    aria-label="Instagram da Renovare (@renovarebetim)"
                   >
-                    Instagram (@renovare_betim)
+                    <InstagramIcon size={20} />
                   </a>
                 </li>
                 <li>
@@ -889,8 +892,10 @@ export function App() {
                     href={buildWhatsAppUrl('Olá! Vim pelo site da Renovare.')}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="celimax-footer-social__link"
+                    aria-label="Falar com a Renovare no WhatsApp"
                   >
-                    WhatsApp Direto
+                    <WhatsAppIcon size={20} />
                   </a>
                 </li>
               </ul>
