@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { RenovareLogo } from './RenovareLogo';
 import { buildWhatsAppUrl } from '../data/renovareContent';
 
 /*
- * Header modelled on lassie.ai: floating glass pills. Desktop has a centre pill (mark +
- * wordmark + section links) where a white highlight slides under the hovered item and
- * rests on the mark, and a right pill with the booking action. Scrolling down past 400px
+ * Header modelled on lassie.ai: floating glass pills holding white rounded chips. Desktop
+ * has a centre pill (mark + wordmark + section links) and a right pill with the booking
+ * action; hovering a chip dims all the others. Scrolling down past 400px
  * folds the wordmark away; scrolling up (or back above 360px, or hovering) unfolds it.
  * Phones show one pill: mark (+ wordmark until scrolled) and MENU, which opens a panel
  * of section links.
@@ -36,7 +36,6 @@ const BOOKING_URL = buildWhatsAppUrl(
 
 // Wordmark (75px) plus its 8px gap from the mark; both fold away together
 const WORDMARK_WIDTH = 83;
-const MOVE = { duration: 0.32, ease: 'power3.out' };
 const FOLD = { duration: 0.45, ease: 'power3.inOut' };
 
 function useCollapsedOnScroll() {
@@ -60,39 +59,15 @@ function useCollapsedOnScroll() {
 export function SiteHeader() {
   const [collapsed, setCollapsed] = useCollapsedOnScroll();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [litIndex, setLitIndex] = useState(0);
 
-  const navRef = useRef<HTMLElement>(null);
-  const highlightRef = useRef<HTMLSpanElement>(null);
-  const itemRefs = useRef<Array<HTMLAnchorElement | null>>([]);
   const wordmarkRef = useRef<HTMLSpanElement>(null);
-  const hoveredRef = useRef<number | null>(null);
 
   const mobileNavRef = useRef<HTMLElement>(null);
   const mobileWordmarkRef = useRef<HTMLSpanElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Slide the white highlight under an item (index 0 is the mark)
-  const moveHighlight = useCallback((index: number, animate = true) => {
-    const item = itemRefs.current[index];
-    const highlight = highlightRef.current;
-    if (!item || !highlight) return;
-    const props = { x: item.offsetLeft, width: item.offsetWidth };
-    if (animate) gsap.to(highlight, { ...props, ...MOVE, overwrite: 'auto' });
-    else gsap.set(highlight, props);
-    setLitIndex(index);
-  }, []);
-
-  useLayoutEffect(() => {
-    moveHighlight(0, false);
-    const onResize = () => moveHighlight(hoveredRef.current ?? 0, false);
-    window.addEventListener('resize', onResize);
-    document.fonts?.ready.then(() => moveHighlight(hoveredRef.current ?? 0, false));
-    return () => window.removeEventListener('resize', onResize);
-  }, [moveHighlight]);
-
-  // Fold / unfold the wordmark; the highlight follows the mark's changing width
+  // Fold / unfold the wordmark
   useEffect(() => {
     const folded = collapsed && !menuOpen;
     const targets = [wordmarkRef.current, mobileWordmarkRef.current].filter(Boolean);
@@ -100,11 +75,8 @@ export function SiteHeader() {
       width: folded ? 0 : WORDMARK_WIDTH,
       opacity: folded ? 0 : 1,
       ...FOLD,
-      onUpdate: () => {
-        if (hoveredRef.current === null) moveHighlight(0, false);
-      },
     });
-  }, [collapsed, menuOpen, moveHighlight]);
+  }, [collapsed, menuOpen]);
 
   // Phone panel: the pill widens to the screen and the panel grows from it; closing folds back faster
   useEffect(() => {
@@ -150,55 +122,23 @@ export function SiteHeader() {
     return () => window.removeEventListener('keydown', onKey);
   }, [menuOpen]);
 
-  const onItemEnter = (index: number) => {
-    hoveredRef.current = index;
-    moveHighlight(index);
-  };
-
-  const onNavLeave = () => {
-    hoveredRef.current = null;
-    moveHighlight(0);
-  };
-
   return (
     <header className="site-header">
       {/* Desktop: centre pill */}
       <nav
-        ref={navRef}
         className="site-header__pill site-header__pill--main"
         aria-label="Navegação principal"
         onMouseEnter={() => setCollapsed(false)}
-        onMouseLeave={onNavLeave}
       >
         <span className="site-header__frame" aria-hidden="true" />
-        <span ref={highlightRef} className="site-header__highlight" aria-hidden="true" />
-        <a
-          ref={(node) => {
-            itemRefs.current[0] = node;
-          }}
-          href="#topo"
-          className={`site-header__item site-header__item--brand ${litIndex === 0 ? 'is-lit' : ''}`}
-          aria-label="Renovare — início"
-          onMouseEnter={() => onItemEnter(0)}
-          onFocus={() => onItemEnter(0)}
-        >
+        <a href="#topo" className="site-header__item site-header__item--brand" aria-label="Renovare — início">
           <RenovareLogo variant="symbol" color="currentColor" className="site-header__symbol" />
           <span ref={wordmarkRef} className="site-header__wordmark" aria-hidden="true">
             <RenovareLogo variant="wordmark" color="currentColor" className="site-header__wordmark-svg" />
           </span>
         </a>
-        {SECTIONS.map((section, idx) => (
-          <a
-            key={section.href}
-            ref={(node) => {
-              itemRefs.current[idx + 1] = node;
-            }}
-            href={section.href}
-            className={`site-header__item ${litIndex === idx + 1 ? 'is-lit' : ''}`}
-            onMouseEnter={() => onItemEnter(idx + 1)}
-            onFocus={() => onItemEnter(idx + 1)}
-            onBlur={onNavLeave}
-          >
+        {SECTIONS.map((section) => (
+          <a key={section.href} href={section.href} className="site-header__item">
             {section.label}
           </a>
         ))}
@@ -222,7 +162,7 @@ export function SiteHeader() {
         <div className="site-header__mobile-row">
           <a
             href="#topo"
-            className="site-header__item site-header__item--brand is-lit"
+            className="site-header__item site-header__item--brand"
             aria-label="Renovare — início"
             onClick={() => setMenuOpen(false)}
           >

@@ -6771,6 +6771,7 @@ html.lenis {
   top: 16px;
   display: none;
   align-items: center;
+  gap: 4px;
   height: 40px;
   pointer-events: auto;
 }
@@ -6792,21 +6793,10 @@ html.lenis {
   width: calc(100% + 8px);
   height: 48px;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
+  border-radius: 12px;
   background: rgba(26, 36, 18, 0.46);
   -webkit-backdrop-filter: blur(13px) saturate(1.2);
   backdrop-filter: blur(13px) saturate(1.2);
-  pointer-events: none;
-}
-
-.site-header__highlight {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 40px;
-  border-radius: 12px;
-  background: #FFFFFF;
   pointer-events: none;
 }
 
@@ -6818,21 +6808,32 @@ html.lenis {
   height: 40px;
   padding: 0 16px;
   border: 0;
-  border-radius: 12px;
-  background: none;
+  border-radius: 8px;
+  background: #FFFFFF;
   font-family: var(--font-sans);
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1;
-  color: rgba(255, 255, 255, 0.92);
+  color: #1A2412;
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: opacity 0.25s ease, transform 0.16s var(--ease-out);
 }
 
-.site-header__item.is-lit {
-  color: #1A2412;
+.site-header__item:active {
+  transform: scale(0.97);
+}
+
+/* Hovering (or keyboard-focusing) one chip dims every other chip in the header */
+@media (hover: hover) and (pointer: fine) {
+  .site-header:has(.site-header__item:hover) .site-header__item:not(:hover) {
+    opacity: 0.4;
+  }
+}
+
+.site-header:has(.site-header__item:focus-visible) .site-header__item:not(:focus-visible) {
+  opacity: 0.4;
 }
 
 .site-header__item:focus-visible {
@@ -6841,16 +6842,13 @@ html.lenis {
 }
 
 .site-header__item--brand {
-  padding: 0 14px;
+  padding: 0 12px;
 }
 
 .site-header__symbol {
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-}
-
-.site-header__item--brand.is-lit .site-header__symbol {
+  width: 26px;
+  height: 26px;
   color: var(--olive-dark);
 }
 
@@ -6868,20 +6866,7 @@ html.lenis {
 }
 
 .site-header__item--cta {
-  background: var(--moss-pale);
-  color: #1A2412;
   font-weight: 600;
-  transition: background-color 0.2s var(--ease-out), transform 0.16s var(--ease-out);
-}
-
-.site-header__item--cta:active {
-  transform: scale(0.97);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .site-header__item--cta:hover {
-    background: #E5EEB8;
-  }
 }
 
 /* ---------- Phones and narrow screens ---------- */
@@ -6906,20 +6891,13 @@ html.lenis {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.site-header__mobile .site-header__item--brand {
-  background: #FFFFFF;
+  gap: 4px;
 }
 
 .site-header__menu-btn {
   font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.08em;
-}
-
-.site-header__mobile.is-open .site-header__menu-btn {
-  color: #1A2412;
 }
 
 .site-header__panel {
@@ -6929,7 +6907,7 @@ html.lenis {
   height: 0;
   margin-top: -40px;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 8px;
   background: #F8F7F7;
 }
 
@@ -6963,7 +6941,7 @@ html.lenis {
   justify-content: center;
   height: 48px;
   margin-top: 20px;
-  border-radius: 12px;
+  border-radius: 8px;
   background: var(--olive-dark);
   font-family: var(--font-sans);
   font-size: 1rem;
