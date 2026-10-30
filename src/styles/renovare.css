@@ -55,6 +55,47 @@
   font-display: swap;
 }
 
+/* Figma imported faces: Black Renovare section (Frame 15686) */
+@font-face {
+  font-family: "Urbanist:Regular";
+  src: url("https://static.figma.com/font/Urbanist_wght__2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Urbanist:Medium";
+  src: url("https://static.figma.com/font/Urbanist_wght__2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Urbanist:Bold";
+  src: url("https://static.figma.com/font/Urbanist_wght__2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Urbanist:ExtraBold";
+  src: url("https://static.figma.com/font/Urbanist_wght__2") format("woff2");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Varela:Regular";
+  src: url("https://static.figma.com/font/Varela-Regular_1") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   /* Core Palette Tokens */
   --olive-dark: #475A38;
@@ -6505,5 +6546,485 @@ html.is-loading body {
   .celimax-doctor-card .celimax-doctor-stage__portrait img,
   .celimax-doctor-card .celimax-doctor-stage__content {
     transform: none;
+  }
+}
+
+/* ==========================================================================
+   BLACK RENOVARE 2026 — campaign banner (Figma frame 15686, 2976 × 1179)
+   Desktop sizes are the frame's px converted to vw (1px = 0.0336vw).
+   The protocol list is the live part: chosen protocols get the black slab
+   and go straight into the WhatsApp message.
+   ========================================================================== */
+.black-renovare {
+  --black-field: #283221;
+  --black-tape-olive: #3F5131;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 39.6vw;
+  padding: clamp(132px, 11.6vw, 360px) var(--page-margin) clamp(80px, 6.4vw, 180px);
+  background: var(--black-field);
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.black-renovare__grain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+  /* Near-white paper noise: multiply keeps the olive field and leaves only the grain */
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* Campaign tapes */
+.black-renovare__tapes {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 9vw;
+  pointer-events: none;
+}
+
+.black-tape {
+  position: absolute;
+  left: -2.1vw;
+  width: 110.8vw;
+  height: clamp(24px, 1.864vw, 64px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.black-tape--olive {
+  top: calc(4.47vw - clamp(24px, 1.864vw, 64px) / 2);
+  background: var(--black-tape-olive);
+  transform: rotate(3.82deg);
+}
+
+.black-tape--black {
+  top: calc(3.12vw - clamp(24px, 1.864vw, 64px) / 2);
+  background: #000000;
+  transform: rotate(-2.51deg);
+}
+
+.black-tape__track {
+  display: flex;
+  flex-shrink: 0;
+  white-space: pre;
+  will-change: transform;
+}
+
+/* Gilroy (Figma) could not be resolved; Urbanist carries the tapes */
+.black-tape__item {
+  padding-right: 2.6em;
+  font-size: clamp(12px, 1.42vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+}
+
+.black-tape__light {
+  font-family: "Urbanist:Regular", var(--font-sans);
+  font-weight: 400;
+}
+
+.black-tape__bold {
+  font-family: "Urbanist:Bold", var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.008em;
+}
+
+/* Stickers */
+.black-sticker {
+  --sticker: 6.15vw;
+  position: absolute;
+  z-index: 1;
+  width: var(--sticker);
+  height: var(--sticker);
+  margin: calc(var(--sticker) / -2) 0 0 calc(var(--sticker) / -2);
+  pointer-events: none;
+}
+
+.black-sticker__spin {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.black-sticker__star {
+  position: absolute;
+  inset: 0;
+}
+
+.black-sticker__star img {
+  position: absolute;
+  inset: 1.65% 2.8%;
+  display: block;
+  width: 94.4%;
+  height: 96.7%;
+}
+
+.black-sticker__text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-family: "Varela:Regular", var(--font-sans);
+  font-weight: 400;
+  font-size: calc(var(--sticker) * 0.176);
+  line-height: 0.96;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+
+/* The two small stickers sit out of focus, as in the frame */
+.black-sticker--top-left {
+  --sticker: 6.15vw;
+  left: 9.27vw;
+  top: 12.36vw;
+  filter: blur(1.5px);
+}
+
+.black-sticker--bottom-left {
+  --sticker: 5.07vw;
+  left: 7.53vw;
+  top: 32.46vw;
+  filter: blur(1.5px);
+}
+
+.black-sticker--right {
+  --sticker: 10.6vw;
+  left: 91.8vw;
+  top: 24.1vw;
+}
+
+/* Wordmark and slab */
+.black-renovare__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1720px;
+  margin: 0 auto;
+}
+
+.black-hero__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.25vw;
+}
+
+.black-hero__title {
+  margin: 0;
+  font-size: clamp(3.4rem, 8.89vw, 16rem);
+  line-height: 0.862;
+  letter-spacing: -0.0024em;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+
+.black-hero__mask {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+  vertical-align: top;
+}
+
+.black-hero__word {
+  display: inline-block;
+}
+
+.black-hero__word--light {
+  font-family: "Urbanist:Regular", var(--font-sans);
+  font-weight: 400;
+}
+
+.black-hero__word--bold {
+  font-family: "Urbanist:Bold", var(--font-sans);
+  font-weight: 700;
+}
+
+.black-hero__slab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  min-width: min(54.8vw, 100%);
+  max-width: 100%;
+  min-height: clamp(34px, 2.35vw, 80px);
+  margin: 0;
+  padding: 0 1em;
+  background: #000000;
+  font-size: clamp(1rem, 2.11vw, 3.8rem);
+  line-height: 0.862;
+  letter-spacing: 0.005em;
+  white-space: pre;
+  clip-path: inset(0% 0% 0% 0%);
+}
+
+.black-hero__slab-regular {
+  font-family: "Urbanist:Regular", var(--font-sans);
+  font-weight: 400;
+}
+
+.black-hero__slab-bold {
+  font-family: "Urbanist:Bold", var(--font-sans);
+  font-weight: 700;
+}
+
+.black-hero__slab-extra {
+  font-family: "Urbanist:ExtraBold", var(--font-sans);
+  font-weight: 800;
+}
+
+/* Protocol picker */
+.black-treatments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(1vw - 0.5em);
+  margin-top: 4.5vw;
+  font-size: clamp(0.95rem, 1.617vw, 2.9rem);
+}
+
+.black-treatments__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.black-treatments__cell {
+  display: inline-flex;
+  align-items: center;
+}
+
+.black-treatments__dot {
+  display: block;
+  flex-shrink: 0;
+  width: clamp(5px, 0.27vw, 10px);
+  height: clamp(5px, 0.27vw, 10px);
+  margin-inline: calc(0.96vw - 0.5em);
+}
+
+.black-treatment {
+  position: relative;
+  isolation: isolate;
+  padding: 0.42em 0.5em;
+  border: 0;
+  background: none;
+  color: #FFFFFF;
+  font-family: "Urbanist:Medium", var(--font-sans);
+  font-weight: 500;
+  font-size: 1em;
+  line-height: 0.862;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 160ms var(--ease-out), color 200ms ease;
+}
+
+/* Choosing a protocol tapes the black slab under it */
+.black-treatment::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #000000;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 260ms var(--ease-out);
+}
+
+.black-treatment.is-on::before {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.black-treatment__label {
+  display: block;
+  /* Trim to cap height like the Figma text, so dots and the slab centre on the capitals */
+  text-box: trim-both cap alphabetic;
+}
+
+.black-treatment:active {
+  transform: scale(0.97);
+}
+
+.black-treatment:focus-visible {
+  outline: 2px solid var(--moss-pale);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .black-treatment:not(.is-on):hover {
+    color: var(--moss-pale);
+  }
+}
+
+.black-hero__action {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px 24px;
+  margin-top: clamp(36px, 3.4vw, 96px);
+}
+
+.black-hero__count {
+  margin: 0;
+  font-family: "Urbanist:Medium", var(--font-sans);
+  font-weight: 500;
+  font-size: 1.0625rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.black-hero__cta.celimax-btn-cta {
+  gap: 14px;
+  padding: 5px 5px 5px 24px;
+  font-size: 1rem;
+}
+
+.black-hero__cta .celimax-btn-arrow-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+}
+
+/* Phones: the banner becomes its own vertical poster */
+@media (max-width: 719px) {
+  .black-renovare {
+    min-height: 0;
+    padding: 112px 16px 72px;
+  }
+
+  .black-renovare__tapes {
+    height: 96px;
+  }
+
+  .black-tape {
+    left: -8vw;
+    width: 116vw;
+    height: 26px;
+  }
+
+  .black-tape--olive {
+    top: 44px;
+  }
+
+  .black-tape--black {
+    top: 22px;
+  }
+
+  .black-tape__item {
+    font-size: 12px;
+  }
+
+  .black-hero__head {
+    gap: 22px;
+  }
+
+  .black-hero__title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: clamp(3rem, 15.5vw, 4.6rem);
+    line-height: 0.9;
+  }
+
+  .black-hero__slab {
+    width: 100%;
+    min-height: 0;
+    padding: 10px 14px;
+    font-size: 1rem;
+    line-height: 1.25;
+    white-space: normal;
+    flex-wrap: wrap;
+  }
+
+  .black-hero__slab-bold {
+    white-space: pre;
+  }
+
+  .black-treatments {
+    gap: 8px;
+    margin-top: 36px;
+    font-size: 0.875rem;
+  }
+
+  .black-treatments__row {
+    gap: 8px;
+  }
+
+  .black-treatments__row {
+    display: contents;
+  }
+
+  .black-treatments {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .black-treatments__dot {
+    display: none;
+  }
+
+  /* On touch the chips need a visible surface: a tone step, not a line */
+  .black-treatment {
+    padding: 12px 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    line-height: 1;
+  }
+
+  .black-treatment::before {
+    border-radius: inherit;
+  }
+
+  .black-hero__action {
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 32px;
+  }
+
+  .black-hero__cta.celimax-btn-cta {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .black-sticker--bottom-left {
+    display: none;
+  }
+
+  .black-sticker--top-left {
+    --sticker: 56px;
+    left: auto;
+    right: 6px;
+    top: 100px;
+  }
+
+  .black-sticker--right {
+    --sticker: 84px;
+    left: -22px;
+    top: 82px;
+    margin: 0;
+  }
+
+  .black-sticker--top-left {
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .black-treatment,
+  .black-treatment::before {
+    transition: none;
   }
 }

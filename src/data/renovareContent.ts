@@ -98,6 +98,26 @@ export function buildWhatsAppUrl(customMessage: string): string {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(customMessage)}`;
 }
 
+/* Black Renovare 2026: protocols included in the campaign (Figma frame 15686) */
+export const BLACK_RENOVARE_TREATMENTS = [
+  'Emagrecimento',
+  'Depilação a laser',
+  'Criolipólise',
+  'Definição muscular',
+  'Clareamento a laser',
+  'Glow facial',
+  'Botox',
+];
+
+export function buildBlackRenovareMessage(selected: string[]): string {
+  if (!selected.length) {
+    return 'Olá! Vim pelo site e quero conhecer as condições exclusivas da Black Renovare 2026.';
+  }
+  const list =
+    selected.length === 1 ? selected[0] : `${selected.slice(0, -1).join(', ')} e ${selected[selected.length - 1]}`;
+  return `Olá! Vim pelo site e quero garantir minha condição da Black Renovare 2026 para: ${list}.`;
+}
+
 export const RE_WORDS: ReWordItem[] = [
   {
     verb: 'renovar',

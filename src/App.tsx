@@ -15,6 +15,7 @@ import { RenovareLogo } from './components/RenovareLogo';
 import { BeforeAfterSlider } from './components/BeforeAfterSlider';
 import { LoadingScreen, LOADING_DURATION_MS } from './components/LoadingScreen';
 import { ReviewRatingCard } from './components/ReviewRatingCard';
+import { BlackRenovareSection } from './components/BlackRenovareSection';
 import { createReviewOrbit } from './animations/reviewOrbit';
 import {
   CLINIC_ADDRESS,
@@ -535,6 +536,9 @@ export function App() {
             </div>
           </div>
         </section>
+
+        {/* 3b. BLACK RENOVARE 2026: CAMPAIGN BANNER (Figma frame 15686) WITH A PROTOCOL PICKER */}
+        <BlackRenovareSection />
 
         {/* 4. PROCEDURES: THREE EQUAL CARDS; HOVER OR FOCUS TILTS ONE INTO THE LIME FEATURE */}
         <section id="procedimentos" className="celimax-procedures js-section-reveal">
