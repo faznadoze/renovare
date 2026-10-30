@@ -3664,6 +3664,12 @@ ol {
     opacity: 0;
   }
 
+  /* Quiet paper cards over the dark hero: three lines of the review keep the stack compact */
+  .celimax-hero__ratings .celimax-hero__rating .review-quiet__quote {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+
   .celimax-hero__ratings .celimax-hero__rating.review-rating--slot-1 { bottom: 16px; z-index: 3; }
   .celimax-hero__ratings .celimax-hero__rating.review-rating--slot-2 { right: -32px; bottom: calc(16px + var(--rating-step)); z-index: 2; }
   .celimax-hero__ratings .celimax-hero__rating.review-rating--slot-3 { bottom: calc(16px + 2 * var(--rating-step)); z-index: 1; }

@@ -31,6 +31,11 @@ import {
 gsap.registerPlugin(ScrollTrigger, CustomEase, useGSAP);
 
 const EMIL_EASE_OUT = CustomEase.create('emilEaseOut', 'M0,0 C0.23,1 0.32,1 1,1');
+// Fast in, slow through the middle (slope ~0.27, never zero), fast out: a drift that never parks
+const HERO_DRIFT_EASE = CustomEase.create(
+  'heroDrift',
+  'M0,0 C0.2,0.38 0.35,0.46 0.5,0.5 0.65,0.54 0.8,0.62 1,1'
+);
 
 const MANIFESTO_SEGMENTS = [
   { text: 'Não viemos consertar você. Viemos' },
@@ -257,22 +262,20 @@ export function App() {
         );
       });
 
-      // Desktop rating cards: 2s after the loading delay they rise from behind the paragraph, hold 3s, retreat
+      // Desktop rating cards: 2s after the loading delay each card drifts up in one continuous
+      // move: it fades in rising, slows (never stops) mid-way, then keeps rising as it fades out
       heroMedia.add('(min-width: 1280px)', () => {
         const ratingCards = gsap.utils.toArray<HTMLElement>('.celimax-hero__rating');
         if (!ratingCards.length) return;
-        gsap
-          .timeline({ delay: LOADING_DURATION_MS / 1000 + 0.12 + 2 })
-          .fromTo(
-            ratingCards,
-            { autoAlpha: 0, y: 56 },
-            { autoAlpha: 1, y: 0, duration: 0.9, ease: EMIL_EASE_OUT, stagger: 0.16 }
-          )
-          .to(
-            ratingCards,
-            { autoAlpha: 0, y: 40, duration: 0.7, ease: 'power2.in', stagger: { each: 0.12, from: 'end' } },
-            '+=3'
-          );
+        const DRIFT = 5.6;
+        const drift = gsap.timeline({ delay: LOADING_DURATION_MS / 1000 + 0.12 + 2 });
+        ratingCards.forEach((card, idx) => {
+          const at = idx * 0.18;
+          drift
+            .fromTo(card, { y: 64 }, { y: -72, duration: DRIFT, ease: HERO_DRIFT_EASE }, at)
+            .fromTo(card, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1, ease: 'power2.out' }, at)
+            .to(card, { autoAlpha: 0, duration: 1.6, ease: 'power1.in' }, at + DRIFT - 1.6);
+        });
       });
 
       // Manifesto words ink from gray to olive as the statement crosses the viewport
@@ -436,6 +439,7 @@ export function App() {
                         review={review}
                         slot={idx + 1}
                         revealOnScroll={false}
+                        variant="quiet"
                         className="celimax-hero__rating"
                       />
                     ))}
