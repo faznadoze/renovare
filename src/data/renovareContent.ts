@@ -525,15 +525,6 @@ export const FIRST_SESSION_STEPS: FirstSessionStep[] = [
 
 export const FAQ_ITEMS: FaqItem[] = [
   {
-    topic: 'Black Renovare',
-    question: 'Como funcionam as condições da Black da Renovare?',
-    answer:
-      'Durante a temporada da Black (com fechamento em 27 de novembro de 2026), liberamos lotes limitados de avaliação e pacotes combinados com condições especiais para pacientes agendadas pelo WhatsApp, mantendo o mesmo tempo de cabine e rigor clínico de todo o ano.',
-    imageSrc: './assets/people/pri-capa.jpg',
-    imageAlt: 'Profissional sorrindo em uma sala de atendimento da clínica',
-    imagePosition: '62% center',
-  },
-  {
     topic: 'Avaliação',
     question: 'Por que todo tratamento na Renovare começa por uma avaliação?',
     answer:
