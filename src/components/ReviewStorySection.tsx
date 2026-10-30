@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react';
 import { ArrowUpRight } from 'lucide-react';
 import { ReviewRatingCard } from './ReviewRatingCard';
 import { GOOGLE_REVIEWS_SHARE_URL, type GoogleReviewItem } from '../data/renovareContent';
+import { shouldSmoothScroll, snapThroughLenis } from '../animations/smoothScroll';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -112,7 +113,10 @@ export function ReviewStorySection({ reviews }: ReviewStorySectionProps) {
               scrub: 0.6,
               refreshPriority: 2,
               invalidateOnRefresh: true,
-              snap: { snapTo: 'labels', duration: { min: 0.2, max: 0.6 }, delay: 0.1, ease: 'power1.inOut' },
+              // Native snap without smooth scroll; with Lenis the settle runs through it (below)
+              snap: shouldSmoothScroll()
+                ? undefined
+                : { snapTo: 'labels', duration: { min: 0.2, max: 0.6 }, delay: 0.1, ease: 'power1.inOut' },
               onRefresh: () => {
                 measure();
                 placeAll();
@@ -168,7 +172,14 @@ export function ReviewStorySection({ reviews }: ReviewStorySectionProps) {
             turnStart
           );
 
+          const stopSnap = tl.scrollTrigger
+            ? snapThroughLenis(tl.scrollTrigger, () =>
+                Object.values(tl.labels).map((time) => time / tl.duration())
+              )
+            : () => {};
+
           return () => {
+            stopSnap();
             gsap.set(cards, { clearProps: 'transform,opacity,visibility' });
             section.classList.remove('is-sequenced');
           };

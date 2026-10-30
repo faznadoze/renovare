@@ -7150,3 +7150,25 @@ html.is-loading body {
     transition: none;
   }
 }
+
+/* Lenis smooth scroll (desktop pointers): it owns the easing, so native smooth scroll steps aside */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis {
+  scroll-behavior: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}

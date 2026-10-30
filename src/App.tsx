@@ -17,6 +17,7 @@ import { LoadingScreen, LOADING_DURATION_MS } from './components/LoadingScreen';
 import { ReviewRatingCard } from './components/ReviewRatingCard';
 import { BlackRenovareSection } from './components/BlackRenovareSection';
 import { ReviewStorySection } from './components/ReviewStorySection';
+import { scrollPageTo, shouldSmoothScroll, snapThroughLenis, startSmoothScroll } from './animations/smoothScroll';
 import {
   CLINIC_ADDRESS,
   CLINIC_HOURS,
@@ -98,6 +99,9 @@ export function App() {
   const headerRef = useRef<HTMLElement>(null);
   const doctorTrackRef = useRef<HTMLDivElement>(null);
   const doctorScrollFrame = useRef<number | null>(null);
+
+  // Smooth, slightly delayed wheel scroll on desktop pointers (native on touch / reduced motion)
+  useEffect(() => startSmoothScroll(LOADING_DURATION_MS), []);
 
   // Header fill follows scroll progress (0 → 1 over the first 160px), eased and
   // damped per frame so the frosted surface fades in instead of snapping on.
@@ -215,10 +219,7 @@ export function App() {
       window.setTimeout(() => {
         faqScrollTargetRef.current = null;
       }, 1400);
-      window.scrollTo({
-        top: pin.start + (pin.end - pin.start) * (index / (FAQ_ITEMS.length - 1)),
-        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-      });
+      scrollPageTo(pin.start + (pin.end - pin.start) * (index / (FAQ_ITEMS.length - 1)));
     }
     setActiveFaqIndex(index);
   }
@@ -307,12 +308,15 @@ export function App() {
           pin: true,
           refreshPriority: 1,
           invalidateOnRefresh: true,
-          snap: {
-            snapTo: 1 / (topicCount - 1),
-            duration: { min: 0.2, max: 0.5 },
-            delay: 0.08,
-            ease: 'power2.inOut',
-          },
+          // Native snap without smooth scroll; with Lenis the settle runs through it (below)
+          snap: shouldSmoothScroll()
+            ? undefined
+            : {
+                snapTo: 1 / (topicCount - 1),
+                duration: { min: 0.2, max: 0.5 },
+                delay: 0.08,
+                ease: 'power2.inOut',
+              },
           onUpdate: (self) => {
             const next = Math.round(self.progress * (topicCount - 1));
             const target = faqScrollTargetRef.current;
@@ -326,8 +330,12 @@ export function App() {
           },
         });
         faqPinRef.current = pin;
+        const stopSnap = snapThroughLenis(pin, () =>
+          Array.from({ length: topicCount }, (_, idx) => idx / (topicCount - 1))
+        );
 
         return () => {
+          stopSnap();
           faqPinRef.current = null;
         };
       });
