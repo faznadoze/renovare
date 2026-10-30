@@ -29,6 +29,16 @@ gsap.registerPlugin(ScrollTrigger, CustomEase, useGSAP);
 
 const EMIL_EASE_OUT = CustomEase.create('emilEaseOut', 'M0,0 C0.23,1 0.32,1 1,1');
 
+const MANIFESTO_SEGMENTS = [
+  { text: 'Não acreditamos em consertar. Acreditamos em' },
+  { text: 'revelar', emphasis: true },
+  { text: 'a versão de você que já existia antes do mundo ditar quem você deveria ser.' },
+];
+const MANIFESTO_TEXT = MANIFESTO_SEGMENTS.map((segment) => segment.text).join(' ');
+const MANIFESTO_WORDS = MANIFESTO_SEGMENTS.flatMap((segment) =>
+  segment.text.split(' ').map((word) => ({ word, emphasis: Boolean(segment.emphasis) }))
+);
+
 export function App() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [openFaqIndex, setOpenFaqIndex] = useState<number>(0); // First item open matching Celimax
@@ -77,6 +87,19 @@ export function App() {
         .fromTo('.celimax-hero__copy', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85 })
         .fromTo('.celimax-hero__right', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85 }, '-=0.55')
         .fromTo('.celimax-hero__bg-frame', { scale: 1.03, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 1.2 }, 0);
+
+      // Manifesto words ink from gray to olive as the statement crosses the viewport
+      gsap.to('.celimax-manifesto__word', {
+        color: '#475A38',
+        ease: 'none',
+        stagger: 0.12,
+        scrollTrigger: {
+          trigger: '.celimax-manifesto__quote',
+          start: 'top 82%',
+          end: 'bottom 42%',
+          scrub: 0.7,
+        },
+      });
 
       // Progressive entrance without leaving unscrollable content hidden
       const sections = gsap.utils.toArray<HTMLElement>('.js-section-reveal');
@@ -210,10 +233,18 @@ export function App() {
               <span className="celimax-manifesto__eyebrow-line celimax-manifesto__eyebrow-line--reverse" aria-hidden="true" />
             </div>
             <h2 className="celimax-manifesto__quote">
-              Não acreditamos em consertar. Acreditamos em{' '}
-              <em>revelar</em>{' '}
-              <span className="celimax-manifesto__highlight">
-                a versão de você que já existia antes do mundo ditar quem você deveria ser.
+              <span className="sr-only">{MANIFESTO_TEXT}</span>
+              <span aria-hidden="true">
+                {MANIFESTO_WORDS.map(({ word, emphasis }, idx) => (
+                  <React.Fragment key={`${word}-${idx}`}>
+                    {idx > 0 && ' '}
+                    {emphasis ? (
+                      <em className="celimax-manifesto__word">{word}</em>
+                    ) : (
+                      <span className="celimax-manifesto__word">{word}</span>
+                    )}
+                  </React.Fragment>
+                ))}
               </span>
             </h2>
             <p className="celimax-manifesto__sub">
