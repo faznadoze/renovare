@@ -553,17 +553,6 @@ export function App() {
                   Tecnologias que respeitam sua <em className="editorial-serif">natureza</em>
                 </h2>
               </div>
-              <a
-                href={buildWhatsAppUrl(
-                  'Olá! Gostaria de consultar todos os procedimentos e protocolos estéticos da Renovare.'
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="celimax-btn-outline celimax-procedures__all"
-              >
-                <span>Ver todos os protocolos</span>
-                <img src="./assets/38f39.svg" alt="" width={16} height={16} />
-              </a>
             </div>
 
             <div className="celimax-procedures__grid js-reveal-item">

@@ -3890,25 +3890,6 @@ ol {
   background: linear-gradient(to right, rgba(71, 90, 56, 0.8), rgba(219, 228, 169, 0));
 }
 
-.celimax-procedures__all {
-  gap: 8px;
-  padding: 10px 20px;
-  border: 1px solid #475A38;
-  font-weight: 700;
-  font-size: 14.72px;
-  line-height: 22.816px;
-  color: #475A38;
-  white-space: nowrap;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .celimax-procedures__all:hover {
-    background-color: #EFF2EC;
-    color: #475A38;
-    border-color: #475A38;
-  }
-}
-
 .celimax-procedures__grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -4013,10 +3994,6 @@ ol {
 
   .celimax-procedures .celimax-split-header > div {
     min-width: 0;
-  }
-
-  .celimax-procedures__all {
-    flex-shrink: 0;
   }
 
   .celimax-section-title--procedures {
