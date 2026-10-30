@@ -6827,25 +6827,27 @@ html.lenis {
   display: block;
 }
 
-/* Neutral scrim under the headline only; the rest of the picture stays clear */
+/* Neutral scrim: an even veil for the centred headline, a little deeper at the top for the nav */
 .video-hero__scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(15, 20, 10, 0.28) 0%, rgba(15, 20, 10, 0) 26%, rgba(15, 20, 10, 0) 48%, rgba(15, 20, 10, 0.62) 100%);
+  background: linear-gradient(180deg, rgba(15, 20, 10, 0.5) 0%, rgba(15, 20, 10, 0.34) 22%, rgba(15, 20, 10, 0.34) 100%);
   pointer-events: none;
 }
 
+/* Headline centred on the picture */
 .video-hero__content {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 0 var(--page-margin) clamp(40px, 9vh, 96px);
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 80px var(--page-margin) 48px;
+  text-align: center;
 }
 
 .video-hero__title {
   max-width: 11em;
-  margin: 0;
+  margin: 0 auto;
   font-family: var(--font-sans);
   font-size: clamp(2.6rem, 5.4vw, 5.2rem);
   font-weight: 700;
@@ -6898,7 +6900,7 @@ html.lenis {
 
 @media (max-width: 720px) {
   .video-hero__title {
-    max-width: 9.5em;
+    max-width: 9em;
     font-size: clamp(2.4rem, 11vw, 3.4rem);
     line-height: 1;
   }
