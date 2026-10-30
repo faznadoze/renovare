@@ -15,6 +15,7 @@ import { RenovareLogo } from './components/RenovareLogo';
 import { BeforeAfterSlider } from './components/BeforeAfterSlider';
 import { LoadingScreen, LOADING_DURATION_MS } from './components/LoadingScreen';
 import { ReviewRatingCard } from './components/ReviewRatingCard';
+import { createReviewOrbit } from './animations/reviewOrbit';
 import {
   CLINIC_ADDRESS,
   CLINIC_HOURS,
@@ -233,23 +234,34 @@ export function App() {
         },
       });
 
-      // Testimonials pop in once; each group entering the viewport reveals in random order
       const reviewCards = gsap.utils.toArray<HTMLElement>('.js-review-pop');
-      gsap.set(reviewCards, { autoAlpha: 0, scale: 0.9, y: 18 });
-      ScrollTrigger.batch(reviewCards, {
-        start: 'top 90%',
-        once: true,
-        interval: 0.15,
-        onEnter: (batch) =>
-          gsap.to(gsap.utils.shuffle([...batch]), {
-            autoAlpha: 1,
-            scale: 1,
-            y: 0,
-            duration: 0.62,
-            ease: 'back.out(1.5)',
-            stagger: 0.11,
-            overwrite: true,
-          }),
+      const reviewStage = document.querySelector<HTMLElement>('.review-scatter');
+      const reviewMedia = gsap.matchMedia();
+
+      // Testimonials pop in once; each group entering the viewport reveals in random order
+      reviewMedia.add('(max-width: 1279px)', () => {
+        gsap.set(reviewCards, { autoAlpha: 0, scale: 0.9, y: 18 });
+        ScrollTrigger.batch(reviewCards, {
+          start: 'top 90%',
+          once: true,
+          interval: 0.15,
+          onEnter: (batch) =>
+            gsap.to(gsap.utils.shuffle([...batch]), {
+              autoAlpha: 1,
+              scale: 1,
+              y: 0,
+              duration: 0.62,
+              ease: 'back.out(1.5)',
+              stagger: 0.11,
+              overwrite: true,
+            }),
+        });
+      });
+
+      // Wide screens: the same pop-in, then the cards orbit the lily
+      reviewMedia.add('(min-width: 1280px)', () => {
+        if (!reviewStage || !reviewCards.length) return;
+        return createReviewOrbit(reviewStage, reviewCards);
       });
 
       // Progressive entrance without leaving unscrollable content hidden

@@ -4636,6 +4636,17 @@ ol {
   .review-rating--slot-4 { left: 76.339%; top: 215.33px; }
   .review-rating--slot-5 { left: 64.018%; top: 434.33px; }
   .review-rating--slot-6 { left: 26.964%; top: 144.33px; }
+
+  /* Orbit mode (JS): cards are placed from the stage centre; the lily sits between far and near cards */
+  .review-scatter.is-orbiting .review-rating {
+    left: 50%;
+    top: 50%;
+    will-change: transform, opacity;
+  }
+
+  .review-scatter.is-orbiting .review-scatter__lily {
+    z-index: 51;
+  }
 }
 
 @media (max-width: 719px) {
