@@ -4513,3 +4513,493 @@ ol {
     width: 95%;
   }
 }
+
+/* ==========================================================================
+   MOBILE EDITORIAL COLUMN
+   On phones, typography and hairline rules carry the structure. Photography
+   moves horizontally, and the lime band marks only featured or open content.
+   ========================================================================== */
+@media (max-width: 719px) {
+  /* Header: brand anchors left, CTA anchors right */
+  .celimax-nav__brand {
+    margin-right: auto;
+  }
+
+  /* Hero: a dark reading floor beneath the portrait */
+  .celimax-hero__backdrop,
+  .celimax-hero__overlay {
+    border: 0;
+    transform: translateY(-15%);
+  }
+
+  .celimax-hero--editorial .celimax-hero__grid::before {
+    content: '';
+    position: absolute;
+    inset: 38% 0 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(26, 36, 18, 0) 0%, rgba(26, 36, 18, 0.72) 38%, #1A2412 100%);
+    pointer-events: none;
+  }
+
+  .celimax-hero__copy {
+    width: auto;
+    margin: 0 20px;
+    padding-bottom: 32px;
+  }
+
+  .celimax-hero__spacer {
+    display: none;
+  }
+
+  .celimax-hero--editorial .celimax-hero__title {
+    font-size: clamp(2.45rem, 11.4vw, 3.25rem);
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+    margin-bottom: 20px;
+  }
+
+  .celimax-hero--editorial .celimax-hero__title-line {
+    display: block;
+    text-wrap: balance;
+  }
+
+  .celimax-hero--editorial .celimax-hero__title-italic {
+    display: block;
+    margin-top: 4px;
+    font-size: 1.08em;
+  }
+
+  .celimax-hero--editorial .celimax-hero__desc {
+    font-size: 0.98rem;
+    line-height: 1.58;
+    color: rgba(242, 240, 228, 0.86);
+    margin-bottom: 28px;
+  }
+
+  .celimax-hero__actions-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .celimax-hero__btn-main {
+    justify-content: space-between;
+    padding: 8px 8px 8px 22px;
+    min-height: 54px;
+    background-color: var(--moss-pale);
+    color: #172110;
+  }
+
+  .celimax-hero__btn-main .celimax-hero__arrow-square {
+    width: 38px;
+    height: 38px;
+    background-color: #1A2412;
+    color: var(--moss-pale);
+  }
+
+  .celimax-hero__btn-secondary {
+    justify-content: center;
+    min-height: 50px;
+  }
+
+  /* Manifesto: left-aligned typographic statement, then a swipeable triptych */
+  .celimax-manifesto {
+    padding: 76px 0 64px;
+    text-align: left;
+  }
+
+  .celimax-manifesto__header {
+    margin-bottom: 40px;
+  }
+
+  .celimax-manifesto__eyebrow {
+    justify-content: flex-start;
+    margin-bottom: 22px;
+  }
+
+  .celimax-manifesto__eyebrow-line:first-child {
+    display: none;
+  }
+
+  .celimax-manifesto__eyebrow-line--reverse {
+    flex: 1;
+    width: auto;
+  }
+
+  .celimax-manifesto__quote {
+    font-size: clamp(1.9rem, 8.6vw, 2.4rem);
+    line-height: 1.08;
+    letter-spacing: -0.045em;
+    margin-bottom: 24px;
+  }
+
+  .celimax-manifesto__sub {
+    font-size: 0.98rem;
+    line-height: 1.62;
+  }
+
+  .celimax-triptych {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 68%;
+    align-items: end;
+    gap: 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 20px;
+    padding-bottom: 20px;
+    scrollbar-width: none;
+  }
+
+  .celimax-triptych::-webkit-scrollbar {
+    display: none;
+  }
+
+  .celimax-triptych__card {
+    border-radius: 22px;
+    scroll-snap-align: start;
+    box-shadow: 0 12px 26px -16px rgba(25, 35, 18, 0.32);
+  }
+
+  .celimax-triptych__card--center {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  /* Procedures: an indexed editorial list with one full-bleed lime feature */
+  .celimax-procedures {
+    padding: 88px 0;
+  }
+
+  .celimax-split-header {
+    margin-bottom: 36px;
+  }
+
+  .celimax-section-title--procedures {
+    font-size: clamp(2.2rem, 10vw, 2.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+
+  .celimax-procedures__grid {
+    gap: 0;
+    counter-reset: procedure;
+    border-bottom: 1px solid rgba(71, 90, 56, 0.18);
+  }
+
+  .celimax-card {
+    counter-increment: procedure;
+    padding: 28px 0 30px;
+    border-top: 1px solid rgba(71, 90, 56, 0.18);
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .celimax-card::before {
+    content: counter(procedure, decimal-leading-zero);
+    display: block;
+    margin-bottom: 16px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--olive-dark);
+  }
+
+  .celimax-card--highlight {
+    margin-inline: calc(-1 * clamp(20px, 4vw, 40px));
+    padding-inline: clamp(20px, 4vw, 40px);
+    border: 0;
+    background-color: var(--moss-pale);
+  }
+
+  .celimax-card__title {
+    font-size: 1.5rem;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+    margin-bottom: 12px;
+  }
+
+  .celimax-card__desc {
+    font-size: 0.95rem;
+  }
+
+  .celimax-card__link {
+    padding-top: 22px;
+  }
+
+  /* Results and reasons follow the same left editorial axis */
+  .celimax-ba-header,
+  .celimax-pillars__header {
+    text-align: left;
+    margin-bottom: 36px;
+  }
+
+  .celimax-ba-grid {
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .celimax-ba-card {
+    border-radius: 22px;
+  }
+
+  .celimax-center-cta {
+    display: block;
+  }
+
+  .celimax-ba__btn-whatsapp {
+    width: 100%;
+    justify-content: space-between;
+    min-height: 54px;
+  }
+
+  .celimax-pillars {
+    padding: 84px 0 76px;
+  }
+
+  .celimax-pillars__stage {
+    gap: 0;
+  }
+
+  .celimax-pillar-stack {
+    gap: 0;
+  }
+
+  .celimax-pillar-card {
+    padding: 24px 0 26px;
+    border-top: 1px solid rgba(71, 90, 56, 0.18);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .celimax-pillar-stack:last-child .celimax-pillar-card:last-child {
+    border-bottom: 1px solid rgba(71, 90, 56, 0.18);
+  }
+
+  .celimax-pillar-card__badge {
+    padding: 0;
+    margin-bottom: 10px;
+    background: none;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--olive-dark);
+  }
+
+  .celimax-pillar-card__title {
+    font-size: 1.32rem;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  .celimax-pillars__centerpiece {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 18px;
+    padding: 30px 0;
+    border-top: 1px solid rgba(71, 90, 56, 0.18);
+  }
+
+  .celimax-centerpiece-disc {
+    width: 76px;
+    flex: 0 0 76px;
+    background: var(--polar-white);
+    box-shadow: inset 0 0 0 1px rgba(71, 90, 56, 0.14);
+  }
+
+  .celimax-centerpiece-logo {
+    width: 46px;
+    height: 46px;
+    filter: none;
+  }
+
+  .celimax-centerpiece-caption {
+    margin: 0;
+    font-size: 1.55rem;
+    line-height: 1.08;
+    text-align: left;
+  }
+
+  /* Specialists: contain every column and tighten the stage */
+  .celimax-doctor-section {
+    padding: 72px 0;
+  }
+
+  .celimax-doctor-stage {
+    padding: 32px 22px 26px;
+    border-radius: 24px;
+  }
+
+  .celimax-doctor-stage__header {
+    margin-bottom: 30px;
+    gap: 16px;
+  }
+
+  .celimax-doctor-stage__title {
+    margin-top: 0;
+    font-size: 2.15rem;
+    line-height: 1;
+    letter-spacing: -0.045em;
+  }
+
+  .celimax-doctor-stage__quote {
+    font-size: 0.96rem;
+  }
+
+  .celimax-doctor-stage__body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .celimax-doctor-stage__body > *,
+  .celimax-doctor-stage__meta-row > div {
+    min-width: 0;
+  }
+
+  .celimax-doctor-stage__portrait {
+    width: 100%;
+    max-width: none;
+    aspect-ratio: 5 / 6;
+    border-radius: 18px;
+  }
+
+  .celimax-doctor-stage__spec-title {
+    font-size: 0.74rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--moss-pale);
+  }
+
+  .celimax-doctor-stage__spec-bio {
+    font-size: 0.96rem;
+  }
+
+  .celimax-doctor-stage__tag {
+    font-size: 0.76rem;
+  }
+
+  .celimax-doctor-stage__name {
+    font-size: 1.75rem;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+
+  .celimax-doctor__btn-cta {
+    width: 100%;
+    justify-content: space-between;
+    white-space: normal;
+  }
+
+  .celimax-doctor__pagination-wrap {
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .celimax-doctor__page-numbers {
+    gap: 8px;
+  }
+
+  /* FAQ: ruled accordion, open answer becomes the lime band */
+  .celimax-faq-section {
+    padding: 80px 0;
+  }
+
+  .celimax-faq-grid {
+    gap: 32px;
+  }
+
+  .celimax-faq-left__frame {
+    aspect-ratio: 16 / 9;
+    border-radius: 22px;
+  }
+
+  .celimax-faq-stack {
+    gap: 0;
+    border-bottom: 1px solid rgba(71, 90, 56, 0.18);
+  }
+
+  .celimax-faq-card,
+  .celimax-faq-card--open {
+    margin-inline: calc(-1 * clamp(20px, 4vw, 40px));
+    padding-inline: clamp(20px, 4vw, 40px);
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .celimax-faq-card {
+    background:
+      linear-gradient(rgba(71, 90, 56, 0.18), rgba(71, 90, 56, 0.18))
+      center top / calc(100% - 2 * clamp(20px, 4vw, 40px)) 1px no-repeat;
+  }
+
+  .celimax-faq-card--open {
+    background: var(--moss-pale);
+  }
+
+  .celimax-faq-trigger {
+    gap: 18px;
+    padding: 21px 0;
+    font-size: 1.02rem;
+    line-height: 1.32;
+  }
+
+  .celimax-faq-body {
+    padding: 0 0 24px;
+    font-size: 0.95rem;
+  }
+
+  .coupon-submit-bar {
+    width: 100%;
+    justify-content: space-between;
+    padding-inline: 22px;
+  }
+
+  .coupon-submit-bar__text {
+    width: auto;
+  }
+
+  .coupon-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .coupon-card__right .form-field select {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* Footer: compact two-column index */
+  .celimax-footer {
+    padding-top: 72px;
+  }
+
+  .celimax-footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px 20px;
+    margin-bottom: 44px;
+  }
+
+  .celimax-footer-col:first-child,
+  .celimax-footer-col:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .celimax-footer-col h4 {
+    margin-bottom: 14px;
+  }
+
+  .celimax-footer-bottom-bar {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .celimax-footer-links {
+    gap: 10px;
+  }
+
+  .celimax-footer-monumental {
+    margin-top: 32px;
+  }
+}
