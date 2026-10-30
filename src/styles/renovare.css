@@ -21,6 +21,31 @@
   font-display: swap;
 }
 
+/* Figma imported faces: Manrope Regular, Bold, ExtraBold (review cards) */
+@font-face {
+  font-family: "Manrope:Regular";
+  src: url("https://static.figma.com/font/Manrope_wght__1") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Manrope:Bold";
+  src: url("https://static.figma.com/font/Manrope_wght__1") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Manrope:ExtraBold";
+  src: url("https://static.figma.com/font/Manrope_wght__1") format("woff2");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
 :root {
   /* Core Palette Tokens */
   --olive-dark: #475A38;
@@ -4064,8 +4089,8 @@ ol {
 
 /* 6. PILLARS AROUND CENTRAL ELEMENT ("Why you choose Renovare") */
 .celimax-pillars {
-  padding: clamp(80px, 12vh, 140px) 0;
-  background-color: var(--stone-warm);
+  padding: clamp(80px, 12vh, 117.84px) 0;
+  background-color: #FFFFFF;
   overflow: hidden;
 }
 
@@ -4261,6 +4286,162 @@ ol {
 
 .celimax-pillars__cta {
   margin-top: 48px;
+}
+
+/* Reviews: Figma card-rating, scattered around the lily on wide screens */
+.review-scatter {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 335px);
+  justify-content: center;
+  gap: 24px 32px;
+}
+
+.review-scatter__lily {
+  display: none;
+}
+
+.review-rating {
+  display: flex;
+  align-items: flex-end;
+  gap: 8.845px;
+  width: 335px;
+  height: 134.884px;
+  overflow: hidden;
+  border-radius: 8.845px;
+  background: #FFFFFF;
+  box-shadow: 5.528px 3.87px 11.056px 0 rgba(0, 0, 0, 0.08);
+}
+
+/* Staggered rows read as a loose scatter where the stage is too narrow */
+.review-rating:nth-of-type(even) {
+  margin-top: 28px;
+}
+
+.review-rating__photo-wrap {
+  flex-shrink: 0;
+  padding-top: 27.64px;
+  overflow: hidden;
+}
+
+.review-rating__photo {
+  position: relative;
+  width: 114.697px;
+  height: 113.878px;
+  border-top-right-radius: 56.875px;
+  background: #475A38;
+}
+
+.review-rating__stars {
+  position: absolute;
+  left: 24.08px;
+  top: 83.79px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4.916px;
+  border-radius: 43.011px;
+  background: rgba(255, 255, 255, 0.68);
+}
+
+.review-rating__stars img {
+  display: block;
+  flex-shrink: 0;
+}
+
+.review-rating__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: stretch;
+  gap: 14.373px;
+  width: 211.724px;
+  min-width: 0;
+  padding: 16.584px 39.802px 16.584px 0;
+}
+
+.review-rating__name {
+  font-family: "Manrope:Bold", "Manrope", var(--font-sans);
+  font-size: 17.69px;
+  font-weight: 700;
+  line-height: 13.267px;
+  color: #050505;
+  white-space: nowrap;
+  text-transform: capitalize;
+  max-width: calc(100% + 39.802px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-block: 2px;
+}
+
+.review-rating__text {
+  width: 189.612px;
+  max-width: calc(100% + 39.802px);
+  font-family: "Manrope:Regular", "Manrope", var(--font-sans);
+  font-size: 8.845px;
+  font-weight: 400;
+  line-height: 13.267px;
+  color: #868686;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
+}
+
+.review-rating__time {
+  font-family: "Manrope:ExtraBold", "Manrope", var(--font-sans);
+  font-size: 6.634px;
+  font-weight: 800;
+  line-height: 4.975px;
+  color: #050505;
+  white-space: nowrap;
+}
+
+@media (min-width: 1280px) {
+  .review-scatter {
+    display: block;
+    position: relative;
+    height: 535px;
+    margin-bottom: 40px;
+  }
+
+  .review-scatter__lily {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 267.63px;
+    transform: translate(-50%, -50%);
+  }
+
+  .review-rating,
+  .review-rating:nth-of-type(even) {
+    position: absolute;
+    margin-top: 0;
+  }
+
+  /* Slot coordinates from the Figma stage (1120px wide), left kept proportional */
+  .review-rating--slot-1 { left: -7.232%; top: 9.33px; }
+  .review-rating--slot-2 { left: 3.571%; top: 391.33px; }
+  .review-rating--slot-3 { left: 57.946%; top: 17.33px; }
+  .review-rating--slot-4 { left: 76.339%; top: 215.33px; }
+  .review-rating--slot-5 { left: 64.018%; top: 434.33px; }
+  .review-rating--slot-6 { left: 26.964%; top: 144.33px; }
+}
+
+@media (max-width: 719px) {
+  .review-scatter {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .review-rating:nth-of-type(even) {
+    margin-top: 0;
+    justify-self: end;
+  }
+
+  .review-rating {
+    max-width: 100%;
+  }
 }
 
 @media (min-width: 640px) and (max-width: 959px) {

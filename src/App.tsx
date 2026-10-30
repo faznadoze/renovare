@@ -14,7 +14,7 @@ import {
 import { RenovareLogo } from './components/RenovareLogo';
 import { BeforeAfterSlider } from './components/BeforeAfterSlider';
 import { LoadingScreen, LOADING_DURATION_MS } from './components/LoadingScreen';
-import { GoogleReviewCard } from './components/GoogleReviewCard';
+import { ReviewRatingCard } from './components/ReviewRatingCard';
 import {
   CLINIC_ADDRESS,
   CLINIC_HOURS,
@@ -22,7 +22,7 @@ import {
   buildWhatsAppUrl,
   SPECIALISTS,
   FAQ_ITEMS,
-  FEATURED_GOOGLE_REVIEWS,
+  GOOGLE_REVIEWS,
   GOOGLE_REVIEWS_SHARE_URL,
 } from './data/renovareContent';
 
@@ -64,15 +64,22 @@ const PROCEDURE_CARDS = [
   },
 ];
 
-const REVIEW_COLUMNS = [
-  FEATURED_GOOGLE_REVIEWS.slice(0, 3),
-  FEATURED_GOOGLE_REVIEWS.slice(3, 5),
-  FEATURED_GOOGLE_REVIEWS.slice(5, 8),
-];
+// The Figma stage has six scattered card slots; each visit fills them with a random set of real reviews
+const REVIEW_SLOT_COUNT = 6;
+
+const pickRandomReviews = () => {
+  const pool = [...GOOGLE_REVIEWS];
+  for (let i = pool.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, REVIEW_SLOT_COUNT);
+};
 
 export function App() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeFaqIndex, setActiveFaqIndex] = useState<number>(0);
+  const [scatteredReviews] = useState(pickRandomReviews);
   const faqTabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [currentDoctorIndex, setCurrentDoctorIndex] = useState<number>(0);
   const [patientName, setPatientName] = useState('');
@@ -503,45 +510,31 @@ export function App() {
         <section id="diferenciais" className="celimax-pillars js-section-reveal">
           <div className="celimax-pillars__container">
             <div className="celimax-pillars__header js-reveal-item">
-              <h2 className="celimax-section-title">
+              <p className="celimax-ba-header__eyebrow">
+                <span className="celimax-ba-header__rule celimax-ba-header__rule--in" aria-hidden="true" />
+                <span>nossas clientes falaram</span>
+                <span className="celimax-ba-header__rule" aria-hidden="true" />
+              </p>
+              <h2 className="celimax-section-title celimax-ba-header__title">
                 Por que escolher a <em className="editorial-serif">Renovare</em> em Betim?
               </h2>
-              <p className="celimax-manifesto__sub" style={{ marginTop: '12px' }}>
-                Avaliações reais de pacientes que escolheram a Renovare, publicadas no Google.
+              <p className="celimax-ba-header__lead">
+                Conheça os pilares que tornam nossos protocolos seguros, transformadores e reconhecidos pela
+                ética e naturalidade.
               </p>
             </div>
 
-            <div className="celimax-pillars__stage celimax-pillars__stage--reviews">
-              <div className="celimax-pillar-stack">
-                {REVIEW_COLUMNS[0].map((review) => (
-                  <GoogleReviewCard key={review.id} review={review} />
-                ))}
-              </div>
-
-              <div className="celimax-pillar-stack">
-                <div className="celimax-pillars__centerpiece">
-                  <div className="celimax-centerpiece-disc">
-                    <RenovareLogo
-                      variant="symbol"
-                      color="#475A38"
-                      className="celimax-centerpiece-logo"
-                      ariaLabel="Lírio Renovare"
-                    />
-                  </div>
-                  <p className="celimax-centerpiece-caption">
-                    “Beleza real não precisa de filtro.”
-                  </p>
-                </div>
-                {REVIEW_COLUMNS[1].map((review) => (
-                  <GoogleReviewCard key={review.id} review={review} />
-                ))}
-              </div>
-
-              <div className="celimax-pillar-stack">
-                {REVIEW_COLUMNS[2].map((review) => (
-                  <GoogleReviewCard key={review.id} review={review} />
-                ))}
-              </div>
+            <div className="review-scatter">
+              <img
+                className="review-scatter__lily"
+                src="./assets/17506.svg"
+                alt=""
+                width={180}
+                height={180}
+              />
+              {scatteredReviews.map((review, idx) => (
+                <ReviewRatingCard key={review.id} review={review} slot={idx + 1} />
+              ))}
             </div>
 
             <div className="celimax-center-cta celimax-pillars__cta js-reveal-item">
