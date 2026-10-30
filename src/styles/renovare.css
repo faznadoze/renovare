@@ -6398,16 +6398,16 @@ html.is-loading body {
     content: '';
     position: absolute;
     inset: 0 0 auto;
-    /* Figma's gradient layer runs 612px on a 560px card */
-    height: 109.3%;
+    height: 100%;
     z-index: -1;
+    /* Anchored to where the name starts, so faces stay clear and only the text area darkens */
     background: linear-gradient(
       180deg,
       rgba(26, 36, 18, 0) 0%,
-      rgba(26, 36, 18, 0) 16%,
-      rgba(26, 36, 18, 0.7) 30%,
-      rgba(26, 36, 18, 0.92) 42%,
-      #1A2412 56%,
+      rgba(26, 36, 18, 0) calc(var(--doctor-photo-space, 320px) - 140px),
+      rgba(26, 36, 18, 0.55) calc(var(--doctor-photo-space, 320px) - 60px),
+      rgba(26, 36, 18, 0.9) calc(var(--doctor-photo-space, 320px) - 8px),
+      #1A2412 calc(var(--doctor-photo-space, 320px) + 48px),
       #1A2412 100%
     );
     pointer-events: none;
