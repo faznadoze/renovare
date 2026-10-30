@@ -3,7 +3,6 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import { useGSAP } from '@gsap/react';
-import { Pause, Play } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
@@ -43,13 +42,11 @@ type SaveDataNavigator = Navigator & { connection?: { saveData?: boolean } };
 export function VideoHero({ introDelay }: VideoHeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const userPausedRef = useRef(false);
   const [isPhone, setIsPhone] = useState(() =>
     typeof window !== 'undefined' ? window.matchMedia(PHONE_QUERY).matches : false
   );
   const [canPlay, setCanPlay] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
 
   // Motion and data preferences decide whether the video runs at all; the poster stays
   useEffect(() => {
@@ -63,14 +60,14 @@ export function VideoHero({ introDelay }: VideoHeroProps) {
     return () => phone.removeEventListener('change', onChange);
   }, []);
 
-  // Play only while the hero is on screen; respect a manual pause
+  // Play only while the hero is on screen
   useEffect(() => {
     const section = sectionRef.current;
     const video = videoRef.current;
     if (!section || !video || !canPlay || videoFailed) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !userPausedRef.current) {
+        if (entry.isIntersecting) {
           video.play().catch(() => undefined);
         } else {
           video.pause();
@@ -81,18 +78,6 @@ export function VideoHero({ introDelay }: VideoHeroProps) {
     observer.observe(section);
     return () => observer.disconnect();
   }, [canPlay, videoFailed, isPhone]);
-
-  const togglePlayback = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (video.paused) {
-      userPausedRef.current = false;
-      video.play().catch(() => undefined);
-    } else {
-      userPausedRef.current = true;
-      video.pause();
-    }
-  };
 
   useGSAP(
     () => {
@@ -167,8 +152,6 @@ export function VideoHero({ introDelay }: VideoHeroProps) {
               autoPlay
               preload="metadata"
               aria-hidden="true"
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
               onError={() => setVideoFailed(true)}
             >
               {media.sources.map((source) => (
@@ -194,17 +177,6 @@ export function VideoHero({ introDelay }: VideoHeroProps) {
             <span className="video-hero__title-italic">novo despertar</span>
           </h1>
         </div>
-
-        {showVideo && (
-          <button
-            type="button"
-            className="video-hero__toggle"
-            onClick={togglePlayback}
-            aria-label={isPlaying ? 'Pausar vídeo' : 'Reproduzir vídeo'}
-          >
-            {isPlaying ? <Pause size={16} aria-hidden="true" /> : <Play size={16} aria-hidden="true" />}
-          </button>
-        )}
       </div>
     </section>
   );

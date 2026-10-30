@@ -6867,37 +6867,6 @@ html.lenis {
   color: var(--moss-pale);
 }
 
-.video-hero__toggle {
-  position: absolute;
-  right: var(--page-margin);
-  bottom: clamp(40px, 9vh, 96px);
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(15, 20, 10, 0.42);
-  color: #FFFFFF;
-  cursor: pointer;
-  transition: background-color 0.2s var(--ease-out), transform 0.16s var(--ease-out);
-}
-
-.video-hero__toggle:active {
-  transform: scale(0.94);
-}
-
-.video-hero__toggle:focus-visible {
-  outline: 2px solid var(--moss-pale);
-  outline-offset: 3px;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .video-hero__toggle:hover {
-    background: rgba(15, 20, 10, 0.62);
-  }
-}
-
 @media (max-width: 720px) {
   .video-hero__title {
     max-width: 9em;
@@ -6908,12 +6877,5 @@ html.lenis {
   .video-hero__title-italic {
     display: block;
     margin-top: 0.06em;
-  }
-
-  .video-hero__toggle {
-    width: 36px;
-    height: 36px;
-    bottom: auto;
-    top: 76px;
   }
 }
