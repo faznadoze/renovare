@@ -144,7 +144,7 @@ export const RE_WORDS: ReWordItem[] = [
     specialistName: 'Daniella Diniz',
     specialistRole: 'Especialista em Harmonização, Microvasos e Celulite',
     roleBadge: 'Harmonização',
-    imageSrc: './assets/people/specialist-2.jpg',
+    imageSrc: './assets/people/prof-daniella-diniz.webp',
     highlights: ['Harmonização facial sem exageros', 'Tratamento para microvasos e celulite'],
   },
   {
@@ -463,7 +463,7 @@ export const SPECIALISTS: SpecialistProfile[] = [
     quote: '“Realçar traços faciais com naturalidade e tratar alterações corporais com precisão e equilíbrio.”',
     bio: 'Conduz protocolos personalizados para realçar traços faciais com naturalidade e tratar alterações corporais como celulite e microvasos com precisão e equilíbrio.',
     ritualStep: 'Harmonização Facial & Corporal',
-    imageSrc: './assets/people/specialist-2.jpg',
+    imageSrc: './assets/people/prof-daniella-diniz.webp',
     imageAlt: 'Daniella Diniz — Harmonização Facial e Corporal na Renovare',
     photoPlaceholderNote: 'Profissional Renovare · Atendimento em Betim',
   },
