@@ -7173,3 +7173,169 @@ html.lenis {
 .lenis.lenis-smooth iframe {
   pointer-events: none;
 }
+
+/* ==========================================================================
+   ANTES & DEPOIS — pinned scroll story
+   Default (no script, reduced motion): centred title, then each case as name,
+   result card and note. .is-sequenced (GSAP): one pinned screen where the stacked
+   cards rise over the title and lift away one by one.
+   ========================================================================== */
+.ba-story .ba-story__head {
+  max-width: 760px;
+  margin: 0 auto 56px;
+  text-align: center;
+}
+
+.ba-story .ba-story__head .celimax-ba-header__eyebrow {
+  justify-content: center;
+}
+
+.ba-story__deck {
+  display: grid;
+  gap: 56px;
+  max-width: 760px;
+  margin: 0 auto 48px;
+  padding: 0 clamp(20px, 4vw, 40px);
+}
+
+.ba-story__card {
+  display: grid;
+  gap: 14px;
+}
+
+.ba-story__name {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: #171E12;
+}
+
+.ba-story__desc {
+  max-width: 34ch;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: #2B3125;
+  text-wrap: pretty;
+}
+
+/* ---------- Sequenced ---------- */
+.ba-story.is-sequenced {
+  padding: 0;
+}
+
+.ba-story.is-sequenced .ba-story__stage {
+  position: relative;
+  height: 100svh;
+  min-height: 600px;
+  overflow: hidden;
+}
+
+.ba-story.is-sequenced .ba-story__head {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: none;
+  margin: 0;
+  padding: 0 clamp(20px, 4vw, 40px);
+}
+
+.ba-story.is-sequenced .ba-story__head .celimax-ba-header__title {
+  max-width: 760px;
+}
+
+.ba-story.is-sequenced .ba-story__deck {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  max-width: none;
+  margin: 0;
+  padding: 0 16px;
+}
+
+.ba-story.is-sequenced .ba-story__case {
+  grid-area: 1 / 1;
+}
+
+.ba-story.is-sequenced .ba-story__case--1 {
+  z-index: 2;
+}
+
+.ba-story.is-sequenced .ba-story__case--2 {
+  z-index: 1;
+}
+
+.ba-story.is-sequenced .ba-story__card {
+  width: min(560px, calc(100vw - 32px));
+  will-change: transform;
+}
+
+.ba-story.is-sequenced .ba-story__cta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: max(24px, 5svh);
+  z-index: 3;
+  margin: 0;
+}
+
+/* Desktop: three symmetric columns keep every card centred, its name and note
+   beside it (left of the first, right of the second), aligned with the card top */
+@media (min-width: 1100px) {
+  .ba-story.is-sequenced .ba-story__card {
+    --ba-info: clamp(200px, 18vw, 280px);
+    --ba-card: min(600px, 42vw);
+    width: auto;
+    grid-template-columns: var(--ba-info) var(--ba-card) var(--ba-info);
+    grid-template-rows: auto 1fr;
+    column-gap: 48px;
+    row-gap: 12px;
+    align-items: start;
+  }
+
+  .ba-story.is-sequenced .ba-story__card .celimax-ba-card {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .ba-story.is-sequenced .ba-story__case--1 .ba-story__text {
+    grid-column: 1;
+    justify-self: end;
+    text-align: right;
+  }
+
+  .ba-story.is-sequenced .ba-story__case--2 .ba-story__text {
+    grid-column: 3;
+    justify-self: start;
+    text-align: left;
+  }
+
+  .ba-story.is-sequenced .ba-story__name {
+    grid-row: 1;
+  }
+
+  .ba-story.is-sequenced .ba-story__desc {
+    grid-row: 2;
+  }
+}
+
+/* Centred story title keeps both rules, shorter, at every width */
+.ba-story .ba-story__head .celimax-ba-header__rule,
+.ba-story .ba-story__head .celimax-ba-header__rule--in {
+  display: block;
+  width: clamp(36px, 8vw, 115px);
+}
+
+@media (max-width: 1099px) {
+  .ba-story.is-sequenced .ba-story__cta {
+    padding-inline: 16px;
+  }
+}

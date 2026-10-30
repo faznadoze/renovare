@@ -12,7 +12,7 @@ import {
   MessageCircle,
 } from 'lucide-react';
 import { RenovareLogo } from './components/RenovareLogo';
-import { BeforeAfterSlider } from './components/BeforeAfterSlider';
+import { BeforeAfterStorySection } from './components/BeforeAfterStorySection';
 import { LoadingScreen, LOADING_DURATION_MS } from './components/LoadingScreen';
 import { ReviewRatingCard } from './components/ReviewRatingCard';
 import { BlackRenovareSection } from './components/BlackRenovareSection';
@@ -601,63 +601,7 @@ export function App() {
         </section>
 
         {/* 5. BEFORE & AFTER INTERACTIVE SPLIT SLIDERS */}
-        <section id="antes-depois" className="celimax-ba-section js-section-reveal">
-          <div className="celimax-ba-section__container">
-            <div className="celimax-ba-header js-reveal-item">
-              <p className="celimax-ba-header__eyebrow">
-                <span className="celimax-ba-header__rule celimax-ba-header__rule--in" aria-hidden="true" />
-                <span>Resultados Comprovados</span>
-                <span className="celimax-ba-header__rule" aria-hidden="true" />
-              </p>
-              <h2 className="celimax-section-title celimax-ba-header__title">
-                Antes &amp; Depois: testemunhe o poder da{' '}
-                <em className="editorial-serif">estética integrativa</em>
-              </h2>
-              <p className="celimax-ba-header__lead">
-                Arraste o cursor horizontalmente em cada imagem para comparar a evolução real das nossas
-                pacientes na clínica Renovare em Betim.
-              </p>
-            </div>
-
-            <div className="celimax-ba-grid js-reveal-item">
-              <BeforeAfterSlider
-                beforeImage="./assets/results/abdomen-perfil-esquerdo-antes.jpg"
-                afterImage="./assets/results/abdomen-perfil-esquerdo-depois.jpg"
-                beforeAlt="Abdômen de paciente em perfil esquerdo, antes do protocolo"
-                afterAlt="Abdômen da mesma paciente em perfil esquerdo, depois do protocolo"
-                title="Contorno abdominal, perfil esquerdo"
-                initialPosition={51.8}
-                showLabels={false}
-              />
-
-              <BeforeAfterSlider
-                beforeImage="./assets/results/abdomen-perfil-direito-antes.jpg"
-                afterImage="./assets/results/abdomen-perfil-direito-depois.jpg"
-                beforeAlt="Abdômen de paciente em perfil direito, antes do protocolo"
-                afterAlt="Abdômen da mesma paciente em perfil direito, depois do protocolo"
-                title="Contorno abdominal, perfil direito"
-                initialPosition={55.5}
-                showLabels={false}
-              />
-            </div>
-
-            <div className="celimax-center-cta js-reveal-item">
-              <a
-                href={buildWhatsAppUrl(
-                  'Olá! Vi os resultados de Antes e Depois no site e gostaria de agendar uma avaliação para o meu caso.'
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="celimax-ba__btn-whatsapp celimax-ba__btn-whatsapp--results"
-              >
-                <span>Avaliar meu caso no WhatsApp</span>
-                <span className="celimax-ba__arrow-badge" aria-hidden="true">
-                  <img src="./assets/c256d.svg" alt="" width={22.4} height={22.4} />
-                </span>
-              </a>
-            </div>
-          </div>
-        </section>
+        <BeforeAfterStorySection />
 
         {/* 6. "NOSSAS CLIENTES FALARAM": PINNED SCROLL STORY (LILY FORMS, THREE STATEMENTS, REVIEWS ARRIVE) */}
         <ReviewStorySection reviews={scatteredReviews} />
