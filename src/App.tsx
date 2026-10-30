@@ -16,7 +16,7 @@ import { BeforeAfterSlider } from './components/BeforeAfterSlider';
 import { LoadingScreen, LOADING_DURATION_MS } from './components/LoadingScreen';
 import { ReviewRatingCard } from './components/ReviewRatingCard';
 import { BlackRenovareSection } from './components/BlackRenovareSection';
-import { createReviewOrbit } from './animations/reviewOrbit';
+import { ReviewStorySection } from './components/ReviewStorySection';
 import {
   CLINIC_ADDRESS,
   CLINIC_HOURS,
@@ -286,65 +286,6 @@ export function App() {
           end: 'bottom 42%',
           scrub: 0.7,
         },
-      });
-
-      const reviewCards = gsap.utils.toArray<HTMLElement>('.js-review-pop');
-      const reviewStage = document.querySelector<HTMLElement>('.review-scatter');
-      const reviewMedia = gsap.matchMedia();
-
-      // Phones: the deck is dealt by the user's scroll. Each card rises and lands on the
-      // previous one over its own stretch of scroll, so one card is read at a time.
-      reviewMedia.add('(max-width: 719px)', () => {
-        if (!reviewStage) return;
-        const DEAL_SPACING = 90;
-        const DEAL_LENGTH = 190;
-
-        reviewCards.forEach((card, idx) => {
-          const tilt = idx % 2 === 0 ? -1 : 1;
-          const offset = idx * DEAL_SPACING;
-          const dealt = gsap.timeline({
-            scrollTrigger: {
-              trigger: reviewStage,
-              start: `top+=${offset} 92%`,
-              end: `top+=${offset + DEAL_LENGTH} 92%`,
-              scrub: 0.5,
-            },
-          });
-          dealt
-            .fromTo(
-              card,
-              { yPercent: 80, rotate: tilt * 2, scale: 0.96 },
-              { yPercent: 0, rotate: 0, scale: 1, duration: 1, ease: 'power3.out' },
-              0
-            )
-            .fromTo(card, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.16, ease: 'none' }, 0);
-        });
-      });
-
-      // Tablets: testimonials pop in once; each group entering the viewport reveals in random order
-      reviewMedia.add('(min-width: 720px) and (max-width: 1279px)', () => {
-        gsap.set(reviewCards, { autoAlpha: 0, scale: 0.9, y: 18 });
-        ScrollTrigger.batch(reviewCards, {
-          start: 'top 90%',
-          once: true,
-          interval: 0.15,
-          onEnter: (batch) =>
-            gsap.to(gsap.utils.shuffle([...batch]), {
-              autoAlpha: 1,
-              scale: 1,
-              y: 0,
-              duration: 0.62,
-              ease: 'back.out(1.5)',
-              stagger: 0.11,
-              overwrite: true,
-            }),
-        });
-      });
-
-      // Wide screens: the same pop-in, then the cards orbit the lily
-      reviewMedia.add('(min-width: 1280px)', () => {
-        if (!reviewStage || !reviewCards.length) return;
-        return createReviewOrbit(reviewStage, reviewCards);
       });
 
       // Desktop FAQ: the topic index is pinned and each topic owns a stretch of scroll
@@ -706,50 +647,8 @@ export function App() {
           </div>
         </section>
 
-        {/* 6. GOOGLE TESTIMONIALS AROUND CENTRAL ELEMENT ("Why you choose Renovare") */}
-        <section id="diferenciais" className="celimax-pillars js-section-reveal">
-          <div className="celimax-pillars__container">
-            <div className="celimax-pillars__header js-reveal-item">
-              <p className="celimax-ba-header__eyebrow">
-                <span className="celimax-ba-header__rule celimax-ba-header__rule--in" aria-hidden="true" />
-                <span>nossas clientes falaram</span>
-                <span className="celimax-ba-header__rule" aria-hidden="true" />
-              </p>
-              <h2 className="celimax-section-title celimax-ba-header__title">
-                Por que escolher a <em className="editorial-serif">Renovare</em> em Betim?
-              </h2>
-              <p className="celimax-ba-header__lead">
-                Conheça os pilares que tornam nossos protocolos seguros, transformadores e reconhecidos pela
-                ética e naturalidade.
-              </p>
-            </div>
-
-            <div className="review-scatter">
-              <img
-                className="review-scatter__lily"
-                src="./assets/17506.svg"
-                alt=""
-                width={180}
-                height={180}
-              />
-              {scatteredReviews.map((review, idx) => (
-                <ReviewRatingCard key={review.id} review={review} slot={idx + 1} variant="quiet" />
-              ))}
-            </div>
-
-            <div className="celimax-center-cta celimax-pillars__cta js-reveal-item">
-              <a
-                href={GOOGLE_REVIEWS_SHARE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="celimax-btn-outline"
-              >
-                <span>Ver todas as avaliações no Google</span>
-                <ArrowUpRight size={16} />
-              </a>
-            </div>
-          </div>
-        </section>
+        {/* 6. "NOSSAS CLIENTES FALARAM": PINNED SCROLL STORY (LILY FORMS, THREE STATEMENTS, REVIEWS ARRIVE) */}
+        <ReviewStorySection reviews={scatteredReviews} />
 
         {/* 7. DOCTOR / SPECIALIST SPOTLIGHT STAGE (Figma node 5389:1861) */}
         <section id="especialistas" className="celimax-doctor-section js-section-reveal">
