@@ -141,23 +141,22 @@ export function App() {
         {/* 2. HERO SECTION: EDITORIAL BOTÂNICO LIMPO */}
         <section className="celimax-hero celimax-hero--editorial">
           <div className="celimax-hero__container">
+            <div className="celimax-hero__backdrop" aria-hidden="true">
+              <img
+                src="./assets/figma/hero-bg-figma.png"
+                alt=""
+                className="celimax-hero__backdrop-img"
+                fetchPriority="high"
+              />
+            </div>
+            <div className="celimax-hero__overlay" aria-hidden="true" />
             <div className="celimax-hero__grid">
-              <div className="celimax-hero__backdrop" aria-hidden="true">
-                <img
-                  src="./assets/figma/hero-bg-figma.png"
-                  alt=""
-                  className="celimax-hero__backdrop-img"
-                  fetchPriority="high"
-                />
-              </div>
-
               <div className="celimax-hero__copy">
                 <div className="celimax-hero__spacer" aria-hidden="true" />
                 <h1 className="celimax-hero__title">
-                  <span className="celimax-hero__title-line">Revele a sua beleza real </span>
-                  <span className="celimax-hero__title-line">
-                    a cada <em className="celimax-hero__title-italic">novo despertar</em>
-                  </span>
+                  <span className="celimax-hero__title-line">Revele a sua beleza real a cada</span>
+                  <span className="celimax-hero__title-separator" aria-hidden="true"> </span>
+                  <span className="celimax-hero__title-italic">novo despertar</span>
                 </h1>
                 <p className="celimax-hero__desc">
                   Ciência estética de precisão, protocolos integrativos e acolhimento humano em Betim para
@@ -190,14 +189,18 @@ export function App() {
         {/* 3. MANIFESTO / GENTLE BEAUTY SECTION WITH 3-PHOTO TRIPTYCH */}
         <section id="manifesto" className="celimax-manifesto js-section-reveal">
           <div className="celimax-manifesto__header js-reveal-item">
-            <h2 className="celimax-manifesto__title">Filosofia Renovare</h2>
-            <blockquote className="celimax-manifesto__quote">
-              “Não acreditamos em consertar. Acreditamos em{' '}
-              <em className="editorial-serif">revelar</em> —{' '}
+            <div className="celimax-manifesto__eyebrow" aria-label="Filosofia Renovare">
+              <span className="celimax-manifesto__eyebrow-line" aria-hidden="true" />
+              <span>Filosofia Renovare</span>
+              <span className="celimax-manifesto__eyebrow-line celimax-manifesto__eyebrow-line--reverse" aria-hidden="true" />
+            </div>
+            <h2 className="celimax-manifesto__quote">
+              Não acreditamos em consertar. Acreditamos em{' '}
+              <em>revelar</em>{' '}
               <span className="celimax-manifesto__highlight">
-                a versão de você que já existia antes do mundo ditar quem você deveria ser.”
+                a versão de você que já existia antes do mundo ditar quem você deveria ser.
               </span>
-            </blockquote>
+            </h2>
             <p className="celimax-manifesto__sub">
               A Renovare nasceu em Betim para ser um lugar de pausa e acolhimento. Sem padrões inatingíveis
               ou promessas artificiais: cada protocolo é planejado para realçar a sua anatomia com
@@ -238,7 +241,7 @@ export function App() {
           <div className="celimax-procedures__container">
             <div className="celimax-split-header js-reveal-item">
               <div>
-                <h2 className="celimax-section-title">
+                <h2 className="celimax-section-title celimax-section-title--procedures">
                   Tecnologias que respeitam sua <em className="editorial-serif">natureza</em>
                 </h2>
               </div>
