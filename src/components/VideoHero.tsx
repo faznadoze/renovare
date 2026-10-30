@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { SplitText } from 'gsap/SplitText';
 import { useGSAP } from '@gsap/react';
 
-gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 // Drop the encoded files here (see the brief in chat): 16:9 desktop and 9:16 phone cuts,
 // no audio track, faststart. Posters are the first frame; until the video exists they
@@ -28,6 +27,10 @@ const HERO_MEDIA = {
 
 const PHONE_QUERY = '(max-width: 720px)';
 
+// The second line of the headline turns every few seconds
+const HERO_PHRASES = ['se sentir bem', 'ser valorizada', 'todo cuidado'];
+const PHRASE_INTERVAL_MS = 5000;
+
 interface VideoHeroProps {
   /** Seconds before the headline starts (the loading screen) */
   introDelay: number;
@@ -47,6 +50,21 @@ export function VideoHero({ introDelay }: VideoHeroProps) {
   );
   const [canPlay, setCanPlay] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
+  const [phrase, setPhrase] = useState<{ index: number; previous: number | null }>({ index: 0, previous: null });
+
+  // Second line rotates every 5s once the intro has played
+  useEffect(() => {
+    let interval: number | undefined;
+    const start = window.setTimeout(() => {
+      interval = window.setInterval(() => {
+        setPhrase(({ index }) => ({ index: (index + 1) % HERO_PHRASES.length, previous: index }));
+      }, PHRASE_INTERVAL_MS);
+    }, introDelay * 1000);
+    return () => {
+      window.clearTimeout(start);
+      if (interval) window.clearInterval(interval);
+    };
+  }, [introDelay]);
 
   // Motion and data preferences decide whether the video runs at all; the poster stays
   useEffect(() => {
@@ -86,20 +104,14 @@ export function VideoHero({ introDelay }: VideoHeroProps) {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        // Headline arrives line by line on the lines the reader sees; re-split on font load / resize
-        SplitText.create('.video-hero__title', {
-          type: 'lines',
-          linesClass: 'video-hero__line',
-          autoSplit: true,
-          onSplit: (self) =>
-            gsap.from(self.lines, {
-              yPercent: 60,
-              autoAlpha: 0,
-              duration: 1,
-              ease: 'power3.out',
-              stagger: 0.14,
-              delay: introDelay,
-            }),
+        // The two headline lines arrive one after the other
+        gsap.from('.video-hero__title-row', {
+          yPercent: 60,
+          autoAlpha: 0,
+          duration: 1,
+          ease: 'power3.out',
+          stagger: 0.16,
+          delay: introDelay,
         });
 
         gsap.fromTo(
@@ -173,8 +185,23 @@ export function VideoHero({ introDelay }: VideoHeroProps) {
 
         <div className="video-hero__content">
           <h1 className="video-hero__title">
-            <span className="video-hero__title-line">Revele a sua beleza real a cada</span>{' '}
-            <span className="video-hero__title-italic">novo despertar</span>
+            {/* Read once in full; the turning line is visual only */}
+            <span className="sr-only">Você merece {HERO_PHRASES.slice(0, -1).join(', ')} e {HERO_PHRASES.at(-1)}</span>
+            <span className="video-hero__title-row video-hero__title-line" aria-hidden="true">
+              Você merece
+            </span>
+            <span className="video-hero__title-row video-hero__rotator" aria-hidden="true">
+              {HERO_PHRASES.map((text, idx) => (
+                <span
+                  key={text}
+                  className={`video-hero__phrase ${idx === phrase.index ? 'is-active' : ''} ${
+                    idx === phrase.previous ? 'is-leaving' : ''
+                  }`}
+                >
+                  {text}
+                </span>
+              ))}
+            </span>
           </h1>
         </div>
       </div>
