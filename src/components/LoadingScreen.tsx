@@ -43,7 +43,6 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
       aria-label="Carregando Renovare"
     >
       <div className="renovare-loader__mark" aria-hidden="true">
-        <span className="renovare-loader__halo" />
         <RenovareLogo variant="symbol" color="currentColor" className="renovare-loader__symbol" />
       </div>
 
