@@ -32,9 +32,9 @@ gsap.registerPlugin(ScrollTrigger, CustomEase, useGSAP);
 const EMIL_EASE_OUT = CustomEase.create('emilEaseOut', 'M0,0 C0.23,1 0.32,1 1,1');
 
 const MANIFESTO_SEGMENTS = [
-  { text: 'Não acreditamos em consertar. Acreditamos em' },
+  { text: 'Não viemos consertar você. Viemos' },
   { text: 'revelar', emphasis: true },
-  { text: 'a versão de você que já existia antes do mundo ditar quem você deveria ser.' },
+  { text: 'quem você sempre foi.' },
 ];
 const MANIFESTO_TEXT = MANIFESTO_SEGMENTS.map((segment) => segment.text).join(' ');
 const MANIFESTO_WORDS = MANIFESTO_SEGMENTS.flatMap((segment) =>
@@ -500,11 +500,6 @@ export function App() {
                 ))}
               </span>
             </h2>
-            <p className="celimax-manifesto__sub">
-              A Renovare nasceu em Betim para ser um lugar de pausa e acolhimento. Sem padrões inatingíveis
-              ou promessas artificiais: cada protocolo é planejado para realçar a sua anatomia com
-              naturalidade e segurança.
-            </p>
           </div>
 
           <div className="celimax-triptych js-reveal-item">

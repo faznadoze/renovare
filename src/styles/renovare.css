@@ -3682,7 +3682,7 @@ ol {
   line-height: 1.18;
   letter-spacing: -0.03em;
   color: #26331E;
-  margin: 0 auto 28px;
+  margin: 0 auto;
   max-width: 860px;
 }
 
@@ -3702,14 +3702,6 @@ ol {
   .celimax-manifesto__word {
     color: var(--olive-dark);
   }
-}
-
-.celimax-manifesto__sub {
-  font-size: 1.05rem;
-  line-height: 1.65;
-  color: #3B4734;
-  max-width: 680px;
-  margin: 0 auto;
 }
 
 /* Triptych of 3 photos */
@@ -5820,12 +5812,7 @@ html.is-loading body {
     font-size: clamp(1.9rem, 8.6vw, 2.4rem);
     line-height: 1.08;
     letter-spacing: -0.045em;
-    margin-bottom: 24px;
-  }
-
-  .celimax-manifesto__sub {
-    font-size: 0.98rem;
-    line-height: 1.62;
+    margin-bottom: 0;
   }
 
   .celimax-triptych {
