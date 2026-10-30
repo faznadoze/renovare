@@ -271,8 +271,37 @@ export function App() {
       const reviewStage = document.querySelector<HTMLElement>('.review-scatter');
       const reviewMedia = gsap.matchMedia();
 
-      // Testimonials pop in once; each group entering the viewport reveals in random order
-      reviewMedia.add('(max-width: 1279px)', () => {
+      // Phones: the deck is dealt by the user's scroll. Each card rises and lands on the
+      // previous one over its own stretch of scroll, so one card is read at a time.
+      reviewMedia.add('(max-width: 719px)', () => {
+        if (!reviewStage) return;
+        const DEAL_SPACING = 90;
+        const DEAL_LENGTH = 190;
+
+        reviewCards.forEach((card, idx) => {
+          const tilt = idx % 2 === 0 ? -1 : 1;
+          const offset = idx * DEAL_SPACING;
+          const dealt = gsap.timeline({
+            scrollTrigger: {
+              trigger: reviewStage,
+              start: `top+=${offset} 92%`,
+              end: `top+=${offset + DEAL_LENGTH} 92%`,
+              scrub: 0.5,
+            },
+          });
+          dealt
+            .fromTo(
+              card,
+              { yPercent: 80, rotate: tilt * 4, scale: 0.94 },
+              { yPercent: 0, rotate: tilt * 0.5, scale: 1, duration: 1, ease: 'power3.out' },
+              0
+            )
+            .fromTo(card, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.16, ease: 'none' }, 0);
+        });
+      });
+
+      // Tablets: testimonials pop in once; each group entering the viewport reveals in random order
+      reviewMedia.add('(min-width: 720px) and (max-width: 1279px)', () => {
         gsap.set(reviewCards, { autoAlpha: 0, scale: 0.9, y: 18 });
         ScrollTrigger.batch(reviewCards, {
           start: 'top 90%',
