@@ -3344,7 +3344,7 @@ ol {
 
 .celimax-hero--editorial .celimax-hero__title {
   font-family: var(--font-sans);
-  font-weight: 600;
+  font-weight: 700;
   font-size: clamp(1.85rem, 3.2vw, 4.5rem);
   line-height: 45px;
   letter-spacing: -0.03em;
@@ -3541,7 +3541,7 @@ ol {
     margin: 0;
     padding-bottom: 24px;
     font-family: var(--font-sans);
-    font-weight: 600;
+    font-weight: 700;
     font-size: var(--hero-title-size);
     line-height: 45px;
     letter-spacing: -0.035em;
