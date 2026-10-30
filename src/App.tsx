@@ -56,8 +56,8 @@ export function App() {
   const [patientGoal, setPatientGoal] = useState('Ciclo Seca-Barriga & Desintoxicação');
   const [patientPeriod, setPatientPeriod] = useState('Manhã (08h às 12h)');
   const [isHeaderFilled, setIsHeaderFilled] = useState(false);
-
-  const currentDoctor = SPECIALISTS[currentDoctorIndex];
+  const doctorTrackRef = useRef<HTMLDivElement>(null);
+  const doctorScrollFrame = useRef<number | null>(null);
 
   useEffect(() => {
     const updateHeaderFill = () => setIsHeaderFilled(window.scrollY > 24);
@@ -67,13 +67,46 @@ export function App() {
     return () => window.removeEventListener('scroll', updateHeaderFill);
   }, []);
 
+  // On mobile the track scrolls horizontally; on desktop cards crossfade in place
+  const selectDoctor = (index: number) => {
+    setCurrentDoctorIndex(index);
+    const track = doctorTrackRef.current;
+    const card = track?.children[index] as HTMLElement | undefined;
+    if (!track || !card || track.scrollWidth <= track.clientWidth) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    track.scrollTo({
+      left: card.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft),
+      behavior: reduceMotion ? 'auto' : 'smooth',
+    });
+  };
+
   const handlePrevDoctor = () => {
-    setCurrentDoctorIndex((prev) => (prev > 0 ? prev - 1 : SPECIALISTS.length - 1));
+    selectDoctor(currentDoctorIndex > 0 ? currentDoctorIndex - 1 : SPECIALISTS.length - 1);
   };
 
   const handleNextDoctor = () => {
-    setCurrentDoctorIndex((prev) => (prev < SPECIALISTS.length - 1 ? prev + 1 : 0));
+    selectDoctor(currentDoctorIndex < SPECIALISTS.length - 1 ? currentDoctorIndex + 1 : 0);
   };
+
+  const handleDoctorTrackScroll = () => {
+    if (doctorScrollFrame.current !== null) return;
+    doctorScrollFrame.current = window.requestAnimationFrame(() => {
+      doctorScrollFrame.current = null;
+      const track = doctorTrackRef.current;
+      const firstCard = track?.children[0] as HTMLElement | undefined;
+      if (!track || !firstCard || track.scrollWidth <= track.clientWidth) return;
+      const step = firstCard.offsetWidth + parseFloat(getComputedStyle(track).columnGap || '0');
+      const nextIndex = Math.min(SPECIALISTS.length - 1, Math.max(0, Math.round(track.scrollLeft / step)));
+      setCurrentDoctorIndex(nextIndex);
+    });
+  };
+
+  useEffect(
+    () => () => {
+      if (doctorScrollFrame.current !== null) window.cancelAnimationFrame(doctorScrollFrame.current);
+    },
+    []
+  );
 
   const handleCouponSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -558,93 +591,102 @@ export function App() {
 
               {/* Stage Body */}
               <div className="celimax-doctor-stage__body">
-                <div className="celimax-doctor-stage__portrait">
-                  <img
-                    src={currentDoctor.imageSrc}
-                    alt={currentDoctor.imageAlt}
-                    loading="lazy"
-                  />
+                <div
+                  ref={doctorTrackRef}
+                  className="celimax-doctor-track"
+                  onScroll={handleDoctorTrackScroll}
+                  aria-label="Profissionais da Renovare"
+                >
+                  {SPECIALISTS.map((doctor, idx) => (
+                    <article
+                      key={doctor.id}
+                      className={`celimax-doctor-card ${idx === currentDoctorIndex ? 'is-active' : ''}`}
+                      aria-label={`${idx + 1} de ${SPECIALISTS.length}: ${doctor.name}`}
+                    >
+                      <div className="celimax-doctor-stage__portrait">
+                        <img src={doctor.imageSrc} alt={doctor.imageAlt} loading="lazy" />
+                      </div>
+
+                      <div className="celimax-doctor-stage__content">
+                        <h3 className="celimax-doctor-stage__spec-title">Especialização Clínica</h3>
+                        <p className="celimax-doctor-stage__spec-bio">{doctor.bio}</p>
+
+                        {doctor.focusAreas && doctor.focusAreas.length > 0 && (
+                          <div className="celimax-doctor-stage__tags" aria-label="Áreas de foco">
+                            {doctor.focusAreas.map((area) => (
+                              <span key={area} className="celimax-doctor-stage__tag">
+                                {area}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        <div className="celimax-doctor-stage__meta-row">
+                          <div>
+                            <h4 className="celimax-doctor-stage__name">{doctor.name}</h4>
+                            <p className="celimax-doctor-stage__role">{doctor.role}</p>
+                            {doctor.registry && <p className="celimax-doctor-stage__reg">{doctor.registry}</p>}
+                          </div>
+
+                          <a
+                            href={buildWhatsAppUrl(
+                              `Olá! Gostaria de agendar uma consulta com ${doctor.name} na Clínica Renovare em Betim.`
+                            )}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="celimax-doctor__btn-cta"
+                          >
+                            <span>Agendar com {doctor.name.replace(/^Dr\.\s*/, '').split(' ')[0]}</span>
+                            <span className="celimax-doctor__btn-badge" aria-hidden="true">
+                              <ArrowUpRight size={18} />
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
                 </div>
 
-                <div className="celimax-doctor-stage__content">
-                  <h3 className="celimax-doctor-stage__spec-title">Especialização Clínica</h3>
-                  <p className="celimax-doctor-stage__spec-bio">{currentDoctor.bio}</p>
-
-                  {currentDoctor.focusAreas && currentDoctor.focusAreas.length > 0 && (
-                    <div className="celimax-doctor-stage__tags" aria-label="Áreas de foco">
-                      {currentDoctor.focusAreas.map((area, idx) => (
-                        <span key={idx} className="celimax-doctor-stage__tag">
-                          {area}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-
-                  <div className="celimax-doctor-stage__meta-row">
-                    <div>
-                      <h4 className="celimax-doctor-stage__name">{currentDoctor.name}</h4>
-                      <p className="celimax-doctor-stage__role">{currentDoctor.role}</p>
-                      {currentDoctor.registry && (
-                        <p className="celimax-doctor-stage__reg">{currentDoctor.registry}</p>
-                      )}
-                    </div>
-
-                    <a
-                      href={buildWhatsAppUrl(
-                        `Olá! Gostaria de agendar uma consulta com ${currentDoctor.name} na Clínica Renovare em Betim.`
-                      )}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="celimax-doctor__btn-cta"
+                {/* Doctor pagination indicator */}
+                <div className="celimax-doctor__pagination-wrap">
+                  <div className="celimax-doctor__page-arrows">
+                    <button
+                      type="button"
+                      className="celimax-doctor__page-arrow"
+                      onClick={handlePrevDoctor}
+                      aria-label="Ver profissional anterior"
                     >
-                      <span>Agendar com {currentDoctor.name.replace(/^Dr\.\s*/, '').split(' ')[0]}</span>
-                      <span className="celimax-doctor__btn-badge" aria-hidden="true">
-                        <ArrowUpRight size={18} />
-                      </span>
-                    </a>
+                      <ChevronLeft size={18} />
+                    </button>
+                    <button
+                      type="button"
+                      className="celimax-doctor__page-arrow"
+                      onClick={handleNextDoctor}
+                      aria-label="Ver próximo profissional"
+                    >
+                      <ChevronRight size={18} />
+                    </button>
                   </div>
 
-                  {/* Doctor pagination indicator */}
-                  <div className="celimax-doctor__pagination-wrap">
-                    <div className="celimax-doctor__page-arrows">
-                      <button
-                        type="button"
-                        className="celimax-doctor__page-arrow"
-                        onClick={handlePrevDoctor}
-                        aria-label="Especialista anterior"
-                      >
-                        <ChevronLeft size={18} />
-                      </button>
-                      <button
-                        type="button"
-                        className="celimax-doctor__page-arrow"
-                        onClick={handleNextDoctor}
-                        aria-label="Próxima especialista"
-                      >
-                        <ChevronRight size={18} />
-                      </button>
-                    </div>
-
-                    <div className="celimax-doctor__page-numbers" aria-label="Navegar entre especialistas">
-                      {SPECIALISTS.map((spec, idx) => {
-                        const isActive = currentDoctorIndex === idx;
-                        const numStr = (idx + 1).toString().padStart(2, '0');
-                        return (
-                          <button
-                            key={spec.id}
-                            type="button"
-                            className={`celimax-doctor__page-num ${
-                              isActive ? 'celimax-doctor__page-num--active' : ''
-                            }`}
-                            onClick={() => setCurrentDoctorIndex(idx)}
-                            aria-label={`Ver especialista ${numStr} - ${spec.name}`}
-                            aria-current={isActive ? 'true' : undefined}
-                          >
-                            {numStr}
-                          </button>
-                        );
-                      })}
-                    </div>
+                  <div className="celimax-doctor__page-numbers" aria-label="Navegar entre profissionais">
+                    {SPECIALISTS.map((spec, idx) => {
+                      const isActive = currentDoctorIndex === idx;
+                      const numStr = (idx + 1).toString().padStart(2, '0');
+                      return (
+                        <button
+                          key={spec.id}
+                          type="button"
+                          className={`celimax-doctor__page-num ${
+                            isActive ? 'celimax-doctor__page-num--active' : ''
+                          }`}
+                          onClick={() => selectDoctor(idx)}
+                          aria-label={`Ver profissional ${numStr}: ${spec.name}`}
+                          aria-current={isActive ? 'true' : undefined}
+                        >
+                          {numStr}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

@@ -5271,3 +5271,234 @@ html.is-loading body {
     margin-top: 32px;
   }
 }
+
+/* ==========================================================================
+   SPECIALIST CARDS: crossfade on desktop, swipe track on mobile.
+   Every card shares one height: stacked in one grid cell on desktop,
+   stretched by the flex track on mobile.
+   ========================================================================== */
+.celimax-doctor-stage__body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 32px;
+}
+
+.celimax-doctor-track {
+  position: relative;
+  display: grid;
+}
+
+.celimax-doctor-card {
+  grid-area: 1 / 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 420ms var(--ease-out),
+    visibility 0s linear 420ms;
+}
+
+.celimax-doctor-card.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.celimax-doctor-card .celimax-doctor-stage__portrait {
+  outline: 1px solid oklch(1 0 0 / 0.1);
+  outline-offset: -1px;
+}
+
+/* Translucent fill reads well on the olive stage; per-tag blur is costly across all cards */
+.celimax-doctor-card .celimax-doctor-stage__tag {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.celimax-doctor-card .celimax-doctor-stage__portrait img {
+  transform: scale(1.04);
+  transition: transform 900ms var(--ease-out);
+}
+
+.celimax-doctor-card .celimax-doctor-stage__content {
+  transform: translateY(10px);
+  transition: transform 520ms var(--ease-out) 60ms;
+}
+
+.celimax-doctor-card.is-active .celimax-doctor-stage__portrait img,
+.celimax-doctor-card.is-active .celimax-doctor-stage__content {
+  transform: none;
+}
+
+@media (min-width: 900px) {
+  .celimax-doctor-card {
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 50px;
+  }
+
+  .celimax-doctor-stage__body .celimax-doctor__pagination-wrap {
+    margin-inline-start: calc((100% - 50px) * 0.4 + 50px);
+    margin-top: 0;
+  }
+}
+
+.celimax-doctor__page-arrow {
+  width: 40px;
+  height: 40px;
+  transition:
+    background-color 0.2s var(--ease-out),
+    transform 150ms var(--ease-out);
+}
+
+.celimax-doctor__page-arrow:active {
+  transform: scale(0.96);
+}
+
+.celimax-doctor__page-num {
+  border-bottom: 2px solid transparent;
+  transition:
+    opacity 0.2s var(--ease-out),
+    border-color 0.25s var(--ease-out);
+}
+
+.celimax-doctor__page-num--active {
+  border-bottom-color: var(--moss-pale);
+}
+
+@media (max-width: 719px) {
+  .celimax-doctor-stage {
+    padding-inline: 16px;
+  }
+
+  .celimax-doctor-stage__header {
+    padding-inline: 6px;
+  }
+
+  .celimax-doctor-stage__body {
+    gap: 18px;
+  }
+
+  .celimax-doctor-track {
+    display: flex;
+    gap: 12px;
+    margin-inline: -16px;
+    padding-inline: 16px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 16px;
+    scrollbar-width: none;
+  }
+
+  .celimax-doctor-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .celimax-doctor-card {
+    grid-area: auto;
+    position: relative;
+    isolation: isolate;
+    flex: 0 0 88%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0;
+    min-height: 560px;
+    padding: clamp(210px, 60vw, 260px) 20px 20px;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #1A2412;
+    box-shadow: 0 18px 36px -22px rgba(0, 0, 0, 0.6);
+    scroll-snap-align: start;
+    visibility: visible;
+    opacity: 0.55;
+    transition: opacity 360ms var(--ease-out);
+  }
+
+  .celimax-doctor-card.is-active {
+    opacity: 1;
+  }
+
+  /* Portrait becomes the card background, softened by a bottom-up mask */
+  .celimax-doctor-card .celimax-doctor-stage__portrait {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 62%;
+    z-index: -1;
+    width: 100%;
+    max-width: none;
+    aspect-ratio: auto;
+    border-radius: 0;
+    box-shadow: none;
+    outline: 0;
+    background: #2E3B25;
+  }
+
+  .celimax-doctor-card .celimax-doctor-stage__portrait img {
+    object-position: center top;
+  }
+
+  .celimax-doctor-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      180deg,
+      rgba(26, 36, 18, 0) 0%,
+      rgba(26, 36, 18, 0) 16%,
+      rgba(26, 36, 18, 0.7) 30%,
+      rgba(26, 36, 18, 0.92) 42%,
+      #1A2412 56%,
+      #1A2412 100%
+    );
+    pointer-events: none;
+  }
+
+  .celimax-doctor-card .celimax-doctor-stage__content {
+    transform: none;
+  }
+
+  .celimax-doctor-card .celimax-doctor-stage__spec-title {
+    margin-bottom: 8px;
+  }
+
+  .celimax-doctor-card .celimax-doctor-stage__spec-bio {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* Focus tags repeat the bio; hide them on narrow cards to keep one-screen height */
+  .celimax-doctor-card .celimax-doctor-stage__tags {
+    display: none;
+  }
+
+  .celimax-doctor-card .celimax-doctor-stage__meta-row {
+    gap: 16px;
+    margin-bottom: 0;
+  }
+
+  .celimax-doctor-card .celimax-doctor__btn-cta {
+    gap: 12px;
+    padding-inline-start: 18px;
+    font-size: 0.94rem;
+    white-space: nowrap;
+  }
+
+  .celimax-doctor-stage__body .celimax-doctor__pagination-wrap {
+    margin-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .celimax-doctor-card .celimax-doctor-stage__portrait img,
+  .celimax-doctor-card .celimax-doctor-stage__content {
+    transform: none;
+  }
+}
