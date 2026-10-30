@@ -17,6 +17,7 @@ import { LoadingScreen, LOADING_DURATION_MS } from './components/LoadingScreen';
 import { BlackRenovareSection } from './components/BlackRenovareSection';
 import { ReviewStorySection } from './components/ReviewStorySection';
 import { VideoHero } from './components/VideoHero';
+import { SiteHeader } from './components/SiteHeader';
 import { InstagramIcon, WhatsAppIcon } from './components/SocialIcons';
 import { scrollPageTo, shouldSmoothScroll, snapThroughLenis, startSmoothScroll } from './animations/smoothScroll';
 import {
@@ -91,53 +92,11 @@ export function App() {
   const [patientName, setPatientName] = useState('');
   const [patientGoal, setPatientGoal] = useState('Ciclo Seca-Barriga & Desintoxicação');
   const [patientPeriod, setPatientPeriod] = useState('Manhã (08h às 12h)');
-  const headerRef = useRef<HTMLElement>(null);
   const doctorTrackRef = useRef<HTMLDivElement>(null);
   const doctorScrollFrame = useRef<number | null>(null);
 
   // Smooth, slightly delayed wheel scroll on desktop pointers (native on touch / reduced motion)
   useEffect(() => startSmoothScroll(LOADING_DURATION_MS), []);
-
-  // Header fill follows scroll progress (0 → 1 over the first 160px), eased and
-  // damped per frame so the frosted surface fades in instead of snapping on.
-  useEffect(() => {
-    const header = headerRef.current;
-    if (!header) return;
-
-    const FILL_DISTANCE = 160;
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let current = -1;
-    let target = 0;
-    let frame: number | null = null;
-
-    const write = () => header.style.setProperty('--nav-fill', current.toFixed(3));
-
-    const step = () => {
-      current += (target - current) * 0.14;
-      if (Math.abs(target - current) < 0.002) current = target;
-      write();
-      frame = current === target ? null : requestAnimationFrame(step);
-    };
-
-    const updateHeaderFill = () => {
-      const progress = Math.min(1, Math.max(0, window.scrollY / FILL_DISTANCE));
-      target = progress * progress * (3 - 2 * progress);
-
-      if (reduceMotion || current < 0) {
-        current = target;
-        write();
-        return;
-      }
-      if (frame === null) frame = requestAnimationFrame(step);
-    };
-
-    updateHeaderFill();
-    window.addEventListener('scroll', updateHeaderFill, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', updateHeaderFill);
-      if (frame !== null) cancelAnimationFrame(frame);
-    };
-  }, []);
 
   // On mobile the track scrolls horizontally; on desktop cards crossfade in place
   const selectDoctor = (index: number) => {
@@ -318,49 +277,7 @@ export function App() {
     <div ref={containerRef} className="celimax-theme-wrapper">
       <LoadingScreen />
 
-      {/* 1. FLOATING ISLAND NAVBAR */}
-      <div className="celimax-nav-wrapper">
-        <header ref={headerRef} className="celimax-nav">
-          <a href="#topo" className="celimax-nav__brand" aria-label="Renovare — Início">
-            <RenovareLogo variant="symbol" color="currentColor" className="celimax-nav__symbol" />
-          </a>
-
-          <nav className="celimax-nav__links" aria-label="Navegação principal">
-            <a href="#manifesto" className="celimax-nav__link">
-              SOBRE
-            </a>
-            <a href="#procedimentos" className="celimax-nav__link">
-              PROTOCOLOS
-            </a>
-            <a href="#antes-depois" className="celimax-nav__link">
-              ANTES & DEPOIS
-            </a>
-            <a href="#diferenciais" className="celimax-nav__link">
-              DIFERENCIAIS
-            </a>
-            <a href="#especialistas" className="celimax-nav__link">
-              ESPECIALISTAS
-            </a>
-          </nav>
-
-          <div className="celimax-nav__actions">
-            <a
-              href={buildWhatsAppUrl(
-                'Olá! Vim pelo site da Renovare e gostaria de agendar uma avaliação estética personalizada em Betim.'
-              )}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="celimax-btn-cta"
-            >
-              <span className="celimax-btn-cta__full">Agendar Avaliação</span>
-              <span className="celimax-btn-cta__short">Agendar</span>
-              <span className="celimax-btn-arrow-circle" aria-hidden="true">
-                <ArrowUpRight size={25} />
-              </span>
-            </a>
-          </div>
-        </header>
-      </div>
+      <SiteHeader />
 
       <main id="topo">
         {/* 2. HERO: FULL-BLEED VIDEO THAT INSETS WITH ROUNDED CORNERS AS THE PAGE SCROLLS */}

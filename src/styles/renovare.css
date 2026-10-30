@@ -3016,180 +3016,6 @@ ol {
    - mobile-native (iOS Safari viewport units, touch manipulation, 0px leak)
    ========================================================================== */
 
-/* 1. FLOATING ISLAND NAVBAR */
-.celimax-nav-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 999;
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.celimax-nav {
-  /* 0 = transparent over the hero, 1 = frosted surface; driven from App.tsx */
-  --nav-fill: 0;
-  --nav-clear: calc(1 - var(--nav-fill));
-  --nav-ink: color-mix(in oklab, #2F3D24 calc(var(--nav-fill) * 100%), #FFFFFF);
-  position: relative;
-  isolation: isolate;
-  pointer-events: auto;
-  width: 100%;
-  min-height: 68px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: clamp(28px, 3.4vw, 56px);
-  padding: 12px var(--page-margin);
-}
-
-/* Legibility scrim: a soft olive shade behind light type while the header is clear */
-.celimax-nav::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 -44px;
-  z-index: -1;
-  pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgba(20, 28, 14, 0.5) 0%,
-    rgba(20, 28, 14, 0.3) 50%,
-    rgba(20, 28, 14, 0.1) 78%,
-    rgba(20, 28, 14, 0) 100%
-  );
-  opacity: var(--nav-clear);
-}
-
-/* Frosted fill: opacity-only fade keeps the scroll reveal on the compositor */
-.celimax-nav::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: rgba(255, 255, 255, 0.9);
-  -webkit-backdrop-filter: blur(24px) saturate(1.2);
-  backdrop-filter: blur(24px) saturate(1.2);
-  box-shadow:
-    0 1px 0 rgba(47, 61, 36, 0.08),
-    0 12px 32px -24px rgba(15, 23, 10, 0.4);
-  opacity: var(--nav-fill);
-}
-
-.celimax-nav__brand {
-  display: flex;
-  align-items: center;
-  padding: 4px 0;
-  text-decoration: none;
-  color: color-mix(in oklab, var(--olive-dark) calc(var(--nav-fill) * 100%), #FFFFFF);
-  filter: drop-shadow(0 1px 8px rgba(20, 28, 14, calc(0.35 * var(--nav-clear))));
-}
-
-.celimax-nav__symbol {
-  width: 36px;
-  height: 36px;
-  color: inherit;
-}
-
-.celimax-nav__links {
-  display: none;
-  flex: 1;
-  align-items: center;
-  justify-content: flex-end;
-  gap: clamp(20px, 2.4vw, 36px);
-  list-style: none;
-}
-
-.celimax-nav__link {
-  position: relative;
-  padding: 10px 0;
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: var(--nav-ink);
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  text-shadow: 0 1px 10px rgba(20, 28, 14, calc(0.4 * var(--nav-clear)));
-}
-
-/* Hover underline works in both header states without changing ink color */
-.celimax-nav__link::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 4px;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.35s var(--ease-out);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .celimax-nav__link:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
-  }
-}
-
-.celimax-nav__link:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 4px;
-  border-radius: 2px;
-}
-
-.celimax-nav__actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.celimax-btn-black-renovare {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #3F5031;
-  color: var(--moss-pale);
-  font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: 0.88rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 10px 20px;
-  border-radius: 999px;
-  box-shadow: 0 4px 14px -3px rgba(63, 80, 49, 0.35);
-  transition: transform 0.2s var(--ease-out), background-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
-  touch-action: manipulation;
-  user-select: none;
-  white-space: nowrap;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .celimax-btn-black-renovare:hover {
-    background-color: #4A5E3A;
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px -4px rgba(63, 80, 49, 0.45);
-  }
-}
-
-.celimax-btn-black-renovare:active {
-  transform: scale(0.97);
-}
-
-.celimax-nav__badge-location {
-  display: none;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #55624A;
-  background: rgba(71, 90, 56, 0.08);
-  padding: 6px 12px;
-  border-radius: 999px;
-}
-
 .celimax-btn-cta {
   display: inline-flex;
   align-items: center;
@@ -3229,28 +3055,9 @@ ol {
   color: #1A2412;
 }
 
-@media (min-width: 860px) {
-  .celimax-nav__links {
-    display: flex;
-  }
-  .celimax-nav__badge-location {
-    display: inline-block;
-  }
-}
-
-.celimax-btn-cta__short {
-  display: none;
-}
-
 @media (max-width: 768px) {
-  .celimax-nav {
-    min-height: 60px;
-    padding: 8px var(--page-margin);
-  }
-  .celimax-nav__symbol {
-    width: 30px;
-    height: 30px;
-  }
+
+  
   .celimax-btn-cta {
     font-size: 0.85rem;
     gap: 6px;
@@ -3258,12 +3065,8 @@ ol {
 }
 
 @media (max-width: 480px) {
-  .celimax-btn-cta__full {
-    display: none;
-  }
-  .celimax-btn-cta__short {
-    display: inline;
-  }
+
+  
   .celimax-btn-cta {
     font-size: 0.82rem;
   }
@@ -4979,9 +4782,6 @@ ol {
   color: #4C5844;
 }
 
-
-
-
 @media (min-width: 760px) and (max-width: 1099px) {
   .faq-index {
     grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
@@ -5004,7 +4804,6 @@ ol {
     font-size: 1.1875rem;
     white-space: nowrap;
   }
-
 
   .faq-index__panel {
     grid-column: 2;
@@ -5066,7 +4865,6 @@ ol {
   .faq-index__topic svg {
     display: none;
   }
-
 
   .faq-index__panel {
     border-radius: 22px;
@@ -5343,10 +5141,6 @@ html.is-loading body {
    moves horizontally, and the lime band marks only featured or open content.
    ========================================================================== */
 @media (max-width: 719px) {
-  /* Header: brand anchors left, CTA anchors right */
-  .celimax-nav__brand {
-    margin-right: auto;
-  }
 
   
 
@@ -6954,6 +6748,237 @@ html.lenis {
 /* Mobile: the specialist cards carry the detail; keep the section header concise */
 @media (max-width: 719px) {
   .celimax-doctor-stage__quote {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   SITE HEADER — floating glass pills modelled on lassie.ai.
+   Desktop: centre pill (mark + wordmark + sections) with a white highlight that
+   slides under the hovered item and rests on the mark; right pill with the action.
+   Phones: one pill with the mark and MENU, opening a panel of sections.
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 999;
+  height: 0;
+  pointer-events: none;
+}
+
+.site-header__pill {
+  position: fixed;
+  top: 16px;
+  display: none;
+  align-items: center;
+  height: 40px;
+  pointer-events: auto;
+}
+
+.site-header__pill--main {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.site-header__pill--action {
+  right: 22px;
+}
+
+/* Glass frame sits 4px outside the items, as on the reference */
+.site-header__frame {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: calc(100% + 8px);
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  background: rgba(26, 36, 18, 0.46);
+  -webkit-backdrop-filter: blur(13px) saturate(1.2);
+  backdrop-filter: blur(13px) saturate(1.2);
+  pointer-events: none;
+}
+
+.site-header__highlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 40px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  pointer-events: none;
+}
+
+.site-header__item {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.92);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.site-header__item.is-lit {
+  color: #1A2412;
+}
+
+.site-header__item:focus-visible {
+  outline: 2px solid var(--moss-pale);
+  outline-offset: 2px;
+}
+
+.site-header__item--brand {
+  padding: 0 14px;
+}
+
+.site-header__symbol {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.site-header__item--brand.is-lit .site-header__symbol {
+  color: var(--olive-dark);
+}
+
+.site-header__wordmark {
+  display: inline-block;
+  width: 83px;
+  overflow: hidden;
+}
+
+.site-header__wordmark-svg {
+  display: block;
+  width: 75px;
+  height: auto;
+  margin-left: 8px;
+}
+
+.site-header__item--cta {
+  background: var(--moss-pale);
+  color: #1A2412;
+  font-weight: 600;
+  transition: background-color 0.2s var(--ease-out), transform 0.16s var(--ease-out);
+}
+
+.site-header__item--cta:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-header__item--cta:hover {
+    background: #E5EEB8;
+  }
+}
+
+/* ---------- Phones and narrow screens ---------- */
+.site-header__mobile {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  z-index: 1;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  transform: translateX(-50%);
+  pointer-events: auto;
+}
+
+.site-header__frame--mobile {
+  height: calc(100% + 8px);
+}
+
+.site-header__mobile-row {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-header__mobile .site-header__item--brand {
+  background: #FFFFFF;
+}
+
+.site-header__menu-btn {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.site-header__mobile.is-open .site-header__menu-btn {
+  color: #1A2412;
+}
+
+.site-header__panel {
+  position: relative;
+  z-index: 1;
+  display: none;
+  height: 0;
+  margin-top: -40px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #F8F7F7;
+}
+
+.site-header__panel-inner {
+  display: flex;
+  flex-direction: column;
+  padding: 64px 20px 20px;
+}
+
+.site-header__panel-link {
+  padding: 8px 0;
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #171E12;
+  text-decoration: none;
+}
+
+.site-header__panel-link:focus-visible,
+.site-header__panel-cta:focus-visible,
+.site-header__menu-btn:focus-visible {
+  outline: 2px solid var(--olive-dark);
+  outline-offset: 2px;
+}
+
+.site-header__panel-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  margin-top: 20px;
+  border-radius: 12px;
+  background: var(--olive-dark);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+/* Wide screens: the two desktop pills replace the phone pill */
+@media (min-width: 1180px) {
+  .site-header__pill {
+    display: flex;
+  }
+
+  .site-header__mobile {
     display: none;
   }
 }
