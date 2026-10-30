@@ -123,10 +123,10 @@ export function BeforeAfterSlider({
           draggable={false}
         />
 
-        {/* Clipped: Before Image (revealed on the left) */}
+        {/* Clipped: Before Image (revealed on the left); full-size mask keeps both photos registered */}
         <div
           className="celimax-ba-clip"
-          style={{ width: `${sliderPosition}%` }}
+          style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
         >
           <img
             src={beforeImage}

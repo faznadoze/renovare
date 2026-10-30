@@ -539,17 +539,21 @@ export function App() {
 
             <div className="celimax-ba-grid js-reveal-item">
               <BeforeAfterSlider
-                beforeImage="./assets/people/hero-woman-portrait.jpg"
-                afterImage="./assets/people/hero-woman-glow.jpg"
-                title="Renovação de Textura e Luminosidade"
+                beforeImage="./assets/results/abdomen-perfil-esquerdo-antes.jpg"
+                afterImage="./assets/results/abdomen-perfil-esquerdo-depois.jpg"
+                beforeAlt="Abdômen de paciente em perfil esquerdo, antes do protocolo"
+                afterAlt="Abdômen da mesma paciente em perfil esquerdo, depois do protocolo"
+                title="Contorno abdominal, perfil esquerdo"
                 initialPosition={51.8}
                 showLabels={false}
               />
 
               <BeforeAfterSlider
-                beforeImage="./assets/people/treatment-secabarriga.jpg"
-                afterImage="./assets/people/treatment-crio.jpg"
-                title="Afinamento de Cintura & Redução de Medidas"
+                beforeImage="./assets/results/abdomen-perfil-direito-antes.jpg"
+                afterImage="./assets/results/abdomen-perfil-direito-depois.jpg"
+                beforeAlt="Abdômen de paciente em perfil direito, antes do protocolo"
+                afterAlt="Abdômen da mesma paciente em perfil direito, depois do protocolo"
+                title="Contorno abdominal, perfil direito"
                 initialPosition={55.5}
                 showLabels={false}
               />
