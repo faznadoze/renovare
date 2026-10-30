@@ -131,25 +131,29 @@ export function ReviewStorySection({ reviews }: ReviewStorySectionProps) {
           }).addLabel('formed');
 
           // Then it steps back to a watermark so the words can sit on it
-          tl.to(lily, { opacity: 0.12, scale: 1.06, duration: 0.6, ease: 'power2.inOut' }, 'formed+=0.25');
+          tl.to(lily, { opacity: 0.06, scale: 1.06, duration: 0.6, ease: 'power2.inOut' }, 'formed+=0.25');
 
-          lines.forEach((line, idx) => {
-            const pair = cards.slice(idx * 2, idx * 2 + 2);
-            const at = idx === 0 ? '<0.15' : '+=0.45';
-            if (idx > 0) {
-              tl.to(lines[idx - 1], { autoAlpha: 0, y: -24, duration: 0.4, ease: 'power2.in' }, at);
-            }
-            tl.fromTo(line, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.55 }, idx === 0 ? at : '<0.2');
-            // The pair arrives together: scale and opacity only, the turn carries the movement
-            pair.forEach((card, offset) => {
-              const cardIdx = cards.indexOf(card);
+          // First statement, and every review arrives while it is on screen: pairs fade and
+          // scale in one after another, the shared turn carries the movement
+          tl.fromTo(lines[0], { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.55 }, '<0.15');
+          for (let pairStart = 0; pairStart < cards.length; pairStart += 2) {
+            cards.slice(pairStart, pairStart + 2).forEach((_, offset) => {
+              const cardIdx = pairStart + offset;
               tl.to(
                 appear[cardIdx],
                 { a: 1, duration: 0.6, ease: 'power2.out', onUpdate: () => place(cardIdx) },
-                offset === 0 ? '<0.1' : '<0.08'
+                offset === 1 ? '<0.08' : pairStart === 0 ? '<0.2' : '>-0.2'
               );
             });
-            tl.addLabel(`line-${idx + 1}`);
+          }
+          tl.addLabel('line-1');
+
+          // Each following statement waits for the previous one to leave (it rises a little
+          // as it fades), then comes in
+          lines.slice(1).forEach((line, idx) => {
+            tl.to(lines[idx], { autoAlpha: 0, y: -28, duration: 0.45, ease: 'power2.in' }, '+=0.45')
+              .fromTo(line, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.55 }, '>0.05')
+              .addLabel(`line-${idx + 2}`);
           });
 
           // A short hold on the last statement before the section releases
