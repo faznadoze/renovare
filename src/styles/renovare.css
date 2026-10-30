@@ -3806,12 +3806,12 @@ ol {
 
 /* 5. BEFORE & AFTER INTERACTIVE SPLIT SLIDERS */
 .celimax-ba-section {
-  padding: clamp(80px, 12vh, 140px) 0;
-  background-color: var(--polar-white);
+  padding: clamp(64px, 9vh, 96px) 0;
+  background-color: #F8F7F7;
 }
 
 .celimax-ba-section__container {
-  max-width: 1200px;
+  max-width: 1360px;
   margin: 0 auto;
   padding: 0 clamp(20px, 4vw, 40px);
 }
@@ -3820,6 +3820,56 @@ ol {
   text-align: center;
   max-width: 720px;
   margin: 0 auto 56px;
+}
+
+.celimax-ba-header__eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 27px;
+  font-family: var(--font-sans);
+  font-size: 13.12px;
+  font-weight: 400;
+  line-height: 20.336px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #475A38;
+}
+
+.celimax-ba-header__rule {
+  width: 115.476px;
+  height: 1.118px;
+  flex-shrink: 0;
+  background: linear-gradient(to right, rgba(71, 90, 56, 0.8), rgba(219, 228, 169, 0));
+}
+
+.celimax-ba-header__rule--in {
+  background: linear-gradient(to right, rgba(219, 228, 169, 0), rgba(71, 90, 56, 0.8));
+}
+
+.celimax-ba-header__title {
+  font-weight: 400;
+  font-size: clamp(2rem, 4.7vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.celimax-ba-header__title .editorial-serif {
+  font-family: "Cormorant Garamond:SemiBold Italic", var(--font-serif);
+  letter-spacing: -0.48px;
+}
+
+.celimax-ba-header__lead {
+  max-width: 680px;
+  margin: 12px auto 0;
+  font-family: var(--font-sans);
+  font-size: 17.6px;
+  font-weight: 400;
+  line-height: 29.04px;
+  color: #4A5642;
+  text-wrap: pretty;
 }
 
 .celimax-ba-grid {
@@ -3836,8 +3886,7 @@ ol {
 }
 
 .celimax-ba-card {
-  border-radius: 28px;
-  box-shadow: 0 14px 36px -10px rgba(25, 35, 18, 0.1);
+  border-radius: 20px;
 }
 
 .celimax-ba-visual {
@@ -3850,6 +3899,12 @@ ol {
   touch-action: pan-y;
   cursor: ew-resize;
   background: #EAECE7;
+}
+
+@media (min-width: 860px) {
+  .celimax-ba-visual {
+    aspect-ratio: 622 / 381;
+  }
 }
 
 .celimax-ba-img {
@@ -3908,8 +3963,7 @@ ol {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: #FFFFFF;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  background: #F8F7F7;
   transform: translateX(-50%);
   pointer-events: none;
   z-index: 5;
@@ -3922,13 +3976,19 @@ ol {
   transform: translate(-50%, -50%);
   width: 36px;
   height: 36px;
-  border-radius: 50%;
-  background: #FFFFFF;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+  border: 2px solid #F8F7F7;
+  background: rgba(255, 255, 255, 0.25);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1E2816;
+}
+
+.celimax-ba-visual:focus-visible {
+  outline: 2px solid var(--olive-dark);
+  outline-offset: 4px;
 }
 
 .celimax-center-cta {
@@ -3965,6 +4025,29 @@ ol {
 
 .celimax-ba__btn-whatsapp:active {
   transform: scale(0.97);
+}
+
+/* Results CTA follows the Figma pill: flat onyx, 6px inset, square lime badge */
+.celimax-ba__btn-whatsapp--results {
+  gap: 24px;
+  padding: 6px 6px 6px 18px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 31.45px;
+  box-shadow: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .celimax-ba__btn-whatsapp--results:hover {
+    box-shadow: none;
+  }
+}
+
+.celimax-ba__btn-whatsapp--results .celimax-ba__arrow-badge {
+  width: 31.45px;
+  height: 31.45px;
+  border-radius: 16px;
+  background-color: #DBE4A9;
 }
 
 .celimax-ba__arrow-badge {
@@ -5317,6 +5400,30 @@ html.is-loading body {
   .celimax-pillars__header {
     text-align: left;
     margin-bottom: 36px;
+  }
+
+  .celimax-ba-header__eyebrow {
+    justify-content: flex-start;
+    margin-bottom: 18px;
+  }
+
+  .celimax-ba-header__rule--in {
+    display: none;
+  }
+
+  .celimax-ba-header__eyebrow span:not(.celimax-ba-header__rule) {
+    white-space: nowrap;
+  }
+
+  .celimax-ba-header__rule {
+    flex: 0 1 115.476px;
+    min-width: 24px;
+  }
+
+  .celimax-ba-header__lead {
+    margin-left: 0;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   .celimax-ba-grid {

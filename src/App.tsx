@@ -448,10 +448,16 @@ export function App() {
         <section id="antes-depois" className="celimax-ba-section js-section-reveal">
           <div className="celimax-ba-section__container">
             <div className="celimax-ba-header js-reveal-item">
-              <h2 className="celimax-section-title">
-                Resultados Reais na <em className="editorial-serif">Renovare</em>
+              <p className="celimax-ba-header__eyebrow">
+                <span className="celimax-ba-header__rule celimax-ba-header__rule--in" aria-hidden="true" />
+                <span>Resultados Comprovados</span>
+                <span className="celimax-ba-header__rule" aria-hidden="true" />
+              </p>
+              <h2 className="celimax-section-title celimax-ba-header__title">
+                Antes &amp; Depois: testemunhe o poder da{' '}
+                <em className="editorial-serif">estética integrativa</em>
               </h2>
-              <p className="celimax-manifesto__sub" style={{ marginTop: '12px' }}>
+              <p className="celimax-ba-header__lead">
                 Arraste o cursor horizontalmente em cada imagem para comparar a evolução real das nossas
                 pacientes na clínica Renovare em Betim.
               </p>
@@ -462,14 +468,16 @@ export function App() {
                 beforeImage="./assets/people/hero-woman-portrait.jpg"
                 afterImage="./assets/people/hero-woman-glow.jpg"
                 title="Renovação de Textura e Luminosidade"
-                initialPosition={48}
+                initialPosition={51.8}
+                showLabels={false}
               />
 
               <BeforeAfterSlider
                 beforeImage="./assets/people/treatment-secabarriga.jpg"
                 afterImage="./assets/people/treatment-crio.jpg"
                 title="Afinamento de Cintura & Redução de Medidas"
-                initialPosition={52}
+                initialPosition={55.5}
+                showLabels={false}
               />
             </div>
 
@@ -480,11 +488,11 @@ export function App() {
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="celimax-ba__btn-whatsapp"
+                className="celimax-ba__btn-whatsapp celimax-ba__btn-whatsapp--results"
               >
                 <span>Avaliar meu caso no WhatsApp</span>
                 <span className="celimax-ba__arrow-badge" aria-hidden="true">
-                  <ArrowUpRight size={18} />
+                  <img src="./assets/c256d.svg" alt="" width={22.4} height={22.4} />
                 </span>
               </a>
             </div>

@@ -9,6 +9,7 @@ interface BeforeAfterSliderProps {
   afterLabel?: string;
   title: string;
   initialPosition?: number; // 0 to 100
+  showLabels?: boolean;
 }
 
 export function BeforeAfterSlider({
@@ -20,6 +21,7 @@ export function BeforeAfterSlider({
   afterLabel = 'Depois',
   title,
   initialPosition = 50,
+  showLabels = true,
 }: BeforeAfterSliderProps) {
   const [sliderPosition, setSliderPosition] = useState(initialPosition);
   const [isDragging, setIsDragging] = useState(false);
@@ -136,18 +138,22 @@ export function BeforeAfterSlider({
         </div>
 
         {/* Labels */}
-        <span
-          className="celimax-ba-tag celimax-ba-tag--before"
-          style={{ opacity: sliderPosition > 15 ? 1 : 0 }}
-        >
-          {beforeLabel}
-        </span>
-        <span
-          className="celimax-ba-tag celimax-ba-tag--after"
-          style={{ opacity: sliderPosition < 85 ? 1 : 0 }}
-        >
-          {afterLabel}
-        </span>
+        {showLabels && (
+          <>
+            <span
+              className="celimax-ba-tag celimax-ba-tag--before"
+              style={{ opacity: sliderPosition > 15 ? 1 : 0 }}
+            >
+              {beforeLabel}
+            </span>
+            <span
+              className="celimax-ba-tag celimax-ba-tag--after"
+              style={{ opacity: sliderPosition < 85 ? 1 : 0 }}
+            >
+              {afterLabel}
+            </span>
+          </>
+        )}
 
         {/* Divider & Draggable Handle */}
         <div
@@ -156,30 +162,8 @@ export function BeforeAfterSlider({
           aria-hidden="true"
         >
           <div className="celimax-ba-handle-pill">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
+            <img src="./assets/d45b3.svg" alt="" width={16} height={16} />
+            <img src="./assets/44684.svg" alt="" width={16} height={16} />
           </div>
         </div>
       </div>
