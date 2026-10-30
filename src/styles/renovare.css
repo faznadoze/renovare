@@ -6808,8 +6808,7 @@ html.lenis {
   height: 40px;
   padding: 0 16px;
   border: 0;
-  border-radius: 8px;
-  background: #FFFFFF;
+  background: none;
   font-family: var(--font-sans);
   font-size: 0.875rem;
   font-weight: 500;
@@ -6818,22 +6817,73 @@ html.lenis {
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
-  transition: opacity 0.25s ease, transform 0.16s var(--ease-out);
+  transition: color 0.25s ease, transform 0.16s var(--ease-out);
+}
+
+/* The white fill lives on its own layer so it can fade without touching the label.
+   At rest the fills overlap by 1px and only the ends are rounded: one seamless bar. */
+.site-header__item::before {
+  content: '';
+  position: absolute;
+  inset: 0 -1px;
+  z-index: -1;
+  border-radius: 0;
+  background: #FFFFFF;
+  transition: opacity 0.25s ease, border-radius 0.25s ease, inset 0.25s ease;
+}
+
+.site-header__pill > .site-header__item:nth-child(2)::before,
+.site-header__mobile-row > .site-header__item:first-child::before {
+  inset: 0 -1px 0 0;
+  border-radius: 8px 0 0 8px;
+}
+
+.site-header__pill > .site-header__item:last-child::before,
+.site-header__mobile-row > .site-header__item:last-child::before {
+  inset: 0 0 0 -1px;
+  border-radius: 0 8px 8px 0;
 }
 
 .site-header__item:active {
   transform: scale(0.97);
 }
 
-/* Hovering (or keyboard-focusing) one chip dims every other chip in the header */
+/* Hovering (or keyboard-focusing) one chip: every other fill fades out and its label or
+   mark turns white over the glass; the chosen chip keeps its fill as a full rounded chip */
 @media (hover: hover) and (pointer: fine) {
   .site-header:has(.site-header__item:hover) .site-header__item:not(:hover) {
-    opacity: 0.4;
+    color: #FFFFFF;
+  }
+
+  .site-header:has(.site-header__item:hover) .site-header__item:not(:hover)::before {
+    opacity: 0;
+  }
+
+  .site-header:has(.site-header__item:hover) .site-header__item:not(:hover) .site-header__symbol {
+    color: #FFFFFF;
+  }
+
+  .site-header .site-header__item:hover::before {
+    inset: 0;
+    border-radius: 8px;
   }
 }
 
 .site-header:has(.site-header__item:focus-visible) .site-header__item:not(:focus-visible) {
-  opacity: 0.4;
+  color: #FFFFFF;
+}
+
+.site-header:has(.site-header__item:focus-visible) .site-header__item:not(:focus-visible)::before {
+  opacity: 0;
+}
+
+.site-header:has(.site-header__item:focus-visible) .site-header__item:not(:focus-visible) .site-header__symbol {
+  color: #FFFFFF;
+}
+
+.site-header .site-header__item:focus-visible::before {
+  inset: 0;
+  border-radius: 8px;
 }
 
 .site-header__item:focus-visible {
@@ -6850,11 +6900,12 @@ html.lenis {
   width: 26px;
   height: 26px;
   color: var(--olive-dark);
+  transition: color 0.25s ease;
 }
 
 .site-header__wordmark {
   display: inline-block;
-  width: 83px;
+  width: 81px;
   overflow: hidden;
 }
 
@@ -6862,12 +6913,18 @@ html.lenis {
   display: block;
   width: 75px;
   height: auto;
-  margin-left: 8px;
+  margin-left: 6px;
 }
 
 .site-header__item--cta {
-  background: var(--moss-pale);
   font-weight: 600;
+}
+
+.site-header__item--cta::before,
+.site-header__pill > .site-header__item--cta::before {
+  inset: 0;
+  border-radius: 8px;
+  background: var(--moss-pale);
 }
 
 /* ---------- Phones and narrow screens ---------- */

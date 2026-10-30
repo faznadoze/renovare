@@ -14,7 +14,6 @@ import { buildWhatsAppUrl } from '../data/renovareContent';
 
 // Section links in page order; BLACK (the campaign) is set in gold
 const SECTIONS = [
-  { href: '#manifesto', label: 'Sobre' },
   { href: '#black-renovare', label: 'BLACK', gold: true },
   { href: '#procedimentos', label: 'Protocolos' },
   { href: '#antes-depois', label: 'Antes & Depois' },
@@ -24,7 +23,6 @@ const SECTIONS = [
 ];
 
 const MOBILE_SECTIONS = [
-  { href: '#manifesto', label: 'Sobre a Renovare' },
   { href: '#black-renovare', label: 'BLACK', gold: true },
   { href: '#procedimentos', label: 'Protocolos' },
   { href: '#antes-depois', label: 'Antes & Depois' },
@@ -37,8 +35,8 @@ const BOOKING_URL = buildWhatsAppUrl(
   'Olá! Vim pelo site da Renovare e gostaria de agendar uma avaliação estética personalizada em Betim.'
 );
 
-// Wordmark (75px) plus its 8px gap from the mark; both fold away together
-const WORDMARK_WIDTH = 83;
+// Wordmark (75px) plus its 6px gap from the mark; both fold away together
+const WORDMARK_WIDTH = 81;
 const FOLD = { duration: 0.45, ease: 'power3.inOut' };
 
 function useCollapsedOnScroll() {
