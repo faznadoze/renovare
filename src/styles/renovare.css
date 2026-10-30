@@ -2989,40 +2989,62 @@ ol {
 }
 
 .celimax-nav {
+  /* 0 = transparent over the hero, 1 = frosted surface; driven from App.tsx */
+  --nav-fill: 0;
+  --nav-clear: calc(1 - var(--nav-fill));
+  --nav-ink: color-mix(in oklab, #2F3D24 calc(var(--nav-fill) * 100%), #FFFFFF);
+  position: relative;
+  isolation: isolate;
   pointer-events: auto;
   width: 100%;
+  min-height: 68px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 32px;
-  padding: 10px 16px 10px 20px;
-  background: transparent;
-  -webkit-backdrop-filter: blur(0);
-  backdrop-filter: blur(0);
-  transition:
-    background-color 0.3s var(--ease-out),
-    backdrop-filter 0.3s var(--ease-out),
-    -webkit-backdrop-filter 0.3s var(--ease-out),
-    box-shadow 0.3s var(--ease-out);
+  gap: clamp(28px, 3.4vw, 56px);
+  padding: 12px var(--page-margin);
 }
 
-.celimax-nav--filled {
-  background: rgba(255, 255, 255, 0.94);
-  -webkit-backdrop-filter: blur(40px);
-  backdrop-filter: blur(40px);
-  box-shadow: 0 10px 30px -22px rgba(15, 23, 10, 0.35);
+/* Legibility scrim: a soft olive shade behind light type while the header is clear */
+.celimax-nav::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 -44px;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 28, 14, 0.5) 0%,
+    rgba(20, 28, 14, 0.3) 50%,
+    rgba(20, 28, 14, 0.1) 78%,
+    rgba(20, 28, 14, 0) 100%
+  );
+  opacity: var(--nav-clear);
+}
+
+/* Frosted fill: opacity-only fade keeps the scroll reveal on the compositor */
+.celimax-nav::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  backdrop-filter: blur(24px) saturate(1.2);
+  box-shadow:
+    0 1px 0 rgba(47, 61, 36, 0.08),
+    0 12px 32px -24px rgba(15, 23, 10, 0.4);
+  opacity: var(--nav-fill);
 }
 
 .celimax-nav__brand {
   display: flex;
   align-items: center;
+  padding: 4px 0;
   text-decoration: none;
-  color: #F2F0E4;
-  transition: color 0.3s var(--ease-out);
-}
-
-.celimax-nav--filled .celimax-nav__brand {
-  color: var(--olive-dark);
+  color: color-mix(in oklab, var(--olive-dark) calc(var(--nav-fill) * 100%), #FFFFFF);
+  filter: drop-shadow(0 1px 8px rgba(20, 28, 14, calc(0.35 * var(--nav-clear))));
 }
 
 .celimax-nav__symbol {
@@ -3036,31 +3058,47 @@ ol {
   flex: 1;
   align-items: center;
   justify-content: flex-end;
-  gap: 28px;
+  gap: clamp(20px, 2.4vw, 36px);
   list-style: none;
 }
 
 .celimax-nav__link {
+  position: relative;
+  padding: 10px 0;
   font-size: 0.92rem;
   font-weight: 600;
-  color: #F2F0E4;
+  color: var(--nav-ink);
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  transition: color 0.3s var(--ease-out);
+  text-shadow: 0 1px 10px rgba(20, 28, 14, calc(0.4 * var(--nav-clear)));
 }
 
-.celimax-nav--filled .celimax-nav__link {
-  color: #384232;
+/* Hover underline works in both header states without changing ink color */
+.celimax-nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .celimax-nav__link:hover {
-    color: var(--moss-pale);
+  .celimax-nav__link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
   }
-  .celimax-nav--filled .celimax-nav__link:hover {
-    color: var(--olive-dark);
-  }
+}
+
+.celimax-nav__link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 
 .celimax-nav__actions {
@@ -3166,7 +3204,8 @@ ol {
 
 @media (max-width: 768px) {
   .celimax-nav {
-    padding: 8px 14px;
+    min-height: 60px;
+    padding: 8px var(--page-margin);
   }
   .celimax-nav__symbol {
     width: 30px;

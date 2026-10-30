@@ -86,16 +86,49 @@ export function App() {
   const [patientName, setPatientName] = useState('');
   const [patientGoal, setPatientGoal] = useState('Ciclo Seca-Barriga & Desintoxicação');
   const [patientPeriod, setPatientPeriod] = useState('Manhã (08h às 12h)');
-  const [isHeaderFilled, setIsHeaderFilled] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
   const doctorTrackRef = useRef<HTMLDivElement>(null);
   const doctorScrollFrame = useRef<number | null>(null);
 
+  // Header fill follows scroll progress (0 → 1 over the first 160px), eased and
+  // damped per frame so the frosted surface fades in instead of snapping on.
   useEffect(() => {
-    const updateHeaderFill = () => setIsHeaderFilled(window.scrollY > 24);
+    const header = headerRef.current;
+    if (!header) return;
+
+    const FILL_DISTANCE = 160;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let current = -1;
+    let target = 0;
+    let frame: number | null = null;
+
+    const write = () => header.style.setProperty('--nav-fill', current.toFixed(3));
+
+    const step = () => {
+      current += (target - current) * 0.14;
+      if (Math.abs(target - current) < 0.002) current = target;
+      write();
+      frame = current === target ? null : requestAnimationFrame(step);
+    };
+
+    const updateHeaderFill = () => {
+      const progress = Math.min(1, Math.max(0, window.scrollY / FILL_DISTANCE));
+      target = progress * progress * (3 - 2 * progress);
+
+      if (reduceMotion || current < 0) {
+        current = target;
+        write();
+        return;
+      }
+      if (frame === null) frame = requestAnimationFrame(step);
+    };
 
     updateHeaderFill();
     window.addEventListener('scroll', updateHeaderFill, { passive: true });
-    return () => window.removeEventListener('scroll', updateHeaderFill);
+    return () => {
+      window.removeEventListener('scroll', updateHeaderFill);
+      if (frame !== null) cancelAnimationFrame(frame);
+    };
   }, []);
 
   // On mobile the track scrolls horizontally; on desktop cards crossfade in place
@@ -296,7 +329,7 @@ export function App() {
 
       {/* 1. FLOATING ISLAND NAVBAR */}
       <div className="celimax-nav-wrapper">
-        <header className={`celimax-nav ${isHeaderFilled ? 'celimax-nav--filled' : ''}`}>
+        <header ref={headerRef} className="celimax-nav">
           <a href="#topo" className="celimax-nav__brand" aria-label="Renovare — Início">
             <RenovareLogo variant="symbol" color="currentColor" className="celimax-nav__symbol" />
           </a>
