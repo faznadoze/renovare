@@ -4740,7 +4740,6 @@ ol {
   overflow: hidden;
   padding: clamp(36px, 5vw, 64px);
   color: #FFFFFF;
-  box-shadow: 0 24px 60px -12px rgba(18, 26, 12, 0.4);
 }
 
 /* Ambient SVG background layers */
@@ -4836,7 +4835,6 @@ ol {
   background: #FFFFFF;
   border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
   max-width: 480px;
   aspect-ratio: 4 / 5;
 }
@@ -4931,8 +4929,7 @@ ol {
   text-decoration: none;
   padding: 6px 6px 6px 20px;
   border-radius: 88px;
-  box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.25);
-  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+  transition: transform 0.35s var(--ease-out), background-color 0.35s var(--ease-out);
   touch-action: manipulation;
   user-select: none;
   white-space: nowrap;
@@ -4941,7 +4938,7 @@ ol {
 @media (hover: hover) and (pointer: fine) {
   .celimax-doctor__btn-cta:hover {
     transform: translateY(-2px);
-    box-shadow: 0 14px 30px -4px rgba(0, 0, 0, 0.35);
+    background-color: #F4F6E6;
   }
 }
 
@@ -6138,20 +6135,21 @@ html.is-loading body {
 }
 
 .celimax-doctor-card {
+  /* Symmetric curve for dissolves; the site's quint ease-out front-loads too hard here */
+  --doctor-ease: cubic-bezier(0.45, 0, 0.2, 1);
   grid-area: 1 / 1;
+  z-index: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 40px;
   align-items: center;
-  opacity: 0;
   visibility: hidden;
-  transition:
-    opacity 420ms var(--ease-out),
-    visibility 0s linear 420ms;
+  /* Stay rendered until the outgoing portrait has finished dissolving */
+  transition: visibility 0s linear 1100ms;
 }
 
 .celimax-doctor-card.is-active {
-  opacity: 1;
+  z-index: 1;
   visibility: visible;
   transition-delay: 0s;
 }
@@ -6159,6 +6157,9 @@ html.is-loading body {
 .celimax-doctor-card .celimax-doctor-stage__portrait {
   outline: 1px solid oklch(1 0 0 / 0.1);
   outline-offset: -1px;
+  opacity: 0;
+  /* Outgoing portrait holds briefly so the incoming one dissolves over it, never over the bare stage */
+  transition: opacity 600ms var(--doctor-ease) 450ms;
 }
 
 /* Translucent fill reads well on the olive stage; per-tag blur is costly across all cards */
@@ -6169,12 +6170,28 @@ html.is-loading body {
 
 .celimax-doctor-card .celimax-doctor-stage__portrait img {
   transform: scale(1.04);
-  transition: transform 900ms var(--ease-out);
+  transition: transform 1400ms var(--ease-out);
 }
 
+/* Outgoing copy clears quickly in place; it resets its offset only once invisible */
 .celimax-doctor-card .celimax-doctor-stage__content {
-  transform: translateY(10px);
-  transition: transform 520ms var(--ease-out) 60ms;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 280ms cubic-bezier(0.4, 0, 1, 1),
+    transform 0s linear 280ms;
+}
+
+.celimax-doctor-card.is-active .celimax-doctor-stage__portrait {
+  opacity: 1;
+  transition: opacity 750ms var(--doctor-ease);
+}
+
+.celimax-doctor-card.is-active .celimax-doctor-stage__content {
+  opacity: 1;
+  transition:
+    opacity 600ms var(--doctor-ease) 240ms,
+    transform 900ms var(--ease-out) 240ms;
 }
 
 .celimax-doctor-card.is-active .celimax-doctor-stage__portrait img,
@@ -6209,8 +6226,8 @@ html.is-loading body {
 .celimax-doctor__page-num {
   border-bottom: 2px solid transparent;
   transition:
-    opacity 0.2s var(--ease-out),
-    border-color 0.25s var(--ease-out);
+    opacity 0.4s var(--ease-out),
+    border-color 0.4s var(--ease-out);
 }
 
 .celimax-doctor__page-num--active {
@@ -6260,11 +6277,10 @@ html.is-loading body {
     border-radius: 22px;
     overflow: hidden;
     background: #1A2412;
-    box-shadow: 0 18px 36px -22px rgba(0, 0, 0, 0.6);
     scroll-snap-align: start;
     visibility: visible;
     opacity: 0.55;
-    transition: opacity 360ms var(--ease-out);
+    transition: opacity 600ms var(--doctor-ease);
   }
 
   .celimax-doctor-card.is-active {
@@ -6281,9 +6297,10 @@ html.is-loading body {
     max-width: none;
     aspect-ratio: auto;
     border-radius: 0;
-    box-shadow: none;
     outline: 0;
     background: #2E3B25;
+    opacity: 1;
+    transition: none;
   }
 
   .celimax-doctor-card .celimax-doctor-stage__portrait img {
@@ -6308,7 +6325,9 @@ html.is-loading body {
   }
 
   .celimax-doctor-card .celimax-doctor-stage__content {
+    opacity: 1;
     transform: none;
+    transition: none;
   }
 
   .celimax-doctor-card .celimax-doctor-stage__spec-title {
