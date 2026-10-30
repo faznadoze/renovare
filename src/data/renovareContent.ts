@@ -370,7 +370,7 @@ export const SPECIALISTS: SpecialistProfile[] = [
     quote: '“Protocolos integrados com tecnologia de padrão ouro para remodelar, firmar e revitalizar.”',
     bio: 'Atua no planejamento e execução de protocolos com Microagulhamento Facial e Capilar, Depilação a Laser, Corrente Russa e Ultrassom, focados em rejuvenescimento da pele, redução de manchas e cicatrizes, estímulo capilar, melhora da flacidez muscular, definição corporal e redução de medidas.',
     ritualStep: 'Estética Avançada & Biomedicina',
-    imageSrc: './assets/people/doctor-priscila.webp',
+    imageSrc: './assets/people/prof-priscila-couto.webp',
     imageAlt: 'Priscila Couto — Profissional da Estética na Clínica Renovare',
     photoPlaceholderNote: 'Profissional Renovare · Atendimento em Betim',
   },
