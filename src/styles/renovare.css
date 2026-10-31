@@ -7030,25 +7030,45 @@ html.lenis {
     calc(24px + env(safe-area-inset-bottom, 0px));
 }
 
-/* Auto margins centre the list but never clip it on short (landscape) screens */
+/* Links sit at the top of the sheet as one centred column; every row shares the widest
+   row's width so the hairlines line up */
 .site-header__panel-links {
   display: flex;
+  flex: 1 0 auto;
   flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  margin-block: auto;
-  text-align: center;
+  align-items: stretch;
+  gap: 19px;
+  width: max-content;
+  max-width: 100%;
 }
 
 .site-header__panel-link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 56px;
   padding: 8px 12px;
   font-family: var(--font-sans);
-  font-size: clamp(1.625rem, 7.6vw, 2.5rem);
+  font-size: min(29.868px, 8vw);
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.025em;
   color: #171E12;
+  text-align: center;
   text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Hairline under each row, fading out at both ends */
+.site-header__panel-link::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 0.65px;
+  background: linear-gradient(90deg, rgba(26, 36, 18, 0), rgba(26, 36, 18, 0.32) 50%, rgba(26, 36, 18, 0));
 }
 
 .site-header__panel-link:focus-visible,
@@ -7058,26 +7078,57 @@ html.lenis {
   outline-offset: 2px;
 }
 
-/* Same pill as the page's results CTA (onyx, moss arrow badge on the right), stretched
-   between the safe margins; an empty first column balances the badge so the label
-   sits on the screen's centre line */
-.site-header__panel-cta.celimax-ba__btn-whatsapp {
-  display: grid;
-  grid-template-columns: 31.45px 1fr 31.45px;
+/* Booking pill: onyx, label on the left, moss arrow badge on the right, stretched
+   between the 20px safe margins */
+.site-header__panel-cta {
+  display: flex;
+  flex-shrink: 0;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   width: 100%;
   max-width: 440px;
+  height: 54px;
+  min-height: 54px;
   margin-top: 32px;
-  padding: 6px;
-  flex-shrink: 0;
+  padding: 4px 4px 4px 18px;
+  border-radius: 88px;
+  background: #0F0F0F;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 31.45px;
+  color: #F8F7F7;
+  text-decoration: none;
+  touch-action: manipulation;
+  user-select: none;
   /* GSAP owns transform during the entrance; a CSS transform transition would lag it */
   transition: background-color 0.2s var(--ease-out);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .site-header__panel-cta:hover {
+    background: #1F1F1F;
+  }
+}
+
 .site-header__panel-cta-label {
-  grid-column: 2;
-  text-align: center;
+  white-space: nowrap;
+}
+
+.site-header__panel-cta-badge {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 23.412px;
+  background: #DBE4A9;
+}
+
+.site-header__panel-cta-badge img {
+  display: block;
 }
 
 /* BLACK (the campaign) in gold, dark enough to read on the white chips */

@@ -237,12 +237,12 @@ export function SiteHeader() {
             href={BOOKING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="celimax-ba__btn-whatsapp celimax-ba__btn-whatsapp--results site-header__panel-item site-header__panel-cta"
+            className="site-header__panel-item site-header__panel-cta"
             onClick={() => setMenuOpen(false)}
           >
             <span className="site-header__panel-cta-label">Agendar avaliação</span>
-            <span className="celimax-ba__arrow-badge" aria-hidden="true">
-              <img src="./assets/c256d.svg" alt="" width={22.4} height={22.4} />
+            <span className="site-header__panel-cta-badge" aria-hidden="true">
+              <img src="./assets/16df4.svg" alt="" width={16.3812} height={16.3812} />
             </span>
           </a>
         </div>
