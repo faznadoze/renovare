@@ -6844,29 +6844,29 @@ html.lenis {
 /* Hovering (or keyboard-focusing) one chip: every other fill fades out and its label or
    mark turns white over the glass; the chosen chip keeps its fill as a full rounded chip */
 @media (hover: hover) and (pointer: fine) {
-  .site-header:has(.site-header__item:hover) .site-header__item:not(:hover) {
+  .site-header:not(.site-header--menu-open):has(.site-header__item:hover) .site-header__item:not(:hover) {
     color: #FFFFFF;
   }
 
-  .site-header:has(.site-header__item:hover) .site-header__item:not(:hover)::before {
+  .site-header:not(.site-header--menu-open):has(.site-header__item:hover) .site-header__item:not(:hover)::before {
     opacity: 0;
   }
 
-  .site-header:has(.site-header__item:hover) .site-header__item:not(:hover) .site-header__symbol {
+  .site-header:not(.site-header--menu-open):has(.site-header__item:hover) .site-header__item:not(:hover) .site-header__symbol {
     color: #FFFFFF;
   }
 
 }
 
-.site-header:has(.site-header__item:focus-visible) .site-header__item:not(:focus-visible) {
+.site-header:not(.site-header--menu-open):has(.site-header__item:focus-visible) .site-header__item:not(:focus-visible) {
   color: #FFFFFF;
 }
 
-.site-header:has(.site-header__item:focus-visible) .site-header__item:not(:focus-visible)::before {
+.site-header:not(.site-header--menu-open):has(.site-header__item:focus-visible) .site-header__item:not(:focus-visible)::before {
   opacity: 0;
 }
 
-.site-header:has(.site-header__item:focus-visible) .site-header__item:not(:focus-visible) .site-header__symbol {
+.site-header:not(.site-header--menu-open):has(.site-header__item:focus-visible) .site-header__item:not(:focus-visible) .site-header__symbol {
   color: #FFFFFF;
 }
 
@@ -6934,36 +6934,119 @@ html.lenis {
   gap: 0;
 }
 
+/* MENU morphs into an X: the label lifts away while the chip fill draws in to a circle on
+   the right, where the X turns into place. Both glyphs share one cell, so the button
+   (and the pill) keep their width through the swap. */
 .site-header__menu-btn {
+  display: inline-grid;
+  place-items: center;
   font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.08em;
 }
 
+.site-header__menu-btn::before {
+  transition:
+    opacity 0.25s ease,
+    inset 0.42s var(--ease-in-out),
+    border-radius 0.42s var(--ease-in-out),
+    background-color 0.42s var(--ease-in-out);
+}
+
+.site-header__menu-label,
+.site-header__menu-icon {
+  grid-area: 1 / 1;
+  transition:
+    opacity 0.32s var(--ease-in-out),
+    transform 0.42s var(--ease-in-out);
+}
+
+.site-header__menu-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  width: 40px;
+  height: 40px;
+  margin-right: -16px;
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.6);
+}
+
+.site-header__mobile.is-open .site-header__menu-btn::before {
+  inset: 0 0 0 calc(100% - 40px);
+  border-radius: 20px;
+  background: var(--stone-warm);
+}
+
+.site-header__mobile.is-open .site-header__menu-label {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.site-header__mobile.is-open .site-header__menu-icon {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.08s;
+}
+
+/* Open: the glass frame and the mark's chip dissolve into the sheet. Closing, they wait
+   for the sheet to start lifting so the glass never shows as a grey band over it. */
+.site-header__frame--mobile,
+.site-header__mobile .site-header__item--brand::before {
+  transition: opacity 0.42s var(--ease-in-out) 0.24s;
+}
+
+.site-header__mobile.is-open .site-header__frame--mobile,
+.site-header__mobile.is-open .site-header__item--brand::before {
+  transition-delay: 0s;
+}
+
+.site-header__mobile.is-open .site-header__frame--mobile,
+.site-header__mobile.is-open .site-header__item--brand::before {
+  opacity: 0;
+}
+
+/* Full-screen sheet behind the pill; clip-path is driven by GSAP */
 .site-header__panel {
-  position: relative;
-  z-index: 1;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
   display: none;
-  height: 0;
-  margin-top: -40px;
-  overflow: hidden;
-  border-radius: 8px;
-  background: #F8F7F7;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--polar-white);
+  pointer-events: auto;
 }
 
 .site-header__panel-inner {
   display: flex;
   flex-direction: column;
-  padding: 64px 20px 20px;
+  align-items: center;
+  min-height: 100%;
+  padding:
+    calc(88px + env(safe-area-inset-top, 0px))
+    20px
+    calc(24px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Auto margins centre the list but never clip it on short (landscape) screens */
+.site-header__panel-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-block: auto;
+  text-align: center;
 }
 
 .site-header__panel-link {
-  padding: 8px 0;
+  padding: 8px 12px;
   font-family: var(--font-sans);
-  font-size: 1.5rem;
+  font-size: clamp(1.625rem, 7.6vw, 2.5rem);
   font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
   color: #171E12;
   text-decoration: none;
 }
@@ -6975,19 +7058,26 @@ html.lenis {
   outline-offset: 2px;
 }
 
-.site-header__panel-cta {
-  display: flex;
+/* Same pill as the page's results CTA (onyx, moss arrow badge on the right), stretched
+   between the safe margins; an empty first column balances the badge so the label
+   sits on the screen's centre line */
+.site-header__panel-cta.celimax-ba__btn-whatsapp {
+  display: grid;
+  grid-template-columns: 31.45px 1fr 31.45px;
   align-items: center;
-  justify-content: center;
-  height: 48px;
-  margin-top: 20px;
-  border-radius: 8px;
-  background: var(--olive-dark);
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 600;
-  color: #FFFFFF;
-  text-decoration: none;
+  gap: 12px;
+  width: 100%;
+  max-width: 440px;
+  margin-top: 32px;
+  padding: 6px;
+  flex-shrink: 0;
+  /* GSAP owns transform during the entrance; a CSS transform transition would lag it */
+  transition: background-color 0.2s var(--ease-out);
+}
+
+.site-header__panel-cta-label {
+  grid-column: 2;
+  text-align: center;
 }
 
 /* BLACK (the campaign) in gold, dark enough to read on the white chips */
@@ -7004,8 +7094,9 @@ html.lenis {
     display: flex;
   }
 
-  .site-header__mobile {
-    display: none;
+  .site-header__mobile,
+  .site-header__panel {
+    display: none !important;
   }
 }
 

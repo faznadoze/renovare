@@ -87,3 +87,10 @@ export function snapThroughLenis(trigger: ScrollTrigger, stops: () => number[]):
   ScrollTrigger.addEventListener('scrollEnd', onScrollEnd);
   return () => ScrollTrigger.removeEventListener('scrollEnd', onScrollEnd);
 }
+
+/** Holds the page still (Lenis and native scroll) while a full-screen layer is open. */
+export function setPageScrollLocked(locked: boolean) {
+  document.documentElement.style.overflow = locked ? 'hidden' : '';
+  if (locked) lenis?.stop();
+  else lenis?.start();
+}
