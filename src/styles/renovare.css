@@ -6459,6 +6459,9 @@ html.lenis {
 
 .ba-story.is-sequenced .ba-story__case {
   grid-area: 1 / 1;
+  /* Stacked cases share one cell: once the first card lifts away, its empty article
+     would still sit on top and swallow the second slider's drag. Only cards take input. */
+  pointer-events: none;
 }
 
 .ba-story.is-sequenced .ba-story__case--1 {
@@ -6472,6 +6475,7 @@ html.lenis {
 .ba-story.is-sequenced .ba-story__card {
   width: min(560px, calc(100vw - 32px));
   will-change: transform;
+  pointer-events: auto;
 }
 
 .ba-story.is-sequenced .ba-story__cta {
